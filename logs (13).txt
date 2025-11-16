@@ -1,0 +1,238 @@
+[02:37:11][W][touchscreen:032]: Touch Polling Stopped. You can safely remove the 'update_interval:' variable from the YAML file.
+[02:37:11][W][component:306]: wifi set Warning flag: scanning for networks
+[02:37:11][E][component:314]: http_request set Error flag: unspecified
+[02:37:11][E][http_request.idf:060]: HTTP Request failed; Not connected to network
+[02:37:11][E][http_request.idf:060]: HTTP Request failed; Not connected to network
+[02:37:11][E][http_request.idf:060]: HTTP Request failed; Not con[E][component:314]: http_request set Error flag: unspecified
+[02:37:11][E][http_request.idf:060]: HTTP Request failed; Not connected to network
+[02:37:11][W][component:297]: mqtt set Warning flag: unspecified
+[02:37:11][W][component:336]: wifi cleared Warning flag
+[02:37:11][W][component:336]: mqtt cleared Warning flag
+[02:37:11][W][component:453]: mqtt took a long time for an operation (103 ms)
+[02:37:11][W][component:456]: Components should block for at most 30 ms
+[02:37:11][E][component:342]: http_request cleared Error flag
+[02:37:12][W][component:453]: mqtt took a long time for an operation (60 ms)
+[02:37:12][W][component:456]: Components should block for at most 30 ms
+[02:37:24][W][esp-idf:000]: E (17849) esp-tls: [sock=57] select() timeout
+[02:37:24][W][esp-idf:000]: E (17850) transport_base: Failed to open a new connection: 32774
+[02:37:24][W][esp-idf:000]: E (17852) HTTP_CLIENT: Connection failed, sock < 0
+[02:37:24][E][component:314]: http_request set Error flag: unspecified
+[02:37:24][E][http_request.idf:127]: HTTP Request failed: ESP_ERR_HTTP_CONNECT
+[02:37:24][W][esp-idf:000]: E (18266) esp-tls: [sock=57] select() timeout
+[02:37:24][W][esp-idf:000]: E (18267) transport_base: Failed to open a new connection: 32774
+[02:37:24][W][esp-idf:000]: E (18269) HTTP_CLIENT: Connection failed, sock < 0
+[02:37:24][E][http_request.idf:127]: HTTP Request failed: ESP_ERR_HTTP_CONNECT
+[02:37:24][W][esp-idf:000]: E (18575) esp-tls: [sock=57] select() timeout
+[02:37:24][W][esp-idf:000]: E (18576) transport_base: Failed to open a new connection: 32774
+[02:37:24][W][esp-idf:000]: E (18578) HTTP_CLIENT: Connection failed, sock < 0
+[02:37:24][E][http_request.idf:127]: HTTP Request failed: ESP_ERR_HTTP_CONNECT
+[02:37:25][W][esp-idf:000]: E (18884) esp-tls: [sock=57] select() timeout
+[02:37:25][W][esp-idf:000]: E (18885) transport_base: Failed to open a new connection: 32774
+[02:37:25][W][esp-idf:000]: E (18887) HTTP_CLIENT: Connection failed, sock < 0
+[02:37:25][E][http_request.idf:127]: HTTP Request failed: ESP_ERR_HTTP_CONNECT
+[02:37:25][W][esp-idf:000]: E (19192) esp-tls: [sock=57] select() timeout
+[02:37:25][W][esp-idf:000]: E (19193) transport_base: Failed to open a new connection: 32774
+[02:37:25][W][esp-idf:000]: E (19195) HTTP_CLIENT: Connection failed, sock < 0
+[02:37:25][E][http_request.idf:127]: HTTP Request failed: ESP_ERR_HTTP_CONNECT
+[02:37:25][W][esp-idf:000]: E (19501) esp-tls: [sock=57] select() timeout
+[02:37:25][W][esp-idf:000]: E (19502) transport_base: Failed to open a new connection: 32774
+[02:37:25][W][esp-idf:000]: E (19504) HTTP_CLIENT: Connection failed, sock < 0
+[02:37:25][E][http_request.idf:127]: HTTP Request failed: ESP_ERR_HTTP_CONNECT
+[02:37:25][W][component:453]: interval took a long time for an operation (2285 ms)
+[02:37:25][W][component:456]: Components should block for at most 30 ms
+[02:37:25][W][component:453]: mqtt took a long time for an operation (2288 ms)
+[02:37:25][W][component:456]: Components should block for at most 30 ms
+[02:37:26][E][component:342]: http_request cleared Error flag
+[02:37:38][W][esp-idf:000]: E (32628) esp-tls: [sock=57] select() timeout
+[02:37:38][W][esp-idf:000]: E (32629) transport_base: Failed to open a new connection: 32774
+[02:37:38][W][esp-idf:000]: E (32631) HTTP_CLIENT: Connection failed, sock < 0
+[02:37:38][E][component:314]: http_request set Error flag: unspecified
+[02:37:38][E][http_request.idf:127]: HTTP Request failed: ESP_ERR_HTTP_CONNECT
+[02:37:39][W][esp-idf:000]: E (32938) esp-tls: [sock=57] select() timeout
+[02:37:39][W][esp-idf:000]: E (32940) transport_base: Failed to open a new connection: 32774
+[02:37:39][W][esp-idf:000]: E (32941) HTTP_CLIENT: Connection failed, sock < 0
+[02:37:39][E][http_request.idf:127]: HTTP Request failed: ESP_ERR_HTTP_CONNECT
+[02:37:39][W][esp-idf:000]: E (33247) esp-tls: [sock=57] select() timeout
+[02:37:39][W][esp-idf:000]: E (33248) transport_base: Failed to open a new connection: 32774
+[02:37:39][W][esp-idf:000]: E (33250) HTTP_CLIENT: Connection failed, sock < 0
+[02:37:39][E][http_request.idf:127]: HTTP Request failed: ESP_ERR_HTTP_CONNECT
+[02:37:39][W][esp-idf:000]: E (33555) esp-tls: [sock=57] select() timeout
+[02:37:39][W][esp-idf:000]: E (33556) transport_base: Failed to open a new connection: 32774
+[02:37:39][W][esp-idf:000]: E (33558) HTTP_CLIENT: Connection failed, sock < 0
+[02:37:39][E][http_request.idf:127]: HTTP Request failed: ESP_ERR_HTTP_CONNECT
+[02:37:40][E][component:342]: http_request cleared Error flag
+[02:37:47][E][http_request.idf:207]: HTTP Request failed; URL: http://192.168.68.77/sensor/current; Code: 404
+[02:37:47][E][component:314]: http_request set Error flag: unspecified
+[02:37:47][E][http_request.idf:207]: HTTP Request failed; URL: http://192.168.68.77/sensor/voltage; Code: 404
+[02:37:47][E][http_request.idf:207]: HTTP Request failed; URL: http://192.168.68.76/sensor/current; Code: 404
+[02:37:48][E][http_request.idf:207]: HTTP Request failed; URL: http://192.168.68.76/sensor/voltage; Code: 404
+[02:37:48][E][http_request.idf:207]: HTTP Request failed; URL: http://192.168.68.79/sensor/current; Code: 404
+[02:37:48][E][http_request.idf:207]: HTTP Request failed; URL: http://192.168.68.79/sensor/voltage; Code: 404
+[02:37:48][W][esp-idf:000]: E (42069) esp-tls: [sock=57] select() timeout
+[02:37:48][W][esp-idf:000]: E (42070) transport_base: Failed to open a new connection: 32774
+[02:37:48][W][esp-idf:000]: E (42072) HTTP_CLIENT: Connection failed, sock < 0
+[02:37:48][E][http_request.idf:127]: HTTP Request failed: ESP_ERR_HTTP_CONNECT
+[02:37:48][W][esp-idf:000]: E (42378) esp-tls: [sock=57] select() timeout
+[02:37:48][W][esp-idf:000]: E (42379) transport_base: Failed to open a new connection: 32774
+[02:37:48][W][esp-idf:000]: E (42381) HTTP_CLIENT: Connection failed, sock < 0
+[02:37:48][E][http_request.idf:127]: HTTP Request failed: ESP_ERR_HTTP_CONNECT
+[02:37:48][W][esp-idf:000]: E (42687) esp-tls: [sock=57] select() timeout
+[02:37:48][W][esp-idf:000]: E (42688) transport_base: Failed to open a new connection: 32774
+[02:37:48][W][esp-idf:000]: E (42690) HTTP_CLIENT: Connection failed, sock < 0
+[02:37:48][E][http_request.idf:127]: HTTP Request failed: ESP_ERR_HTTP_CONNECT
+[02:37:49][W][esp-idf:000]: E (42996) esp-tls: [sock=57] select() timeout
+[02:37:49][W][esp-idf:000]: E (42997) transport_base: Failed to open a new connection: 32774
+[02:37:49][W][esp-idf:000]: E (42999) HTTP_CLIENT: Connection failed, sock < 0
+[02:37:49][E][http_request.idf:127]: HTTP Request failed: ESP_ERR_HTTP_CONNECT
+[02:37:49][W][component:453]: lvgl took a long time for an operation (1719 ms)
+[02:37:49][W][component:456]: Components should block for at most 30 ms
+[02:37:50][E][component:342]: http_request cleared Error flag
+[02:37:54][W][esp-idf:000]: E (47742) esp-tls: [sock=57] select() timeout
+[02:37:54][W][esp-idf:000]: E (47743) transport_base: Failed to open a new connection: 32774
+[02:37:54][W][esp-idf:000]: E (47745) HTTP_CLIENT: Connection failed, sock < 0
+[02:37:54][E][component:314]: http_request set Error flag: unspecified
+[02:37:54][E][http_request.idf:127]: HTTP Request failed: ESP_ERR_HTTP_CONNECT
+[02:37:54][W][esp-idf:000]: E (48052) esp-tls: [sock=57] select() timeout
+[02:37:54][W][esp-idf:000]: E (48053) transport_base: Failed to open a new connection: 32774
+[02:37:54][W][esp-idf:000]: E (48055) HTTP_CLIENT: Connection failed, sock < 0
+[02:37:54][E][http_request.idf:127]: HTTP Request failed: ESP_ERR_HTTP_CONNECT
+[02:37:54][W][esp-idf:000]: E (48361) esp-tls: [sock=57] select() timeout
+[02:37:54][W][esp-idf:000]: E (48362) transport_base: Failed to open a new connection: 32774
+[02:37:54][W][esp-idf:000]: E (48364) HTTP_CLIENT: Connection failed, sock < 0
+[02:37:54][E][http_request.idf:127]: HTTP Request failed: ESP_ERR_HTTP_CONNECT
+[02:37:54][W][esp-idf:000]: E (48670) esp-tls: [sock=57] select() timeout
+[02:37:54][W][esp-idf:000]: E (48671) transport_base: Failed to open a new connection: 32774
+[02:37:54][W][esp-idf:000]: E (48673) HTTP_CLIENT: Connection failed, sock < 0
+[02:37:54][E][http_request.idf:127]: HTTP Request failed: ESP_ERR_HTTP_CONNECT
+[02:37:55][E][component:342]: http_request cleared Error flag
+[02:38:08][W][esp-idf:000]: E (62618) esp-tls: [sock=57] select() timeout
+[02:38:08][W][esp-idf:000]: E (62619) transport_base: Failed to open a new connection: 32774
+[02:38:08][W][esp-idf:000]: E (62621) HTTP_CLIENT: Connection failed, sock < 0
+[02:38:08][E][component:314]: http_request set Error flag: unspecified
+[02:38:08][E][http_request.idf:127]: HTTP Request failed: ESP_ERR_HTTP_CONNECT
+[02:38:09][W][esp-idf:000]: E (62928) esp-tls: [sock=57] select() timeout
+[02:38:09][W][esp-idf:000]: E (62929) transport_base: Failed to open a new connection: 32774
+[02:38:09][W][esp-idf:000]: E (62931) HTTP_CLIENT: Connection failed, sock < 0
+[02:38:09][E][http_request.idf:127]: HTTP Request failed: ESP_ERR_HTTP_CONNECT
+[02:38:09][W][esp-idf:000]: E (63237) esp-tls: [sock=57] select() timeout
+[02:38:09][W][esp-idf:000]: E (63238) transport_base: Failed to open a new connection: 32774
+[02:38:09][W][esp-idf:000]: E (63240) HTTP_CLIENT: Connection failed, sock < 0
+[02:38:09][E][http_request.idf:127]: HTTP Request failed: ESP_ERR_HTTP_CONNECT
+[02:38:09][W][esp-idf:000]: E (63546) esp-tls: [sock=57] select() timeout
+[02:38:09][W][esp-idf:000]: E (63548) transport_base: Failed to open a new connection: 32774
+[02:38:09][W][esp-idf:000]: E (63549) HTTP_CLIENT: Connection failed, sock < 0
+[02:38:09][E][http_request.idf:127]: HTTP Request failed: ESP_ERR_HTTP_CONNECT
+[02:38:10][E][http_request.idf:207]: HTTP Request failed; URL: http://192.168.68.77/sensor/current; Code: 404
+[02:38:10][E][http_request.idf:207]: HTTP Request failed; URL: http://192.168.68.77/sensor/voltage; Code: 404
+[02:38:10][E][http_request.idf:207]: HTTP Request failed; URL: http://192.168.68.76/sensor/current; Code: 404
+[02:38:10][E][http_request.idf:207]: HTTP Request failed; URL: http://192.168.68.76/sensor/voltage; Code: 404
+[02:38:10][E][http_request.idf:207]: HTTP Request failed; URL: http://192.168.68.79/sensor/current; Code: 404
+[02:38:10][E][http_request.idf:207]: HTTP Request failed; URL: http://192.168.68.79/sensor/voltage; Code: 404
+[02:38:10][W][esp-idf:000]: E (64148) esp-tls: [sock=57] select() timeout
+[02:38:10][W][esp-idf:000]: E (64149) transport_base: Failed to open a new connection: 32774
+[02:38:10][W][esp-idf:000]: E (64151) HTTP_CLIENT: Connection failed, sock < 0
+[02:38:10][E][http_request.idf:127]: HTTP Request failed: ESP_ERR_HTTP_CONNECT
+[02:38:10][W][esp-idf:000]: E (64457) esp-tls: [sock=57] select() timeout
+[02:38:10][W][esp-idf:000]: E (64458) transport_base: Failed to open a new connection: 32774
+[02:38:10][W][esp-idf:000]: E (64460) HTTP_CLIENT: Connection failed, sock < 0
+[02:38:10][E][http_request.idf:127]: HTTP Request failed: ESP_ERR_HTTP_CONNECT
+[02:38:11][W][esp-idf:000]: E (64766) esp-tls: [sock=57] select() timeout
+[02:38:11][W][esp-idf:000]: E (64768) transport_base: Failed to open a new connection: 32774
+[02:38:11][W][esp-idf:000]: E (64769) HTTP_CLIENT: Connection failed, sock < 0
+[02:38:11][E][http_request.idf:127]: HTTP Request failed: ESP_ERR_HTTP_CONNECT
+[02:38:11][W][esp-idf:000]: E (65074) esp-tls: [sock=57] select() timeout
+[02:38:11][W][esp-idf:000]: E (65075) transport_base: Failed to open a new connection: 32774
+[02:38:11][W][esp-idf:000]: E (65077) HTTP_CLIENT: Connection failed, sock < 0
+[02:38:11][E][http_request.idf:127]: HTTP Request failed: ESP_ERR_HTTP_CONNECT
+[02:38:12][E][component:342]: http_request cleared Error flag
+[02:38:18][E][http_request.idf:207]: HTTP Request failed; URL: http://192.168.68.77/sensor/current; Code: 404
+[02:38:18][E][component:314]: http_request set Error flag: unspecified
+[02:38:18][E][http_request.idf:207]: HTTP Request failed; URL: http://192.168.68.77/sensor/voltage; Code: 404
+[02:38:18][E][http_request.idf:207]: HTTP Request failed; URL: http://192.168.68.76/sensor/current; Code: 404
+[02:38:18][E][http_request.idf:207]: HTTP Request failed; URL: http://192.168.68.76/sensor/voltage; Code: 404
+[02:38:18][E][http_request.idf:207]: HTTP Request failed; URL: http://192.168.68.79/sensor/current; Code: 404
+[02:38:18][E][http_request.idf:207]: HTTP Request failed; URL: http://192.168.68.79/sensor/voltage; Code: 404
+[02:38:18][W][esp-idf:000]: E (72407) esp-tls: [sock=57] select() timeout
+[02:38:18][W][esp-idf:000]: E (72408) transport_base: Failed to open a new connection: 32774
+[02:38:18][W][esp-idf:000]: E (72410) HTTP_CLIENT: Connection failed, sock < 0
+[02:38:18][E][http_request.idf:127]: HTTP Request failed: ESP_ERR_HTTP_CONNECT
+[02:38:19][W][esp-idf:000]: E (72716) esp-tls: [sock=57] select() timeout
+[02:38:19][W][esp-idf:000]: E (72717) transport_base: Failed to open a new connection: 32774
+[02:38:19][W][esp-idf:000]: E (72719) HTTP_CLIENT: Connection failed, sock < 0
+[02:38:19][E][http_request.idf:127]: HTTP Request failed: ESP_ERR_HTTP_CONNECT
+[02:38:19][W][esp-idf:000]: E (73025) esp-tls: [sock=57] select() timeout
+[02:38:19][W][esp-idf:000]: E (73026) transport_base: Failed to open a new connection: 32774
+[02:38:19][W][esp-idf:000]: E (73028) HTTP_CLIENT: Connection failed, sock < 0
+[02:38:19][E][http_request.idf:127]: HTTP Request failed: ESP_ERR_HTTP_CONNECT
+[02:38:19][W][esp-idf:000]: E (73334) esp-tls: [sock=57] select() timeout
+[02:38:19][W][esp-idf:000]: E (73335) transport_base: Failed to open a new connection: 32774
+[02:38:19][W][esp-idf:000]: E (73337) HTTP_CLIENT: Connection failed, sock < 0
+[02:38:19][E][http_request.idf:127]: HTTP Request failed: ESP_ERR_HTTP_CONNECT
+[02:38:20][E][component:342]: http_request cleared Error flag
+[02:38:23][W][esp-idf:000]: E (76834) esp-tls: [sock=57] select() timeout
+[02:38:23][W][esp-idf:000]: E (76836) transport_base: Failed to open a new connection: 32774
+[02:38:23][W][esp-idf:000]: E (76837) HTTP_CLIENT: Connection failed, sock < 0
+[02:38:23][E][component:314]: http_request set Error flag: unspecified
+[02:38:23][E][http_request.idf:127]: HTTP Request failed: ESP_ERR_HTTP_CONNECT
+[02:38:23][E][http_request.idf:207]: HTTP Request failed; URL: http://192.168.68.77/sensor/current; Code: 404
+[02:38:23][E][http_request.idf:207]: HTTP Request failed; URL: http://192.168.68.77/sensor/voltage; Code: 404
+[02:38:23][E][http_request.idf:207]: HTTP Request failed; URL: http://192.168.68.76/sensor/current; Code: 404
+[02:38:23][E][http_request.idf:207]: HTTP Request failed; URL: http://192.168.68.76/sensor/voltage; Code: 404
+[02:38:23][W][esp-idf:000]: E (77316) esp-tls: [sock=57] select() timeout
+[02:38:23][W][esp-idf:000]: E (77317) transport_base: Failed to open a new connection: 32774
+[02:38:23][W][esp-idf:000]: E (77319) HTTP_CLIENT: Connection failed, sock < 0
+[02:38:23][E][http_request.idf:127]: HTTP Request failed: ESP_ERR_HTTP_CONNECT
+[02:38:23][E][http_request.idf:207]: HTTP Request failed; URL: http://192.168.68.79/sensor/voltage; Code: 404
+[02:38:23][W][esp-idf:000]: E (77649) esp-tls: [sock=57] select() timeout
+[02:38:23][W][esp-idf:000]: E (77651) transport_base: Failed to open a new connection: 32774
+[02:38:23][W][esp-idf:000]: E (77652) HTTP_CLIENT: Connection failed, sock < 0
+[02:38:23][E][http_request.idf:127]: HTTP Request failed: ESP_ERR_HTTP_CONNECT
+[02:38:24][W][esp-idf:000]: E (77958) esp-tls: [sock=57] select() timeout
+[02:38:24][W][esp-idf:000]: E (77960) transport_base: Failed to open a new connection: 32774
+[02:38:24][W][esp-idf:000]: E (77961) HTTP_CLIENT: Connection failed, sock < 0
+[02:38:24][E][http_request.idf:127]: HTTP Request failed: ESP_ERR_HTTP_CONNECT
+[02:38:24][W][esp-idf:000]: E (78267) esp-tls: [sock=57] select() timeout
+[02:38:24][W][esp-idf:000]: E (78269) transport_base: Failed to open a new connection: 32774
+[02:38:24][W][esp-idf:000]: E (78270) HTTP_CLIENT: Connection failed, sock < 0
+[02:38:24][E][http_request.idf:127]: HTTP Request failed: ESP_ERR_HTTP_CONNECT
+[02:38:24][W][esp-idf:000]: E (78576) esp-tls: [sock=57] select() timeout
+[02:38:24][W][esp-idf:000]: E (78577) transport_base: Failed to open a new connection: 32774
+[02:38:24][W][esp-idf:000]: E (78579) HTTP_CLIENT: Connection failed, sock < 0
+[02:38:24][E][http_request.idf:127]: HTTP Request failed: ESP_ERR_HTTP_CONNECT
+[02:38:24][W][component:453]: lvgl took a long time for an operation (2149 ms)
+[02:38:24][W][component:456]: Components should block for at most 30 ms
+[02:38:25][W][esp-idf:000]: E (78985) esp-tls: [sock=57] select() timeout
+[02:38:25][W][esp-idf:000]: E (78986) transport_base: Failed to open a new connection: 32774
+[02:38:25][W][esp-idf:000]: E (78988) HTTP_CLIENT: Connection failed, sock < 0
+[02:38:25][E][http_request.idf:127]: HTTP Request failed: ESP_ERR_HTTP_CONNECT
+[02:38:25][W][esp-idf:000]: E (79294) esp-tls: [sock=57] select() timeout
+[02:38:25][W][esp-idf:000]: E (79296) transport_base: Failed to open a new connection: 32774
+[02:38:25][W][esp-idf:000]: E (79297) HTTP_CLIENT: Connection failed, sock < 0
+[02:38:25][E][http_request.idf:127]: HTTP Request failed: ESP_ERR_HTTP_CONNECT
+[02:38:25][W][esp-idf:000]: E (79603) esp-tls: [sock=57] select() timeout
+[02:38:25][W][esp-idf:000]: E (79604) transport_base: Failed to open a new connection: 32774
+[02:38:25][W][esp-idf:000]: E (79606) HTTP_CLIENT: Connection failed, sock < 0
+[02:38:25][E][http_request.idf:127]: HTTP Request failed: ESP_ERR_HTTP_CONNECT
+[02:38:26][W][esp-idf:000]: E (79911) esp-tls: [sock=57] select() timeout
+[02:38:26][W][esp-idf:000]: E (79913) transport_base: Failed to open a new connection: 32774
+[02:38:26][W][esp-idf:000]: E (79914) HTTP_CLIENT: Connection failed, sock < 0
+[02:38:26][E][http_request.idf:127]: HTTP Request failed: ESP_ERR_HTTP_CONNECT
+[02:38:27][E][component:342]: http_request cleared Error flag
+[02:38:40][W][esp-idf:000]: E (94025) esp-tls: [sock=57] select() timeout
+[02:38:40][W][esp-idf:000]: E (94026) transport_base: Failed to open a new connection: 32774
+[02:38:40][W][esp-idf:000]: E (94028) HTTP_CLIENT: Connection failed, sock < 0
+[02:38:40][E][component:314]: http_request set Error flag: unspecified
+[02:38:40][E][http_request.idf:127]: HTTP Request failed: ESP_ERR_HTTP_CONNECT
+[02:38:40][W][esp-idf:000]: E (94335) esp-tls: [sock=57] select() timeout
+[02:38:40][W][esp-idf:000]: E (94336) transport_base: Failed to open a new connection: 32774
+[02:38:40][W][esp-idf:000]: E (94338) HTTP_CLIENT: Connection failed, sock < 0
+[02:38:40][E][http_request.idf:127]: HTTP Request failed: ESP_ERR_HTTP_CONNECT
+[02:38:40][W][esp-idf:000]: E (94644) esp-tls: [sock=57] select() timeout
+[02:38:40][W][esp-idf:000]: E (94645) transport_base: Failed to open a new connection: 32774
+[02:38:40][W][esp-idf:000]: E (94647) HTTP_CLIENT: Connection failed, sock < 0
+[02:38:40][E][http_request.idf:127]: HTTP Request failed: ESP_ERR_HTTP_CONNECT
+[02:38:41][W][esp-idf:000]: E (94953) esp-tls: [sock=57] select() timeout
+[02:38:41][W][esp-idf:000]: E (94954) transport_base: Failed to open a new connection: 32774
+[02:38:41][W][esp-idf:000]: E (94956) HTTP_CLIENT: Connection failed, sock < 0
+[02:38:41][E][http_request.idf:127]: HTTP Request failed: ESP_ERR_HTTP_CONNECT
+[02:38:42][E][component:342]: http_request cleared Error flag
