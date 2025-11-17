@@ -962,12 +962,6 @@ script:
 
 
 font:
-  - file: "gfonts://Roboto@700"  # Bold for splash screen
-    id: font_splash_title
-    size: 48
-  - file: "gfonts://Roboto"
-    id: font_splash_subtitle
-    size: 28
   - file: "gfonts://Roboto@700"  # Bold for titles
     id: font_large
     size: 28
@@ -1499,69 +1493,6 @@ lvgl:
           lv_label_set_text(id(lbl_timer8_clock), buf);
           lv_label_set_text(id(lbl_plug8_text), "PLUG 8");
   pages:
-    # ========================================
-    # SPLASH SCREEN - Professional branding with animation
-    # ========================================
-    - id: splash_page
-      widgets:
-        # Modern gradient-style background
-        - obj:
-            id: splash_bg
-            x: 0
-            y: 0
-            width: 800
-            height: 480
-            bg_color: 0x0A0E1A  # Deep blue-black
-            bg_grad_color: 0x1A2847  # Lighter blue
-            bg_grad_dir: VER
-            border_width: 0
-
-        # Main content container - fully visible
-        - obj:
-            id: splash_logo
-            x: 0
-            y: 0
-            width: 800
-            height: 480
-            bg_opa: TRANSP
-            border_width: 0
-            widgets:
-              # Company name - Large and bold
-              - label:
-                  id: splash_title
-                  align: center
-                  y: -60
-                  text: "TotalSense"
-                  text_font: font_splash_title
-                  text_color: 0x00D9FF  # Bright cyan
-
-              # Tagline or product name
-              - label:
-                  id: splash_product
-                  align: center
-                  y: 0
-                  text: "Smart Plug Controller"
-                  text_font: font_splash_subtitle
-                  text_color: 0xFFFFFF
-
-              # Creators line
-              - label:
-                  id: splash_creators
-                  align: center
-                  y: 80
-                  text: "by Jeremy Boven & Peter Olundtu"
-                  text_font: font_medium
-                  text_color: 0x88AACC  # Soft blue
-
-              # Version or loading indicator
-              - label:
-                  id: splash_version
-                  align: bottom_mid
-                  y: -20
-                  text: "Initializing..."
-                  text_font: font_small
-                  text_color: 0x4488AA
-
     # ========================================
     # MAIN PAGE
     # ========================================
