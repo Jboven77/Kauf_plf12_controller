@@ -386,6 +386,34 @@ switch:
           id(plug1_state) = false;
 
 #------------------------------------------------------------------
+# Fonts (must be defined before LVGL)
+#------------------------------------------------------------------
+font:
+  - file: "gfonts://Roboto"
+    id: roboto_24
+    size: 24
+    bpp: 4
+    glyphs: "!\"%()+,-./0123456789:;=?@ABCDEFGHIJKLMNOPQRSTUVWXYZ abcdefghijklmnopqrstuvwxyz°"
+
+  - file: "gfonts://Roboto"
+    id: roboto_48
+    size: 48
+    bpp: 4
+    glyphs: "!\"%()+,-./0123456789:;=?@ABCDEFGHIJKLMNOPQRSTUVWXYZ abcdefghijklmnopqrstuvwxyz°"
+
+  - file: "gfonts://Roboto@700"
+    id: roboto_bold_72
+    size: 72
+    bpp: 4
+    glyphs: "!\"%()+,-./0123456789:;=?@ABCDEFGHIJKLMNOPQRSTUVWXYZ abcdefghijklmnopqrstuvwxyz°&"
+
+  - file: "gfonts://Roboto"
+    id: roboto_18
+    size: 18
+    bpp: 4
+    glyphs: "!\"%()+,-./0123456789:;=?@ABCDEFGHIJKLMNOPQRSTUVWXYZ abcdefghijklmnopqrstuvwxyz°"
+
+#------------------------------------------------------------------
 # Interval for Background Tasks
 #------------------------------------------------------------------
 interval:
@@ -443,7 +471,7 @@ lvgl:
 
   # Theme Configuration
   theme:
-    btn:
+    button:
       bg_color: 0x2C3E50
       bg_grad_color: 0x34495E
       bg_grad_dir: VER
@@ -459,32 +487,6 @@ lvgl:
         text_color: 0xFFFFFF
       pressed:
         bg_color: 0x1ABC9C
-
-  # Fonts
-  font:
-    - file: "gfonts://Roboto"
-      id: roboto_24
-      size: 24
-      bpp: 4
-      glyphs: "!\"%()+,-./0123456789:;=?@ABCDEFGHIJKLMNOPQRSTUVWXYZ abcdefghijklmnopqrstuvwxyz°"
-
-    - file: "gfonts://Roboto"
-      id: roboto_48
-      size: 48
-      bpp: 4
-      glyphs: "!\"%()+,-./0123456789:;=?@ABCDEFGHIJKLMNOPQRSTUVWXYZ abcdefghijklmnopqrstuvwxyz°"
-
-    - file: "gfonts://Roboto@700"
-      id: roboto_bold_72
-      size: 72
-      bpp: 4
-      glyphs: "!\"%()+,-./0123456789:;=?@ABCDEFGHIJKLMNOPQRSTUVWXYZ abcdefghijklmnopqrstuvwxyz°&"
-
-    - file: "gfonts://Roboto"
-      id: roboto_18
-      size: 18
-      bpp: 4
-      glyphs: "!\"%()+,-./0123456789:;=?@ABCDEFGHIJKLMNOPQRSTUVWXYZ abcdefghijklmnopqrstuvwxyz°"
 
   # Styles
   style_definitions:
@@ -604,7 +606,7 @@ lvgl:
                   styles: style_subtitle
 
               # Plug State Button (Large, Center)
-              - btn:
+              - button:
                   id: plug1_btn
                   width: 300
                   height: 150
@@ -632,7 +634,7 @@ lvgl:
                         align: CENTER
 
               # Timer Button (next to plug button)
-              - btn:
+              - button:
                   id: timer_btn
                   width: 120
                   height: 150
@@ -649,7 +651,7 @@ lvgl:
                         align: CENTER
 
               # Bottom Navigation Buttons
-              - btn:
+              - button:
                   id: ip_settings_btn
                   width: 180
                   height: 80
@@ -665,7 +667,7 @@ lvgl:
                         text: "IP Settings"
                         align: CENTER
 
-              - btn:
+              - button:
                   id: plug_info_btn
                   width: 180
                   height: 80
@@ -680,7 +682,7 @@ lvgl:
                         text: "Plug Info"
                         align: CENTER
 
-              - btn:
+              - button:
                   id: backlight_btn
                   width: 180
                   height: 80
@@ -744,7 +746,7 @@ lvgl:
                   mode: NUMBER
 
               # Save Button
-              - btn:
+              - button:
                   width: 250
                   height: 70
                   align: BOTTOM_LEFT
@@ -762,7 +764,7 @@ lvgl:
                         align: CENTER
 
               # Back Button
-              - btn:
+              - button:
                   width: 250
                   height: 70
                   align: BOTTOM_RIGHT
@@ -824,7 +826,7 @@ lvgl:
                   styles: style_time_large
 
               # Back Button
-              - btn:
+              - button:
                   width: 250
                   height: 70
                   align: BOTTOM_MID
@@ -929,7 +931,7 @@ lvgl:
                   visible_row_count: 3
 
               # Save Button
-              - btn:
+              - button:
                   width: 250
                   height: 70
                   align: BOTTOM_LEFT
@@ -947,7 +949,7 @@ lvgl:
                         align: CENTER
 
               # Back Button
-              - btn:
+              - button:
                   width: 250
                   height: 70
                   align: BOTTOM_RIGHT
@@ -964,6 +966,7 @@ lvgl:
 
   # Update Scripts
   on_idle:
+    timeout: 1s
     then:
       - lambda: |-
           // Update time display
