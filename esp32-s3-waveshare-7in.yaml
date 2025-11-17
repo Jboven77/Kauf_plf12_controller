@@ -962,16 +962,26 @@ script:
 
 
 font:
+  - file: "gfonts://Roboto@700"  # Bold for splash screen
+    id: font_splash_title
+    size: 48
   - file: "gfonts://Roboto"
+    id: font_splash_subtitle
+    size: 28
+  - file: "gfonts://Roboto@700"  # Bold for titles
     id: font_large
-    size: 26
+    size: 28
+  - file: "gfonts://Roboto"
+    id: font_medium
+    size: 20
   - file: "gfonts://Roboto"
     id: font_small
-    size: 18
+    size: 16
 
 time:
   - platform: sntp
     id: sntp_time
+    timezone: America/Detroit  # Zip 49456 - Michigan Eastern Time
 
 number:
   # Plug 1
@@ -1462,9 +1472,19 @@ lvgl:
 
   on_ready:
     then:
+      # Show splash screen first
+      - lvgl.page.show:
+          id: splash_page
+      - script.execute: register_activity
+      # Fade in animation for splash screen logo
+      - lvgl.widget.update:
+          id: splash_logo
+          opacity: 100%
+      # Wait 2 seconds then transition to main page
+      - delay: 2s
       - lvgl.page.show:
           id: main_page
-      - script.execute: register_activity
+      # Initialize clock displays
       - lambda: |-
           auto now = id(sntp_time).now();
           if (!now.is_valid()) return;
@@ -1485,7 +1505,73 @@ lvgl:
 
                     lv_label_set_text(id(lbl_plug8_text), "PLUG 8");
   pages:
+    # ========================================
+    # SPLASH SCREEN - Professional branding with animation
+    # ========================================
+    - id: splash_page
+      widgets:
+        # Modern gradient-style background
+        - obj:
+            id: splash_bg
+            x: 0
+            y: 0
+            width: 800
+            height: 480
+            bg_color: 0x0A0E1A  # Deep blue-black
+            bg_grad_color: 0x1A2847  # Lighter blue
+            bg_grad_dir: VER
+            border_width: 0
+
+        # Main content container with fade-in effect
+        - obj:
+            id: splash_logo
+            x: 0
+            y: 0
+            width: 800
+            height: 480
+            bg_opa: TRANSP
+            border_width: 0
+            opacity: 0%  # Start invisible, fade in via on_ready
+            widgets:
+              # Company name - Large and bold
+              - label:
+                  id: splash_title
+                  align: center
+                  y: -60
+                  text: "TotalSense"
+                  text_font: font_splash_title
+                  text_color: 0x00D9FF  # Bright cyan
+
+              # Tagline or product name
+              - label:
+                  id: splash_product
+                  align: center
+                  y: 0
+                  text: "Smart Plug Controller"
+                  text_font: font_splash_subtitle
+                  text_color: 0xFFFFFF
+
+              # Creators line
+              - label:
+                  id: splash_creators
+                  align: center
+                  y: 80
+                  text: "by Jeremy Boven & Peter Olundtu"
+                  text_font: font_medium
+                  text_color: 0x88AACC  # Soft blue
+
+              # Version or loading indicator
+              - label:
+                  id: splash_version
+                  align: bottom_mid
+                  y: -20
+                  text: "Initializing..."
+                  text_font: font_small
+                  text_color: 0x4488AA
+
+    # ========================================
     # MAIN PAGE
+    # ========================================
     - id: main_page
       widgets:
         # background only (no inner panel)
@@ -1500,10 +1586,10 @@ lvgl:
         - label:
             id: lbl_main_title
             align: top_mid
-            y: 10
-            text: "Boven Household Smart-Plug Control"
-            text_font: font_small
-            text_color: 0xFFFFFF
+            y: 8
+            text: "TotalSense - Smart Plug Control"
+            text_font: font_large
+            text_color: 0x00D9FF  # Match splash screen branding
 
         # row 1
         - button:
@@ -1513,7 +1599,7 @@ lvgl:
             width: 230
             height: 60
             bg_color: 0xFF0000
-            widgets: [{ label: { text: "PLUG 1", align: center, text_font: font_small }}]
+            widgets: [{ label: { text: "PLUG 1", align: center, text_font: font_medium }}]
             on_click:
               then:
                 - script.execute: register_activity
@@ -1557,7 +1643,7 @@ lvgl:
             width: 230
             height: 60
             bg_color: 0xFF0000
-            widgets: [{ label: { text: "PLUG 5", align: center, text_font: font_small }}]
+            widgets: [{ label: { text: "PLUG 5", align: center, text_font: font_medium }}]
             on_click:
               then:
                 - script.execute: register_activity
@@ -1602,7 +1688,7 @@ lvgl:
             width: 230
             height: 60
             bg_color: 0xFF0000
-            widgets: [{ label: { text: "PLUG 2", align: center, text_font: font_small }}]
+            widgets: [{ label: { text: "PLUG 2", align: center, text_font: font_medium }}]
             on_click:
               then:
                 - script.execute: register_activity
@@ -1646,7 +1732,7 @@ lvgl:
             width: 230
             height: 60
             bg_color: 0xFF0000
-            widgets: [{ label: { text: "PLUG 6", align: center, text_font: font_small }}]
+            widgets: [{ label: { text: "PLUG 6", align: center, text_font: font_medium }}]
             on_click:
               then:
                 - script.execute: register_activity
@@ -1691,7 +1777,7 @@ lvgl:
             width: 230
             height: 60
             bg_color: 0xFF0000
-            widgets: [{ label: { text: "PLUG 3", align: center, text_font: font_small }}]
+            widgets: [{ label: { text: "PLUG 3", align: center, text_font: font_medium }}]
             on_click:
               then:
                 - script.execute: register_activity
@@ -1735,7 +1821,7 @@ lvgl:
             width: 230
             height: 60
             bg_color: 0xFF0000
-            widgets: [{ label: { text: "PLUG 7", align: center, text_font: font_small }}]
+            widgets: [{ label: { text: "PLUG 7", align: center, text_font: font_medium }}]
             on_click:
               then:
                 - script.execute: register_activity
@@ -1780,7 +1866,7 @@ lvgl:
             width: 230
             height: 60
             bg_color: 0xFF0000
-            widgets: [{ label: { text: "PLUG 4", align: center, text_font: font_small }}]
+            widgets: [{ label: { text: "PLUG 4", align: center, text_font: font_medium }}]
             on_click:
               then:
                 - script.execute: register_activity
@@ -1829,7 +1915,7 @@ lvgl:
                   id: lbl_plug8_text     # text label for Plug 8 button
                   text: "PLUG 8"         # initial, overridden in on_ready
                   align: center
-                  text_font: font_small
+                  text_font: font_medium
             on_click:
               then:
                 - script.execute: register_activity
@@ -5071,7 +5157,7 @@ interval:
             - script.execute: plug1_update_state
 
   # Periodic quick state check for all plugs (reflect unplugged devices quickly)
-  - interval: 15s
+  - interval: 5s
     then:
       - if:
           condition:
