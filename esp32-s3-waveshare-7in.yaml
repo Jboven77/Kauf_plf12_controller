@@ -1468,12 +1468,16 @@ lvgl:
 
   on_ready:
     then:
-      # Show main page directly (skip splash for now)
+      # Show splash screen with TotalSense branding
+      - lvgl.page.show:
+          id: splash_page
+      - script.execute: register_activity
+      # Wait 2 seconds, then switch to main page
+      - delay: 2s
       - lvgl.page.show:
           id: main_page
-      - script.execute: register_activity
-      # Initialize clock displays after a short delay
-      - delay: 500ms
+      # Initialize clocks after page loads
+      - delay: 100ms
       - lambda: |-
           auto now = id(sntp_time).now();
           if (!now.is_valid()) return;
@@ -1493,6 +1497,55 @@ lvgl:
           lv_label_set_text(id(lbl_timer8_clock), buf);
           lv_label_set_text(id(lbl_plug8_text), "PLUG 8");
   pages:
+    # ========================================
+    # SPLASH SCREEN - TotalSense Branding 🔥
+    # ========================================
+    - id: splash_page
+      widgets:
+        # Gradient background
+        - obj:
+            id: splash_bg
+            x: 0
+            y: 0
+            width: 800
+            height: 480
+            bg_color: 0x0A0E1A
+            bg_grad_color: 0x1A2847
+            bg_grad_dir: VER
+            border_width: 0
+            widgets:
+              # TotalSense Title
+              - label:
+                  align: center
+                  y: -60
+                  text: "TotalSense"
+                  text_font: font_large
+                  text_color: 0x00D9FF
+
+              # Product Name
+              - label:
+                  align: center
+                  y: 0
+                  text: "Smart Plug Controller"
+                  text_font: font_medium
+                  text_color: 0xFFFFFF
+
+              # Creators
+              - label:
+                  align: center
+                  y: 60
+                  text: "by Jeremy Boven & Peter Olundtu"
+                  text_font: font_small
+                  text_color: 0x88AACC
+
+              # Loading text
+              - label:
+                  align: bottom_mid
+                  y: -20
+                  text: "Loading..."
+                  text_font: font_small
+                  text_color: 0x4488AA
+
     # ========================================
     # MAIN PAGE
     # ========================================
