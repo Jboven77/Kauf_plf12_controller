@@ -1,0 +1,1021 @@
+substitutions:
+  device_name: "totalsense-controller"
+  friendly_name: "TotalSense Controller"
+
+  # Kauf Plug Connection
+  plug1_ip: "192.168.68.77"
+  plug1_name: "Plug 1"
+
+  # Timezone
+  timezone: "America/Detroit"
+
+#------------------------------------------------------------------
+# ESPHome Core Configuration
+#------------------------------------------------------------------
+esphome:
+  name: ${device_name}
+  friendly_name: ${friendly_name}
+  min_version: "2024.11.0"
+  platformio_options:
+    build_flags:
+      - "-DBOARD_HAS_PSRAM"
+      - "-DARDUINO_USB_CDC_ON_BOOT=1"
+    board_build.arduino.memory_type: qio_opi
+    board_build.flash_mode: dio
+  on_boot:
+    priority: -100
+    then:
+      - lambda: |-
+          id(show_splash) = true;
+      - delay: 2s
+      - lambda: |-
+          id(show_splash) = false;
+          id(main_page).show();
+
+#------------------------------------------------------------------
+# ESP32-S3 Hardware Configuration
+#------------------------------------------------------------------
+esp32:
+  board: esp32-s3-devkitc-1
+  variant: ESP32S3
+  flash_size: 16MB
+  framework:
+    type: esp-idf
+    sdkconfig_options:
+      CONFIG_ESP32S3_DEFAULT_CPU_FREQ_240: "y"
+      CONFIG_ESP32S3_DATA_CACHE_64KB: "y"
+      CONFIG_ESP32S3_DATA_CACHE_LINE_64B: "y"
+      CONFIG_SPIRAM_FETCH_INSTRUCTIONS: "y"
+      CONFIG_SPIRAM_RODATA: "y"
+      CONFIG_SPIRAM_MODE_OCT: "y"
+      CONFIG_SPIRAM_SPEED_120M: "y"
+
+psram:
+  mode: octal
+  speed: 120MHz
+
+#------------------------------------------------------------------
+# Logging
+#------------------------------------------------------------------
+logger:
+  level: INFO
+  logs:
+    lvgl: WARN
+    sensor: WARN
+
+#------------------------------------------------------------------
+# WiFi Configuration
+#------------------------------------------------------------------
+wifi:
+  ssid: "JEREMY"
+  password: "605506Jdb"
+  power_save_mode: NONE
+  reboot_timeout: 0s
+
+  ap:
+    ssid: "TotalSense Fallback"
+    password: "12345678"
+
+captive_portal:
+
+#------------------------------------------------------------------
+# ESPHome API
+#------------------------------------------------------------------
+api:
+  encryption:
+    key: "+6lkh+FkWq3HVFh6+NukfmN188wGMQap7sw2RK1p9Gg="
+  reboot_timeout: 0s
+
+ota:
+  - platform: esphome
+    password: "48170f28ed94e6fe392d67906b01ff74"
+
+#------------------------------------------------------------------
+# Time Synchronization
+#------------------------------------------------------------------
+time:
+  - platform: sntp
+    id: sntp_time
+    timezone: ${timezone}
+    on_time_sync:
+      - logger.log: "Time synchronized"
+
+#------------------------------------------------------------------
+# HTTP Request for Plug Monitoring
+#------------------------------------------------------------------
+http_request:
+  id: http_client
+  timeout: 2s
+
+#------------------------------------------------------------------
+# I2C Bus for Touch Controller
+#------------------------------------------------------------------
+i2c:
+  sda: GPIO08
+  scl: GPIO09
+  scan: true
+  id: i2c_bus
+
+#------------------------------------------------------------------
+# LCD Backlight
+#------------------------------------------------------------------
+output:
+  - platform: ledc
+    id: backlight_pwm
+    pin: GPIO38
+    frequency: 1000 Hz
+
+light:
+  - platform: monochromatic
+    id: backlight
+    name: "Display Backlight"
+    output: backlight_pwm
+    default_transition_length: 0.5s
+    restore_mode: ALWAYS_ON
+
+#------------------------------------------------------------------
+# Display Configuration (RGB Parallel - 800x480)
+#------------------------------------------------------------------
+display:
+  - platform: rgb_display
+    id: my_display
+    color_order: RGB
+    dimensions:
+      width: 800
+      height: 480
+    data_pins:
+      red:
+        - GPIO14    # R0
+        - GPIO21    # R1
+        - GPIO47    # R2
+        - GPIO48    # R3
+        - GPIO45    # R4
+      green:
+        - GPIO9     # G0
+        - GPIO46    # G1
+        - GPIO3     # G2
+        - GPIO8     # G3
+        - GPIO16    # G4
+        - GPIO1     # G5
+      blue:
+        - GPIO15    # B0
+        - GPIO7     # B1
+        - GPIO6     # B2
+        - GPIO5     # B3
+        - GPIO4     # B4
+    de_pin: GPIO40
+    hsync_pin: GPIO39
+    vsync_pin: GPIO41
+    pclk_pin: GPIO42
+    pclk_frequency: 16MHz
+    hsync_pulse_width: 10
+    hsync_front_porch: 10
+    hsync_back_porch: 50
+    vsync_pulse_width: 10
+    vsync_front_porch: 10
+    vsync_back_porch: 20
+    update_interval: never
+    auto_clear_enabled: false
+
+#------------------------------------------------------------------
+# Touchscreen (GT911)
+#------------------------------------------------------------------
+touchscreen:
+  - platform: gt911
+    id: touch_controller
+    interrupt_pin: GPIO18
+    on_touch:
+      - lambda: |-
+          ESP_LOGI("touch", "Touch at x=%d, y=%d", touch.x, touch.y);
+          // Reset backlight timer on touch
+          id(backlight_timer) = 0;
+          if (!id(backlight_manual)) {
+            auto call = id(backlight).turn_on();
+            call.set_brightness(1.0);
+            call.perform();
+          }
+
+#------------------------------------------------------------------
+# Remote Plug Monitoring via HTTP
+#------------------------------------------------------------------
+# Note: We'll use HTTP requests to monitor the Kauf plug
+# The plug exposes sensors via its web interface
+
+#------------------------------------------------------------------
+# Global Variables
+#------------------------------------------------------------------
+globals:
+  - id: show_splash
+    type: bool
+    restore_value: no
+    initial_value: 'true'
+
+  - id: current_page
+    type: int
+    restore_value: no
+    initial_value: '0'  # 0=main, 1=ip_settings, 2=plug_info, 3=timer
+
+  - id: plug1_state
+    type: bool
+    restore_value: no
+    initial_value: 'false'
+
+  - id: plug1_voltage
+    type: float
+    restore_value: no
+    initial_value: '0.0'
+
+  - id: plug1_current
+    type: float
+    restore_value: no
+    initial_value: '0.0'
+
+  - id: plug1_power
+    type: float
+    restore_value: no
+    initial_value: '0.0'
+
+  - id: plug1_ip_str
+    type: std::string
+    restore_value: yes
+    initial_value: '"192.168.68.77"'
+
+  - id: backlight_timer
+    type: int
+    restore_value: no
+    initial_value: '0'
+
+  - id: backlight_manual
+    type: bool
+    restore_value: yes
+    initial_value: 'false'
+
+  - id: timer1_enabled
+    type: bool
+    restore_value: yes
+    initial_value: 'false'
+
+  - id: timer1_on_hour
+    type: int
+    restore_value: yes
+    initial_value: '8'
+
+  - id: timer1_on_minute
+    type: int
+    restore_value: yes
+    initial_value: '0'
+
+  - id: timer1_off_hour
+    type: int
+    restore_value: yes
+    initial_value: '22'
+
+  - id: timer1_off_minute
+    type: int
+    restore_value: yes
+    initial_value: '0'
+
+#------------------------------------------------------------------
+# Sensors for Monitoring
+#------------------------------------------------------------------
+sensor:
+  # WiFi Signal
+  - platform: wifi_signal
+    name: "WiFi Signal"
+    id: wifi_signal_db
+    update_interval: 60s
+    internal: true
+
+  # Uptime
+  - platform: uptime
+    name: "Uptime"
+    id: uptime_sensor
+    internal: true
+
+  # Import Plug 1 Voltage from Home Assistant
+  - platform: homeassistant
+    id: plug1_voltage_import
+    entity_id: sensor.kauf_plug_1_voltage
+    internal: true
+    on_value:
+      then:
+        - lambda: |-
+            id(plug1_voltage) = x;
+
+  # Import Plug 1 Current from Home Assistant
+  - platform: homeassistant
+    id: plug1_current_import
+    entity_id: sensor.kauf_plug_1_current
+    internal: true
+    on_value:
+      then:
+        - lambda: |-
+            id(plug1_current) = x;
+
+  # Import Plug 1 Power from Home Assistant
+  - platform: homeassistant
+    id: plug1_power_import
+    entity_id: sensor.kauf_plug_1_power
+    internal: true
+    on_value:
+      then:
+        - lambda: |-
+            id(plug1_power) = x;
+
+#------------------------------------------------------------------
+# Text Sensors
+#------------------------------------------------------------------
+text_sensor:
+  # WiFi Info
+  - platform: wifi_info
+    ip_address:
+      name: "IP Address"
+      id: ip_address
+      internal: true
+    ssid:
+      name: "SSID"
+      id: wifi_ssid
+      internal: true
+
+#------------------------------------------------------------------
+# Binary Sensors
+#------------------------------------------------------------------
+binary_sensor:
+  # Plug 1 State (imported from Home Assistant)
+  - platform: homeassistant
+    id: plug1_state_import
+    entity_id: switch.kauf_plug_1
+    internal: true
+    on_state:
+      then:
+        - lambda: |-
+            id(plug1_state) = x;
+            ESP_LOGI("plug1", "State updated: %s", x ? "ON" : "OFF");
+
+  # Plug 1 State Sensor (for display)
+  - platform: template
+    name: "${plug1_name} State"
+    id: plug1_state_sensor
+    lambda: |-
+      return id(plug1_state);
+
+#------------------------------------------------------------------
+# Switches
+#------------------------------------------------------------------
+switch:
+  # Plug 1 Control
+  - platform: template
+    name: "${plug1_name} Control"
+    id: plug1_switch
+    lambda: |-
+      return id(plug1_state);
+    turn_on_action:
+      - logger.log: "Turning on Plug 1"
+      - homeassistant.service:
+          service: switch.turn_on
+          data:
+            entity_id: !lambda 'return "switch.kauf_plug_1";'
+      - lambda: |-
+          id(plug1_state) = true;
+    turn_off_action:
+      - logger.log: "Turning off Plug 1"
+      - homeassistant.service:
+          service: switch.turn_off
+          data:
+            entity_id: !lambda 'return "switch.kauf_plug_1";'
+      - lambda: |-
+          id(plug1_state) = false;
+
+#------------------------------------------------------------------
+# Interval for Background Tasks
+#------------------------------------------------------------------
+interval:
+  # Backlight auto-off timer (check every second)
+  - interval: 1s
+    then:
+      - lambda: |-
+          if (!id(backlight_manual)) {
+            id(backlight_timer)++;
+            if (id(backlight_timer) >= 300) {  // 5 minutes
+              auto call = id(backlight).turn_off();
+              call.perform();
+            }
+          }
+
+  # Timer automation check (every minute)
+  - interval: 60s
+    then:
+      - lambda: |-
+          if (id(timer1_enabled)) {
+            auto time = id(sntp_time).now();
+            if (time.is_valid()) {
+              int current_hour = time.hour;
+              int current_minute = time.minute;
+
+              // Check ON time
+              if (current_hour == id(timer1_on_hour) && current_minute == id(timer1_on_minute)) {
+                ESP_LOGI("timer", "Timer ON triggered");
+                auto call = id(plug1_switch).turn_on();
+                call.perform();
+              }
+
+              // Check OFF time
+              if (current_hour == id(timer1_off_hour) && current_minute == id(timer1_off_minute)) {
+                ESP_LOGI("timer", "Timer OFF triggered");
+                auto call = id(plug1_switch).turn_off();
+                call.perform();
+              }
+            }
+          }
+
+#------------------------------------------------------------------
+# LVGL Configuration
+#------------------------------------------------------------------
+lvgl:
+  log_level: WARN
+  color_depth: 16
+  bg_color: 0x000000
+  text_font: unscii_8
+  align: center
+  displays:
+    - my_display
+  touchscreens:
+    - touch_controller
+
+  # Theme Configuration
+  theme:
+    btn:
+      bg_color: 0x2C3E50
+      bg_grad_color: 0x34495E
+      bg_grad_dir: VER
+      bg_opa: COVER
+      border_color: 0x7F8C8D
+      border_width: 2
+      radius: 10
+      shadow_width: 0
+      text_color: 0xFFFFFF
+      checked:
+        bg_color: 0x27AE60
+        bg_grad_color: 0x229954
+        text_color: 0xFFFFFF
+      pressed:
+        bg_color: 0x1ABC9C
+
+  # Fonts
+  font:
+    - file: "gfonts://Roboto"
+      id: roboto_24
+      size: 24
+      bpp: 4
+      glyphs: "!\"%()+,-./0123456789:;=?@ABCDEFGHIJKLMNOPQRSTUVWXYZ abcdefghijklmnopqrstuvwxyz°"
+
+    - file: "gfonts://Roboto"
+      id: roboto_48
+      size: 48
+      bpp: 4
+      glyphs: "!\"%()+,-./0123456789:;=?@ABCDEFGHIJKLMNOPQRSTUVWXYZ abcdefghijklmnopqrstuvwxyz°"
+
+    - file: "gfonts://Roboto@700"
+      id: roboto_bold_72
+      size: 72
+      bpp: 4
+      glyphs: "!\"%()+,-./0123456789:;=?@ABCDEFGHIJKLMNOPQRSTUVWXYZ abcdefghijklmnopqrstuvwxyz°&"
+
+    - file: "gfonts://Roboto"
+      id: roboto_18
+      size: 18
+      bpp: 4
+      glyphs: "!\"%()+,-./0123456789:;=?@ABCDEFGHIJKLMNOPQRSTUVWXYZ abcdefghijklmnopqrstuvwxyz°"
+
+  # Styles
+  style_definitions:
+    - id: style_title
+      text_font: roboto_48
+      text_color: 0xFFFFFF
+      bg_opa: TRANSP
+      text_align: CENTER
+
+    - id: style_time_large
+      text_font: roboto_bold_72
+      text_color: 0x3498DB
+      bg_opa: TRANSP
+      text_align: CENTER
+
+    - id: style_subtitle
+      text_font: roboto_24
+      text_color: 0xBDC3C7
+      bg_opa: TRANSP
+      text_align: CENTER
+
+    - id: style_button_large
+      radius: 15
+      bg_color: 0x2C3E50
+      bg_grad_color: 0x34495E
+      bg_grad_dir: VER
+      border_width: 3
+      border_color: 0x7F8C8D
+      text_font: roboto_24
+      text_color: 0xFFFFFF
+      shadow_width: 10
+      shadow_color: 0x000000
+      shadow_opa: 50%
+
+    - id: style_button_on
+      bg_color: 0x27AE60
+      bg_grad_color: 0x229954
+      border_color: 0x1E8449
+      text_color: 0xFFFFFF
+
+    - id: style_button_off
+      bg_color: 0xE74C3C
+      bg_grad_color: 0xC0392B
+      border_color: 0xA93226
+      text_color: 0xFFFFFF
+
+  # Pages
+  pages:
+    #------------------------------------------------------------------
+    # SPLASH SCREEN
+    #------------------------------------------------------------------
+    - id: splash_page
+      skip: true
+      widgets:
+        - obj:
+            id: splash_container
+            width: 800
+            height: 480
+            bg_color: 0x1A1A1A
+            bg_opa: COVER
+            border_width: 0
+            widgets:
+              # Title
+              - label:
+                  id: splash_title
+                  text: "TotalSense"
+                  align: CENTER
+                  y: -80
+                  styles: style_title
+
+              # Subtitle
+              - label:
+                  id: splash_subtitle
+                  text: "by Jeremy Boven & Peter Olundtu"
+                  align: CENTER
+                  y: 0
+                  styles: style_subtitle
+
+              # Loading animation
+              - spinner:
+                  align: CENTER
+                  y: 100
+                  height: 60
+                  width: 60
+                  spin_time: 1s
+                  arc_length: 60deg
+                  arc_color: 0x3498DB
+                  arc_width: 8
+
+    #------------------------------------------------------------------
+    # MAIN PAGE
+    #------------------------------------------------------------------
+    - id: main_page
+      widgets:
+        - obj:
+            id: main_container
+            width: 800
+            height: 480
+            bg_color: 0x1A1A1A
+            bg_opa: COVER
+            border_width: 0
+            pad_all: 10
+            widgets:
+              # Top Bar - Time Display
+              - label:
+                  id: main_time
+                  text: "00:00"
+                  align: TOP_MID
+                  y: 10
+                  styles: style_time_large
+
+              - label:
+                  id: main_date
+                  text: "Loading..."
+                  align: TOP_MID
+                  y: 90
+                  styles: style_subtitle
+
+              # Plug State Button (Large, Center)
+              - btn:
+                  id: plug1_btn
+                  width: 300
+                  height: 150
+                  align: CENTER
+                  y: -20
+                  checkable: true
+                  styles: style_button_large
+                  on_press:
+                    then:
+                      - lambda: |-
+                          bool new_state = !id(plug1_state);
+                          id(plug1_state) = new_state;
+
+                          if (new_state) {
+                            auto call = id(plug1_switch).turn_on();
+                            call.perform();
+                          } else {
+                            auto call = id(plug1_switch).turn_off();
+                            call.perform();
+                          }
+                  widgets:
+                    - label:
+                        id: plug1_btn_label
+                        text: "Plug 1\nOFF"
+                        align: CENTER
+
+              # Timer Button (next to plug button)
+              - btn:
+                  id: timer_btn
+                  width: 120
+                  height: 150
+                  x: 220
+                  y: -20
+                  align: CENTER
+                  styles: style_button_large
+                  on_click:
+                    then:
+                      - lvgl.page.show: timer_page
+                  widgets:
+                    - label:
+                        text: "\U000023F0\nTimer"
+                        align: CENTER
+
+              # Bottom Navigation Buttons
+              - btn:
+                  id: ip_settings_btn
+                  width: 180
+                  height: 80
+                  align: BOTTOM_LEFT
+                  x: 10
+                  y: -10
+                  styles: style_button_large
+                  on_click:
+                    then:
+                      - lvgl.page.show: ip_settings_page
+                  widgets:
+                    - label:
+                        text: "IP Settings"
+                        align: CENTER
+
+              - btn:
+                  id: plug_info_btn
+                  width: 180
+                  height: 80
+                  align: BOTTOM_MID
+                  y: -10
+                  styles: style_button_large
+                  on_click:
+                    then:
+                      - lvgl.page.show: plug_info_page
+                  widgets:
+                    - label:
+                        text: "Plug Info"
+                        align: CENTER
+
+              - btn:
+                  id: backlight_btn
+                  width: 180
+                  height: 80
+                  align: BOTTOM_RIGHT
+                  x: -10
+                  y: -10
+                  checkable: true
+                  styles: style_button_large
+                  on_click:
+                    then:
+                      - lambda: |-
+                          id(backlight_manual) = !id(backlight_manual);
+                          id(backlight_timer) = 0;
+                          if (id(backlight_manual)) {
+                            auto call = id(backlight).turn_on();
+                            call.set_brightness(1.0);
+                            call.perform();
+                          }
+                  widgets:
+                    - label:
+                        id: backlight_btn_label
+                        text: "Auto (5m)"
+                        align: CENTER
+
+    #------------------------------------------------------------------
+    # IP SETTINGS PAGE
+    #------------------------------------------------------------------
+    - id: ip_settings_page
+      widgets:
+        - obj:
+            width: 800
+            height: 480
+            bg_color: 0x1A1A1A
+            bg_opa: COVER
+            widgets:
+              # Title
+              - label:
+                  text: "IP Settings"
+                  align: TOP_MID
+                  y: 20
+                  styles: style_title
+
+              # IP Input Field
+              - textarea:
+                  id: ip_input
+                  width: 600
+                  height: 80
+                  align: CENTER
+                  y: -80
+                  text: "192.168.68.77"
+                  placeholder_text: "Enter IP Address"
+                  one_line: true
+                  max_length: 15
+
+              # Keyboard
+              - keyboard:
+                  id: ip_keyboard
+                  align: BOTTOM_MID
+                  y: -100
+                  textarea: ip_input
+                  mode: NUMBER
+
+              # Save Button
+              - btn:
+                  width: 250
+                  height: 70
+                  align: BOTTOM_LEFT
+                  x: 50
+                  y: -10
+                  styles: style_button_large
+                  on_click:
+                    then:
+                      - lambda: |-
+                          id(plug1_ip_str) = id(ip_input).get_text();
+                          ESP_LOGI("ip_settings", "Saved IP: %s", id(plug1_ip_str).c_str());
+                  widgets:
+                    - label:
+                        text: "Save"
+                        align: CENTER
+
+              # Back Button
+              - btn:
+                  width: 250
+                  height: 70
+                  align: BOTTOM_RIGHT
+                  x: -50
+                  y: -10
+                  styles: style_button_large
+                  on_click:
+                    then:
+                      - lvgl.page.show: main_page
+                  widgets:
+                    - label:
+                        text: "Back"
+                        align: CENTER
+
+    #------------------------------------------------------------------
+    # PLUG INFO PAGE
+    #------------------------------------------------------------------
+    - id: plug_info_page
+      widgets:
+        - obj:
+            width: 800
+            height: 480
+            bg_color: 0x1A1A1A
+            bg_opa: COVER
+            widgets:
+              # Title
+              - label:
+                  text: "Plug Info"
+                  align: TOP_MID
+                  y: 20
+                  styles: style_title
+
+              # Voltage Display
+              - label:
+                  text: "Voltage"
+                  align: CENTER
+                  y: -120
+                  styles: style_subtitle
+
+              - label:
+                  id: voltage_value
+                  text: "0.0 V"
+                  align: CENTER
+                  y: -70
+                  styles: style_time_large
+
+              # Current Display
+              - label:
+                  text: "Current"
+                  align: CENTER
+                  y: 20
+                  styles: style_subtitle
+
+              - label:
+                  id: current_value
+                  text: "0.00 A"
+                  align: CENTER
+                  y: 70
+                  styles: style_time_large
+
+              # Back Button
+              - btn:
+                  width: 250
+                  height: 70
+                  align: BOTTOM_MID
+                  y: -20
+                  styles: style_button_large
+                  on_click:
+                    then:
+                      - lvgl.page.show: main_page
+                  widgets:
+                    - label:
+                        text: "Back"
+                        align: CENTER
+
+    #------------------------------------------------------------------
+    # TIMER PAGE
+    #------------------------------------------------------------------
+    - id: timer_page
+      widgets:
+        - obj:
+            width: 800
+            height: 480
+            bg_color: 0x1A1A1A
+            bg_opa: COVER
+            widgets:
+              # Title
+              - label:
+                  text: "Daily Timer"
+                  align: TOP_MID
+                  y: 20
+                  styles: style_title
+
+              # Current Time
+              - label:
+                  id: timer_current_time
+                  text: "Current: 00:00"
+                  align: TOP_MID
+                  y: 80
+                  styles: style_subtitle
+
+              # Timer Enable Switch
+              - switch:
+                  id: timer_enable_switch
+                  align: TOP_RIGHT
+                  x: -30
+                  y: 25
+                  on_value:
+                    then:
+                      - lambda: |-
+                          id(timer1_enabled) = x;
+                          ESP_LOGI("timer", "Timer enabled: %d", x);
+
+              # ON Time Section
+              - label:
+                  text: "Turn ON at:"
+                  align: LEFT_MID
+                  x: 50
+                  y: -80
+                  styles: style_subtitle
+
+              - roller:
+                  id: on_hour_roller
+                  align: LEFT_MID
+                  x: 250
+                  y: -80
+                  options: "00\n01\n02\n03\n04\n05\n06\n07\n08\n09\n10\n11\n12\n13\n14\n15\n16\n17\n18\n19\n20\n21\n22\n23"
+                  selected_index: 8
+                  visible_row_count: 3
+
+              - roller:
+                  id: on_minute_roller
+                  align: LEFT_MID
+                  x: 350
+                  y: -80
+                  options: "00\n15\n30\n45"
+                  selected_index: 0
+                  visible_row_count: 3
+
+              # OFF Time Section
+              - label:
+                  text: "Turn OFF at:"
+                  align: LEFT_MID
+                  x: 50
+                  y: 30
+                  styles: style_subtitle
+
+              - roller:
+                  id: off_hour_roller
+                  align: LEFT_MID
+                  x: 250
+                  y: 30
+                  options: "00\n01\n02\n03\n04\n05\n06\n07\n08\n09\n10\n11\n12\n13\n14\n15\n16\n17\n18\n19\n20\n21\n22\n23"
+                  selected_index: 22
+                  visible_row_count: 3
+
+              - roller:
+                  id: off_minute_roller
+                  align: LEFT_MID
+                  x: 350
+                  y: 30
+                  options: "00\n15\n30\n45"
+                  selected_index: 0
+                  visible_row_count: 3
+
+              # Save Button
+              - btn:
+                  width: 250
+                  height: 70
+                  align: BOTTOM_LEFT
+                  x: 50
+                  y: -20
+                  styles: style_button_large
+                  on_click:
+                    then:
+                      - lambda: |-
+                          // Save timer settings
+                          ESP_LOGI("timer", "Timer settings saved");
+                  widgets:
+                    - label:
+                        text: "Save"
+                        align: CENTER
+
+              # Back Button
+              - btn:
+                  width: 250
+                  height: 70
+                  align: BOTTOM_RIGHT
+                  x: -50
+                  y: -20
+                  styles: style_button_large
+                  on_click:
+                    then:
+                      - lvgl.page.show: main_page
+                  widgets:
+                    - label:
+                        text: "Back"
+                        align: CENTER
+
+  # Update Scripts
+  on_idle:
+    then:
+      - lambda: |-
+          // Update time display
+          auto time = id(sntp_time).now();
+          if (time.is_valid()) {
+            char time_str[6];
+            char date_str[32];
+            snprintf(time_str, sizeof(time_str), "%02d:%02d", time.hour, time.minute);
+            snprintf(date_str, sizeof(date_str), "%s, %s %d, %d",
+                     time.strftime("%A").c_str(),
+                     time.strftime("%B").c_str(),
+                     time.day_of_month,
+                     time.year);
+
+            id(main_time).set_text(time_str);
+            id(main_date).set_text(date_str);
+
+            char timer_time[32];
+            snprintf(timer_time, sizeof(timer_time), "Current: %02d:%02d", time.hour, time.minute);
+            id(timer_current_time).set_text(timer_time);
+          }
+
+          // Update plug button state and color
+          if (id(plug1_state)) {
+            id(plug1_btn).add_style(&style_button_on);
+            id(plug1_btn_label).set_text("Plug 1\nON");
+            id(plug1_btn).set_state_checked(true);
+          } else {
+            id(plug1_btn).add_style(&style_button_off);
+            id(plug1_btn_label).set_text("Plug 1\nOFF");
+            id(plug1_btn).set_state_checked(false);
+          }
+
+          // Update voltage and current displays
+          char volt_str[16];
+          char curr_str[16];
+          snprintf(volt_str, sizeof(volt_str), "%.1f V", id(plug1_voltage));
+          snprintf(curr_str, sizeof(curr_str), "%.2f A", id(plug1_current));
+          id(voltage_value).set_text(volt_str);
+          id(current_value).set_text(curr_str);
+
+          // Update backlight button
+          if (id(backlight_manual)) {
+            id(backlight_btn_label).set_text("ON");
+            id(backlight_btn).set_state_checked(true);
+          } else {
+            id(backlight_btn_label).set_text("Auto (5m)");
+            id(backlight_btn).set_state_checked(false);
+          }
+
+          // Show splash on boot
+          if (id(show_splash)) {
+            id(splash_page).show();
+          }
