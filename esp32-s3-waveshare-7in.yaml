@@ -1459,6 +1459,8 @@ touchscreen:
       ch422g: ch422g_hub
       number: 1
       mode: OUTPUT
+    on_touch:
+      - script.execute: register_activity
 
 lvgl:
   log_level: INFO
