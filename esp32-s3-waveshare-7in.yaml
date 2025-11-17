@@ -1476,10 +1476,6 @@ lvgl:
       - lvgl.page.show:
           id: splash_page
       - script.execute: register_activity
-      # Fade in animation for splash screen logo
-      - lvgl.widget.update:
-          id: splash_logo
-          opa: 100%
       # Wait 2 seconds then transition to main page
       - delay: 2s
       - lvgl.page.show:
@@ -1522,7 +1518,7 @@ lvgl:
             bg_grad_dir: VER
             border_width: 0
 
-        # Main content container with fade-in effect
+        # Main content container - fully visible
         - obj:
             id: splash_logo
             x: 0
@@ -1531,7 +1527,6 @@ lvgl:
             height: 480
             bg_opa: TRANSP
             border_width: 0
-            opa: 0%  # Start invisible, fade in via on_ready
             widgets:
               # Company name - Large and bold
               - label:
