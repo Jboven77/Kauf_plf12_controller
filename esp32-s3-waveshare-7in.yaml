@@ -1472,15 +1472,12 @@ lvgl:
 
   on_ready:
     then:
-      # Show splash screen first
-      - lvgl.page.show:
-          id: splash_page
-      - script.execute: register_activity
-      # Wait 2 seconds then transition to main page
-      - delay: 2s
+      # Show main page directly (skip splash for now)
       - lvgl.page.show:
           id: main_page
-      # Initialize clock displays
+      - script.execute: register_activity
+      # Initialize clock displays after a short delay
+      - delay: 500ms
       - lambda: |-
           auto now = id(sntp_time).now();
           if (!now.is_valid()) return;
@@ -1498,8 +1495,7 @@ lvgl:
           lv_label_set_text(id(lbl_timer6_clock), buf);
           lv_label_set_text(id(lbl_timer7_clock), buf);
           lv_label_set_text(id(lbl_timer8_clock), buf);
-
-                    lv_label_set_text(id(lbl_plug8_text), "PLUG 8");
+          lv_label_set_text(id(lbl_plug8_text), "PLUG 8");
   pages:
     # ========================================
     # SPLASH SCREEN - Professional branding with animation
