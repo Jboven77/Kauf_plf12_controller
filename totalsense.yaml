@@ -25,12 +25,9 @@ esphome:
   on_boot:
     priority: -100
     then:
-      - lambda: |-
-          id(show_splash) = true;
+      - lvgl.page.show: splash_page
       - delay: 2s
-      - lambda: |-
-          id(show_splash) = false;
-          id(main_page).show();
+      - lvgl.page.show: main_page
 
 #------------------------------------------------------------------
 # ESP32-S3 Hardware Configuration
@@ -211,11 +208,6 @@ touchscreen:
 # Global Variables
 #------------------------------------------------------------------
 globals:
-  - id: show_splash
-    type: bool
-    restore_value: no
-    initial_value: 'true'
-
   - id: current_page
     type: int
     restore_value: no
@@ -449,15 +441,13 @@ interval:
               // Check ON time
               if (current_hour == id(timer1_on_hour) && current_minute == id(timer1_on_minute)) {
                 ESP_LOGI("timer", "Timer ON triggered");
-                auto call = id(plug1_switch).turn_on();
-                call.perform();
+                id(plug1_switch).turn_on();
               }
 
               // Check OFF time
               if (current_hour == id(timer1_off_hour) && current_minute == id(timer1_off_minute)) {
                 ESP_LOGI("timer", "Timer OFF triggered");
-                auto call = id(plug1_switch).turn_off();
-                call.perform();
+                id(plug1_switch).turn_off();
               }
             }
           }
@@ -628,11 +618,9 @@ lvgl:
                           id(plug1_state) = new_state;
 
                           if (new_state) {
-                            auto call = id(plug1_switch).turn_on();
-                            call.perform();
+                            id(plug1_switch).turn_on();
                           } else {
-                            auto call = id(plug1_switch).turn_off();
-                            call.perform();
+                            id(plug1_switch).turn_off();
                           }
                   widgets:
                     - label:
@@ -763,7 +751,7 @@ lvgl:
                   on_click:
                     then:
                       - lambda: |-
-                          id(plug1_ip_str) = id(ip_input).get_text();
+                          id(plug1_ip_str) = lv_textarea_get_text(id(ip_input));
                           ESP_LOGI("ip_settings", "Saved IP: %s", id(plug1_ip_str).c_str());
                   widgets:
                     - label:
@@ -779,7 +767,7 @@ lvgl:
                   on_click:
                     then:
                       - lambda: |-
-                          id(ip_input).set_text("192.168.68.77");
+                          lv_textarea_set_text(id(ip_input), "192.168.68.77");
                   widgets:
                     - label:
                         text: "Reset"
@@ -1075,23 +1063,21 @@ lvgl:
                      time.day_of_month,
                      time.year);
 
-            id(main_time).set_text(time_str);
-            id(main_date).set_text(date_str);
+            lv_label_set_text(id(main_time), time_str);
+            lv_label_set_text(id(main_date), date_str);
 
             char timer_time[32];
             snprintf(timer_time, sizeof(timer_time), "Current: %02d:%02d", time.hour, time.minute);
-            id(timer_current_time).set_text(timer_time);
+            lv_label_set_text(id(timer_current_time), timer_time);
           }
 
           // Update plug button state and color
           if (id(plug1_state)) {
-            id(plug1_btn).add_style(&style_button_on);
-            id(plug1_btn_label).set_text("Plug 1\nON");
-            id(plug1_btn).set_state_checked(true);
+            lv_label_set_text(id(plug1_btn_label), "Plug 1\nON");
+            lv_obj_add_state(id(plug1_btn), LV_STATE_CHECKED);
           } else {
-            id(plug1_btn).add_style(&style_button_off);
-            id(plug1_btn_label).set_text("Plug 1\nOFF");
-            id(plug1_btn).set_state_checked(false);
+            lv_label_set_text(id(plug1_btn_label), "Plug 1\nOFF");
+            lv_obj_clear_state(id(plug1_btn), LV_STATE_CHECKED);
           }
 
           // Update voltage and current displays
@@ -1099,26 +1085,21 @@ lvgl:
           char curr_str[16];
           snprintf(volt_str, sizeof(volt_str), "%.1f V", id(plug1_voltage));
           snprintf(curr_str, sizeof(curr_str), "%.2f A", id(plug1_current));
-          id(voltage_value).set_text(volt_str);
-          id(current_value).set_text(curr_str);
+          lv_label_set_text(id(voltage_value), volt_str);
+          lv_label_set_text(id(current_value), curr_str);
 
           // Update backlight button
           if (id(backlight_manual)) {
-            id(backlight_btn_label).set_text("ON");
-            id(backlight_btn).set_state_checked(true);
+            lv_label_set_text(id(backlight_btn_label), "ON");
+            lv_obj_add_state(id(backlight_btn), LV_STATE_CHECKED);
           } else {
-            id(backlight_btn_label).set_text("Auto (5m)");
-            id(backlight_btn).set_state_checked(false);
+            lv_label_set_text(id(backlight_btn_label), "Auto (5m)");
+            lv_obj_clear_state(id(backlight_btn), LV_STATE_CHECKED);
           }
 
           // Update schedule status label
           if (id(timer1_enabled)) {
-            id(schedule_status_label).set_text("ON");
+            lv_label_set_text(id(schedule_status_label), "ON");
           } else {
-            id(schedule_status_label).set_text("OFF");
-          }
-
-          // Show splash on boot
-          if (id(show_splash)) {
-            id(splash_page).show();
+            lv_label_set_text(id(schedule_status_label), "OFF");
           }
