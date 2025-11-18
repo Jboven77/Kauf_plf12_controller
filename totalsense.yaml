@@ -25,9 +25,7 @@ esphome:
   on_boot:
     priority: -100
     then:
-      - lvgl.page.show: splash_page
-      - delay: 2s
-      - lvgl.page.show: main_page
+      - logger.log: "TotalSense Controller Starting..."
 
 #------------------------------------------------------------------
 # ESP32-S3 Hardware Configuration
@@ -465,6 +463,12 @@ lvgl:
     - my_display
   touchscreens:
     - touch_controller
+
+  on_ready:
+    then:
+      - lvgl.page.show: splash_page
+      - delay: 2s
+      - lvgl.page.show: main_page
 
   # Theme Configuration
   theme:
