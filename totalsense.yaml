@@ -121,7 +121,7 @@ i2c:
 output:
   - platform: ledc
     id: backlight_pwm
-    pin: GPIO38
+    pin: GPIO16
     frequency: 1000 Hz
 
 light:
@@ -145,35 +145,43 @@ display:
       width: 800
       height: 480
     de_pin:
-      number: GPIO40
+      number: GPIO5
     hsync_pin:
-      number: GPIO39
+      number: GPIO46
+      ignore_strapping_warning: true
     vsync_pin:
-      number: GPIO41
+      number: GPIO3
+      ignore_strapping_warning: true
     pclk_pin:
-      number: GPIO42
+      number: GPIO7
     pclk_frequency: 16MHz
-    pclk_inverted: false
+    pclk_inverted: true
+    hsync_back_porch: 8
+    hsync_front_porch: 8
+    hsync_pulse_width: 4
+    vsync_back_porch: 16
+    vsync_front_porch: 16
+    vsync_pulse_width: 4
     data_pins:
       red:
-        - number: GPIO14    # R0
-        - number: GPIO21    # R1
-        - number: GPIO47    # R2
-        - number: GPIO48    # R3
-        - number: GPIO45    # R4
+        - number: GPIO1     # R0
+        - number: GPIO2     # R1
+        - number: GPIO42    # R2
+        - number: GPIO41    # R3
+        - number: GPIO40    # R4
       green:
-        - number: GPIO9     # G0
-        - number: GPIO46    # G1
-        - number: GPIO3     # G2
-        - number: GPIO8     # G3
-        - number: GPIO16    # G4
-        - number: GPIO1     # G5
+        - number: GPIO39    # G0
+        - number: GPIO0     # G1
+        - number: GPIO45    # G2
+        - number: GPIO48    # G3
+        - number: GPIO47    # G4
+        - number: GPIO21    # G5
       blue:
-        - number: GPIO15    # B0
-        - number: GPIO7     # B1
-        - number: GPIO6     # B2
-        - number: GPIO5     # B3
-        - number: GPIO4     # B4
+        - number: GPIO14    # B0
+        - number: GPIO38    # B1
+        - number: GPIO18    # B2
+        - number: GPIO17    # B3
+        - number: GPIO10    # B4
 
 #------------------------------------------------------------------
 # Touchscreen (GT911)
@@ -181,7 +189,7 @@ display:
 touchscreen:
   - platform: gt911
     id: touch_controller
-    interrupt_pin: GPIO18
+    interrupt_pin: GPIO4
     on_touch:
       - lambda: |-
           ESP_LOGI("touch", "Touch at x=%d, y=%d", touch.x, touch.y);
