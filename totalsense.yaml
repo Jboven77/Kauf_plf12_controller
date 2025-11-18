@@ -866,12 +866,29 @@ lvgl:
                   y: 80
                   styles: style_subtitle
 
+              # Schedule Label
+              - label:
+                  text: "Schedule:"
+                  align: TOP_LEFT
+                  x: 20
+                  y: 130
+                  styles: style_subtitle
+
+              # Schedule Status Label
+              - label:
+                  id: schedule_status_label
+                  text: "OFF"
+                  align: TOP_LEFT
+                  x: 150
+                  y: 130
+                  styles: style_subtitle
+
               # Timer Enable Switch
               - switch:
                   id: timer_enable_switch
-                  align: TOP_RIGHT
-                  x: -30
-                  y: 25
+                  align: TOP_LEFT
+                  x: 250
+                  y: 125
                   on_value:
                     then:
                       - lambda: |-
@@ -1015,6 +1032,13 @@ lvgl:
           } else {
             id(backlight_btn_label).set_text("Auto (5m)");
             id(backlight_btn).set_state_checked(false);
+          }
+
+          // Update schedule status label
+          if (id(timer1_enabled)) {
+            id(schedule_status_label).set_text("ON");
+          } else {
+            id(schedule_status_label).set_text("OFF");
           }
 
           // Show splash on boot
