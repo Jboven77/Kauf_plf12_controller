@@ -922,7 +922,31 @@ lvgl:
                   align: LEFT_MID
                   x: 250
                   y: -80
-                  options: '00\n01\n02\n03\n04\n05\n06\n07\n08\n09\n10\n11\n12\n13\n14\n15\n16\n17\n18\n19\n20\n21\n22\n23'
+                  options:
+                    - "00"
+                    - "01"
+                    - "02"
+                    - "03"
+                    - "04"
+                    - "05"
+                    - "06"
+                    - "07"
+                    - "08"
+                    - "09"
+                    - "10"
+                    - "11"
+                    - "12"
+                    - "13"
+                    - "14"
+                    - "15"
+                    - "16"
+                    - "17"
+                    - "18"
+                    - "19"
+                    - "20"
+                    - "21"
+                    - "22"
+                    - "23"
                   selected_index: 8
                   visible_row_count: 3
 
@@ -931,7 +955,11 @@ lvgl:
                   align: LEFT_MID
                   x: 350
                   y: -80
-                  options: '00\n15\n30\n45'
+                  options:
+                    - "00"
+                    - "15"
+                    - "30"
+                    - "45"
                   selected_index: 0
                   visible_row_count: 3
 
@@ -948,7 +976,31 @@ lvgl:
                   align: LEFT_MID
                   x: 250
                   y: 30
-                  options: '00\n01\n02\n03\n04\n05\n06\n07\n08\n09\n10\n11\n12\n13\n14\n15\n16\n17\n18\n19\n20\n21\n22\n23'
+                  options:
+                    - "00"
+                    - "01"
+                    - "02"
+                    - "03"
+                    - "04"
+                    - "05"
+                    - "06"
+                    - "07"
+                    - "08"
+                    - "09"
+                    - "10"
+                    - "11"
+                    - "12"
+                    - "13"
+                    - "14"
+                    - "15"
+                    - "16"
+                    - "17"
+                    - "18"
+                    - "19"
+                    - "20"
+                    - "21"
+                    - "22"
+                    - "23"
                   selected_index: 22
                   visible_row_count: 3
 
@@ -957,7 +1009,11 @@ lvgl:
                   align: LEFT_MID
                   x: 350
                   y: 30
-                  options: '00\n15\n30\n45'
+                  options:
+                    - "00"
+                    - "15"
+                    - "30"
+                    - "45"
                   selected_index: 0
                   visible_row_count: 3
 
