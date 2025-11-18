@@ -722,16 +722,16 @@ lvgl:
               - label:
                   text: "IP Settings"
                   align: TOP_MID
-                  y: 20
-                  styles: style_title
+                  y: 10
+                  styles: style_subtitle
 
               # IP Input Field
               - textarea:
                   id: ip_input
-                  width: 600
-                  height: 80
-                  align: CENTER
-                  y: -80
+                  width: 700
+                  height: 60
+                  align: TOP_MID
+                  y: 50
                   text: "192.168.68.77"
                   placeholder_text: "Enter IP Address"
                   one_line: true
@@ -740,17 +740,17 @@ lvgl:
               # Keyboard
               - keyboard:
                   id: ip_keyboard
-                  align: BOTTOM_MID
-                  y: -100
+                  align: TOP_MID
+                  y: 120
                   textarea: ip_input
-                  mode: NUMBER
+                  mode: TEXT_UPPER
 
-              # Save Button
+              # Action Buttons Row
               - button:
-                  width: 250
-                  height: 70
+                  width: 180
+                  height: 60
                   align: BOTTOM_LEFT
-                  x: 50
+                  x: 100
                   y: -10
                   styles: style_button_large
                   on_click:
@@ -763,12 +763,26 @@ lvgl:
                         text: "Save"
                         align: CENTER
 
-              # Back Button
               - button:
-                  width: 250
-                  height: 70
+                  width: 180
+                  height: 60
+                  align: BOTTOM_MID
+                  y: -10
+                  styles: style_button_large
+                  on_click:
+                    then:
+                      - lambda: |-
+                          id(ip_input).set_text("192.168.68.77");
+                  widgets:
+                    - label:
+                        text: "Reset"
+                        align: CENTER
+
+              - button:
+                  width: 180
+                  height: 60
                   align: BOTTOM_RIGHT
-                  x: -50
+                  x: -100
                   y: -10
                   styles: style_button_large
                   on_click:
