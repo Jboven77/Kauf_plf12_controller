@@ -83,6 +83,7 @@ ota:
 http_request:
   id: http_client
   timeout: 300ms
+  verify_ssl: false  # Required for Arduino framework (local HTTP only, no SSL needed)
 
 i2c:
   sda: GPIO08
