@@ -1796,25 +1796,26 @@ lvgl:
           id: main_page
       - script.execute: register_activity
       - lambda: |-
-          // Set initial clock display ONLY - NO HTTP REQUESTS
+          // Set initial clock display ONLY if time is valid
           auto now = id(sntp_time).now();
-          if (!now.is_valid()) return;
-          char buf[16];
-          int h12 = now.hour % 12;
-          if (h12 == 0) h12 = 12;
-          bool pm = now.hour >= 12;
-          sprintf(buf, "%02d:%02d %s", h12, now.minute, pm ? "PM" : "AM");
-          lv_label_set_text(id(lbl_main_time), buf);
-          lv_label_set_text(id(lbl_timer1_clock), buf);
-          lv_label_set_text(id(lbl_timer2_clock), buf);
-          lv_label_set_text(id(lbl_timer3_clock), buf);
-          lv_label_set_text(id(lbl_timer4_clock), buf);
-          lv_label_set_text(id(lbl_timer5_clock), buf);
-          lv_label_set_text(id(lbl_timer6_clock), buf);
-          lv_label_set_text(id(lbl_timer7_clock), buf);
-          lv_label_set_text(id(lbl_timer8_clock), buf);
+          if (now.is_valid()) {
+            char buf[16];
+            int h12 = now.hour % 12;
+            if (h12 == 0) h12 = 12;
+            bool pm = now.hour >= 12;
+            sprintf(buf, "%02d:%02d %s", h12, now.minute, pm ? "PM" : "AM");
+            lv_label_set_text(id(lbl_main_time), buf);
+            lv_label_set_text(id(lbl_timer1_clock), buf);
+            lv_label_set_text(id(lbl_timer2_clock), buf);
+            lv_label_set_text(id(lbl_timer3_clock), buf);
+            lv_label_set_text(id(lbl_timer4_clock), buf);
+            lv_label_set_text(id(lbl_timer5_clock), buf);
+            lv_label_set_text(id(lbl_timer6_clock), buf);
+            lv_label_set_text(id(lbl_timer7_clock), buf);
+            lv_label_set_text(id(lbl_timer8_clock), buf);
+          }
 
-          // Restore persisted timer settings (FAST operations only)
+          // Restore persisted timer settings ALWAYS (regardless of time validity)
           // Note: Template switches with lambda auto-restore, no publish_state needed
           id(plug1_on_hour).publish_state((int)id(plug1_on_hour_persist));
           id(plug1_on_minute).publish_state((int)id(plug1_on_minute_persist));
