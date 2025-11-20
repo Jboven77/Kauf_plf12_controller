@@ -48,7 +48,7 @@ psram:
 esp32:
   board: esp32-s3-devkitc-1
   variant: ESP32S3
-  flash_size: 8MB
+  flash_size: 16MB
   cpu_frequency: 240MHz
   framework:
     type: esp-idf
@@ -57,7 +57,7 @@ esp32:
     sdkconfig_options:
       COMPILER_OPTIMIZATION_SIZE: y
       CONFIG_ESP32S3_DATA_CACHE_64KB: "y"
-      CONFIG_ESPTOOLPY_FLASHSIZE_8MB: "y"
+      CONFIG_ESPTOOLPY_FLASHSIZE_16MB: "y"
       CONFIG_FREERTOS_HZ: "1000"
       CONFIG_ESP_DEFAULT_CPU_FREQ_MHZ_240: y
       CONFIG_ESPTOOLPY_FLASHMODE_QIO: y
@@ -1229,9 +1229,10 @@ number:
     min_value: 1
     max_value: 12
     step: 1
-    optimistic: true
     entity_category: "config"
-    on_value:
+    lambda: |-
+      return (float)id(plug1_on_hour_persist);
+    set_action:
       - lambda: |-
           id(plug1_on_hour_persist) = (int)x;
   - platform: template
@@ -1240,9 +1241,10 @@ number:
     min_value: 0
     max_value: 59
     step: 1
-    optimistic: true
     entity_category: "config"
-    on_value:
+    lambda: |-
+      return (float)id(plug1_on_minute_persist);
+    set_action:
       - lambda: |-
           id(plug1_on_minute_persist) = (int)x;
   - platform: template
@@ -1251,9 +1253,10 @@ number:
     min_value: 1
     max_value: 12
     step: 1
-    optimistic: true
     entity_category: "config"
-    on_value:
+    lambda: |-
+      return (float)id(plug1_off_hour_persist);
+    set_action:
       - lambda: |-
           id(plug1_off_hour_persist) = (int)x;
   - platform: template
@@ -1262,9 +1265,10 @@ number:
     min_value: 0
     max_value: 59
     step: 1
-    optimistic: true
     entity_category: "config"
-    on_value:
+    lambda: |-
+      return (float)id(plug1_off_minute_persist);
+    set_action:
       - lambda: |-
           id(plug1_off_minute_persist) = (int)x;
 
@@ -1275,9 +1279,10 @@ number:
     min_value: 1
     max_value: 12
     step: 1
-    optimistic: true
     entity_category: "config"
-    on_value:
+    lambda: |-
+      return (float)id(plug2_on_hour_persist);
+    set_action:
       - lambda: |-
           id(plug2_on_hour_persist) = (int)x;
   - platform: template
@@ -1286,9 +1291,10 @@ number:
     min_value: 0
     max_value: 59
     step: 1
-    optimistic: true
     entity_category: "config"
-    on_value:
+    lambda: |-
+      return (float)id(plug2_on_minute_persist);
+    set_action:
       - lambda: |-
           id(plug2_on_minute_persist) = (int)x;
   - platform: template
@@ -1297,9 +1303,10 @@ number:
     min_value: 1
     max_value: 12
     step: 1
-    optimistic: true
     entity_category: "config"
-    on_value:
+    lambda: |-
+      return (float)id(plug2_off_hour_persist);
+    set_action:
       - lambda: |-
           id(plug2_off_hour_persist) = (int)x;
   - platform: template
@@ -1308,9 +1315,10 @@ number:
     min_value: 0
     max_value: 59
     step: 1
-    optimistic: true
     entity_category: "config"
-    on_value:
+    lambda: |-
+      return (float)id(plug2_off_minute_persist);
+    set_action:
       - lambda: |-
           id(plug2_off_minute_persist) = (int)x;
 
