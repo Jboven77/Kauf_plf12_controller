@@ -40,6 +40,7 @@ esphome:
     board_build.arduino.memory_type: qio_opi
     board_build.flash_mode: dio
     board_upload.maximum_ram_size: 524288
+    board_build.partitions: partitions_8mb.csv
 
 psram:
   mode: octal
