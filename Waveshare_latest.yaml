@@ -597,14 +597,15 @@ switch:
   - platform: template
     id: plug1_schedule_enabled
     name: "Plug 1 Schedule Enabled"
-    optimistic: true
     entity_category: "config"
-    on_turn_on:
+    lambda: |-
+      return id(plug1_schedule_persist);
+    turn_on_action:
       - lambda: |-
           id(plug1_schedule_persist) = true;
           lv_label_set_text(id(lbl_schedule1_state), "Timer: ON");
           lv_obj_set_style_bg_color(id(btn_plug1_timer), lv_color_hex(0x228B22), LV_PART_MAIN);
-    on_turn_off:
+    turn_off_action:
       - lambda: |-
           id(plug1_schedule_persist) = false;
           lv_label_set_text(id(lbl_schedule1_state), "Timer: OFF");
@@ -613,14 +614,15 @@ switch:
   - platform: template
     id: plug2_schedule_enabled
     name: "Plug 2 Schedule Enabled"
-    optimistic: true
     entity_category: "config"
-    on_turn_on:
+    lambda: |-
+      return id(plug2_schedule_persist);
+    turn_on_action:
       - lambda: |-
           id(plug2_schedule_persist) = true;
           lv_label_set_text(id(lbl_schedule2_state), "Timer: ON");
           lv_obj_set_style_bg_color(id(btn_plug2_timer), lv_color_hex(0x228B22), LV_PART_MAIN);
-    on_turn_off:
+    turn_off_action:
       - lambda: |-
           id(plug2_schedule_persist) = false;
           lv_label_set_text(id(lbl_schedule2_state), "Timer: OFF");
@@ -629,14 +631,15 @@ switch:
   - platform: template
     id: plug3_schedule_enabled
     name: "Plug 3 Schedule Enabled"
-    optimistic: true
     entity_category: "config"
-    on_turn_on:
+    lambda: |-
+      return id(plug3_schedule_persist);
+    turn_on_action:
       - lambda: |-
           id(plug3_schedule_persist) = true;
           lv_label_set_text(id(lbl_schedule3_state), "Timer: ON");
           lv_obj_set_style_bg_color(id(btn_plug3_timer), lv_color_hex(0x228B22), LV_PART_MAIN);
-    on_turn_off:
+    turn_off_action:
       - lambda: |-
           id(plug3_schedule_persist) = false;
           lv_label_set_text(id(lbl_schedule3_state), "Timer: OFF");
@@ -645,14 +648,15 @@ switch:
   - platform: template
     id: plug4_schedule_enabled
     name: "Plug 4 Schedule Enabled"
-    optimistic: true
     entity_category: "config"
-    on_turn_on:
+    lambda: |-
+      return id(plug4_schedule_persist);
+    turn_on_action:
       - lambda: |-
           id(plug4_schedule_persist) = true;
           lv_label_set_text(id(lbl_schedule4_state), "Timer: ON");
           lv_obj_set_style_bg_color(id(btn_plug4_timer), lv_color_hex(0x228B22), LV_PART_MAIN);
-    on_turn_off:
+    turn_off_action:
       - lambda: |-
           id(plug4_schedule_persist) = false;
           lv_label_set_text(id(lbl_schedule4_state), "Timer: OFF");
@@ -661,14 +665,15 @@ switch:
   - platform: template
     id: plug5_schedule_enabled
     name: "Plug 5 Schedule Enabled"
-    optimistic: true
     entity_category: "config"
-    on_turn_on:
+    lambda: |-
+      return id(plug5_schedule_persist);
+    turn_on_action:
       - lambda: |-
           id(plug5_schedule_persist) = true;
           lv_label_set_text(id(lbl_schedule5_state), "Timer: ON");
           lv_obj_set_style_bg_color(id(btn_plug5_timer), lv_color_hex(0x228B22), LV_PART_MAIN);
-    on_turn_off:
+    turn_off_action:
       - lambda: |-
           id(plug5_schedule_persist) = false;
           lv_label_set_text(id(lbl_schedule5_state), "Timer: OFF");
@@ -677,14 +682,15 @@ switch:
   - platform: template
     id: plug6_schedule_enabled
     name: "Plug 6 Schedule Enabled"
-    optimistic: true
     entity_category: "config"
-    on_turn_on:
+    lambda: |-
+      return id(plug6_schedule_persist);
+    turn_on_action:
       - lambda: |-
           id(plug6_schedule_persist) = true;
           lv_label_set_text(id(lbl_schedule6_state), "Timer: ON");
           lv_obj_set_style_bg_color(id(btn_plug6_timer), lv_color_hex(0x228B22), LV_PART_MAIN);
-    on_turn_off:
+    turn_off_action:
       - lambda: |-
           id(plug6_schedule_persist) = false;
           lv_label_set_text(id(lbl_schedule6_state), "Timer: OFF");
@@ -693,14 +699,15 @@ switch:
   - platform: template
     id: plug7_schedule_enabled
     name: "Plug 7 Schedule Enabled"
-    optimistic: true
     entity_category: "config"
-    on_turn_on:
+    lambda: |-
+      return id(plug7_schedule_persist);
+    turn_on_action:
       - lambda: |-
           id(plug7_schedule_persist) = true;
           lv_label_set_text(id(lbl_schedule7_state), "Timer: ON");
           lv_obj_set_style_bg_color(id(btn_plug7_timer), lv_color_hex(0x228B22), LV_PART_MAIN);
-    on_turn_off:
+    turn_off_action:
       - lambda: |-
           id(plug7_schedule_persist) = false;
           lv_label_set_text(id(lbl_schedule7_state), "Timer: OFF");
@@ -709,14 +716,15 @@ switch:
   - platform: template
     id: plug8_schedule_enabled
     name: "Plug 8 Schedule Enabled"
-    optimistic: true
     entity_category: "config"
-    on_turn_on:
+    lambda: |-
+      return id(plug8_schedule_persist);
+    turn_on_action:
       - lambda: |-
           id(plug8_schedule_persist) = true;
           lv_label_set_text(id(lbl_schedule8_state), "Timer: ON");
           lv_obj_set_style_bg_color(id(btn_plug8_timer), lv_color_hex(0x228B22), LV_PART_MAIN);
-    on_turn_off:
+    turn_off_action:
       - lambda: |-
           id(plug8_schedule_persist) = false;
           lv_label_set_text(id(lbl_schedule8_state), "Timer: OFF");
