@@ -49,39 +49,9 @@ esp32:
   board: esp32-s3-devkitc-1
   variant: ESP32S3
   flash_size: 8MB
-  cpu_frequency: 240MHz
   framework:
-    type: esp-idf
-    advanced:
-      enable_idf_experimental_features: true
-    sdkconfig_options:
-      COMPILER_OPTIMIZATION_SIZE: y
-      CONFIG_ESP32S3_DATA_CACHE_64KB: "y"
-      CONFIG_ESPTOOLPY_FLASHSIZE_8MB: "y"
-      CONFIG_FREERTOS_HZ: "1000"
-      CONFIG_ESP_DEFAULT_CPU_FREQ_MHZ_240: y
-      CONFIG_ESPTOOLPY_FLASHMODE_QIO: y
-      CONFIG_ESPTOOLPY_FLASHFREQ_120M: y
-      CONFIG_SPIRAM_MODE_OCT: y
-      CONFIG_IDF_EXPERIMENTAL_FEATURES: y
-      CONFIG_SPIRAM_SPEED_120M: y
-      CONFIG_SPIRAM_FETCH_INSTRUCTIONS: y
-      CONFIG_SPIRAM_RODATA: y
-      CONFIG_ESP32S3_DATA_CACHE_LINE_64B: y
-      CONFIG_COMPILER_OPTIMIZATION_PERF: y
-      # Performance optimizations
-      CONFIG_FREERTOS_UNICORE: n
-      CONFIG_ESP_TASK_WDT_TIMEOUT_S: "10"
-      CONFIG_ESP_TASK_WDT_CHECK_IDLE_TASK_CPU0: n
-      CONFIG_ESP_TASK_WDT_CHECK_IDLE_TASK_CPU1: n
-      CONFIG_LWIP_TCP_MSS: "1436"
-      CONFIG_LWIP_TCP_WND: "5744"
-      CONFIG_LWIP_TCP_SND_BUF: "5744"
-      CONFIG_LWIP_TCPIP_RECVMBOX_SIZE: "32"
-      CONFIG_LWIP_UDP_RECVMBOX_SIZE: "16"
-      # NVS (Non-Volatile Storage) configuration for preferences
-      CONFIG_NVS_ENCRYPTION: n
-      CONFIG_NVS_COMPATIBLE_PRE_V43_ENCRYPTION: n
+    type: arduino
+    version: recommended
 
 logger:
   level: ERROR  # Reduced from WARN for better performance
