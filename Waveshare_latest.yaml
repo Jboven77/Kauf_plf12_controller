@@ -40,6 +40,69 @@ esphome:
     board_build.arduino.memory_type: qio_opi
     board_build.flash_mode: dio
     board_upload.maximum_ram_size: 524288
+  on_boot:
+    priority: -100  # Run after everything else is initialized
+    then:
+      - lambda: |-
+          ESP_LOGI("Boot", "Restoring timer states from flash");
+
+          // Restore Plug 1 timer state
+          if (id(plug1_schedule_persist)) {
+            id(plug1_schedule_enabled).turn_on();
+          } else {
+            id(plug1_schedule_enabled).turn_off();
+          }
+
+          // Restore Plug 2 timer state
+          if (id(plug2_schedule_persist)) {
+            id(plug2_schedule_enabled).turn_on();
+          } else {
+            id(plug2_schedule_enabled).turn_off();
+          }
+
+          // Restore Plug 3 timer state
+          if (id(plug3_schedule_persist)) {
+            id(plug3_schedule_enabled).turn_on();
+          } else {
+            id(plug3_schedule_enabled).turn_off();
+          }
+
+          // Restore Plug 4 timer state
+          if (id(plug4_schedule_persist)) {
+            id(plug4_schedule_enabled).turn_on();
+          } else {
+            id(plug4_schedule_enabled).turn_off();
+          }
+
+          // Restore Plug 5 timer state
+          if (id(plug5_schedule_persist)) {
+            id(plug5_schedule_enabled).turn_on();
+          } else {
+            id(plug5_schedule_enabled).turn_off();
+          }
+
+          // Restore Plug 6 timer state
+          if (id(plug6_schedule_persist)) {
+            id(plug6_schedule_enabled).turn_on();
+          } else {
+            id(plug6_schedule_enabled).turn_off();
+          }
+
+          // Restore Plug 7 timer state
+          if (id(plug7_schedule_persist)) {
+            id(plug7_schedule_enabled).turn_on();
+          } else {
+            id(plug7_schedule_enabled).turn_off();
+          }
+
+          // Restore Plug 8 timer state
+          if (id(plug8_schedule_persist)) {
+            id(plug8_schedule_enabled).turn_on();
+          } else {
+            id(plug8_schedule_enabled).turn_off();
+          }
+
+          ESP_LOGI("Boot", "Timer states restored from flash");
 
 psram:
   mode: octal
