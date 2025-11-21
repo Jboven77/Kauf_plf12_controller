@@ -66,6 +66,8 @@ web_server:
   port: 80
   version: 3
   local: true
+  css_url: ""
+  js_url: ""
 
 # mDNS for plugs.local
 mdns:
@@ -348,6 +350,114 @@ globals:
     restore_value: yes
     max_restore_data_length: 4
     initial_value: '"PM"'
+
+# ============================================
+# BUTTONS - Direct Plug Control
+# ============================================
+button:
+  # Plug 1 Controls
+  - platform: template
+    name: "${plug1_name} ON"
+    icon: mdi:power-plug
+    on_press:
+      - script.execute: plug1_turn_on
+
+  - platform: template
+    name: "${plug1_name} OFF"
+    icon: mdi:power-plug-off
+    on_press:
+      - script.execute: plug1_turn_off
+
+  # Plug 2 Controls
+  - platform: template
+    name: "${plug2_name} ON"
+    icon: mdi:power-plug
+    on_press:
+      - script.execute: plug2_turn_on
+
+  - platform: template
+    name: "${plug2_name} OFF"
+    icon: mdi:power-plug-off
+    on_press:
+      - script.execute: plug2_turn_off
+
+  # Plug 3 Controls
+  - platform: template
+    name: "${plug3_name} ON"
+    icon: mdi:power-plug
+    on_press:
+      - script.execute: plug3_turn_on
+
+  - platform: template
+    name: "${plug3_name} OFF"
+    icon: mdi:power-plug-off
+    on_press:
+      - script.execute: plug3_turn_off
+
+  # Plug 4 Controls
+  - platform: template
+    name: "${plug4_name} ON"
+    icon: mdi:power-plug
+    on_press:
+      - script.execute: plug4_turn_on
+
+  - platform: template
+    name: "${plug4_name} OFF"
+    icon: mdi:power-plug-off
+    on_press:
+      - script.execute: plug4_turn_off
+
+  # Plug 5 Controls
+  - platform: template
+    name: "${plug5_name} ON"
+    icon: mdi:power-plug
+    on_press:
+      - script.execute: plug5_turn_on
+
+  - platform: template
+    name: "${plug5_name} OFF"
+    icon: mdi:power-plug-off
+    on_press:
+      - script.execute: plug5_turn_off
+
+  # Plug 6 Controls
+  - platform: template
+    name: "${plug6_name} ON"
+    icon: mdi:power-plug
+    on_press:
+      - script.execute: plug6_turn_on
+
+  - platform: template
+    name: "${plug6_name} OFF"
+    icon: mdi:power-plug-off
+    on_press:
+      - script.execute: plug6_turn_off
+
+  # Plug 7 Controls
+  - platform: template
+    name: "${plug7_name} ON"
+    icon: mdi:power-plug
+    on_press:
+      - script.execute: plug7_turn_on
+
+  - platform: template
+    name: "${plug7_name} OFF"
+    icon: mdi:power-plug-off
+    on_press:
+      - script.execute: plug7_turn_off
+
+  # Plug 8 Controls
+  - platform: template
+    name: "${plug8_name} ON"
+    icon: mdi:power-plug
+    on_press:
+      - script.execute: plug8_turn_on
+
+  - platform: template
+    name: "${plug8_name} OFF"
+    icon: mdi:power-plug-off
+    on_press:
+      - script.execute: plug8_turn_off
 
 # ============================================
 # SWITCHES - Timer Enable/Disable
