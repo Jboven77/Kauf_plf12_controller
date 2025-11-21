@@ -41,7 +41,8 @@ logger:
 
 # Enable Home Assistant API
 api:
-  password: "your_api_password"
+  encryption:
+    key: "your_encryption_key_base64_here"
 
 # OTA updates
 ota:
@@ -76,6 +77,7 @@ captive_portal:
 http_request:
   id: http_client
   timeout: 2s
+  verify_ssl: false
 
 # Time component for scheduling
 time:
