@@ -1,0 +1,1158 @@
+substitutions:
+  # Device info
+  device_name: "plugs-controller"
+  friendly_name: "Kauf Plugs Controller"
+
+  # PLUG IP ADDRESSES
+  plug1_ip: "192.168.68.79"
+  plug2_ip: "192.168.68.77"
+  plug3_ip: "192.168.68.76"
+  plug4_ip: "192.168.68.75"
+  plug5_ip: "192.168.68.203"
+  plug6_ip: "192.168.68.204"
+  plug7_ip: "192.168.68.205"
+  plug8_ip: "192.168.68.206"
+
+  # PLUG NAMES
+  plug1_name: "PLUG 1"
+  plug2_name: "PLUG 2"
+  plug3_name: "PLUG 3"
+  plug4_name: "PLUG 4"
+  plug5_name: "PLUG 5"
+  plug6_name: "PLUG 6"
+  plug7_name: "PLUG 7"
+  plug8_name: "PLUG 8"
+
+esphome:
+  name: ${device_name}
+  friendly_name: ${friendly_name}
+
+esp32:
+  board: esp32-s3-devkitc-1
+  variant: ESP32S3
+  flash_size: 16MB
+  framework:
+    type: arduino
+    version: recommended
+
+# Enable logging
+logger:
+  level: INFO
+
+# Enable Home Assistant API
+api:
+  password: "your_api_password"
+
+# OTA updates
+ota:
+  - platform: esphome
+    password: "your_ota_password"
+
+# WiFi configuration
+wifi:
+  ssid: "JEREMY"
+  password: "605506Jdb"
+  power_save_mode: NONE
+
+  # Fallback hotspot
+  ap:
+    ssid: "${friendly_name} Hotspot"
+    password: "12345678"
+
+# Web server for UI at plugs.local
+web_server:
+  port: 80
+  version: 3
+  local: true
+
+# mDNS for plugs.local
+mdns:
+  disabled: false
+
+# Captive portal
+captive_portal:
+
+# HTTP client for Kauf plug control
+http_request:
+  id: http_client
+  timeout: 2s
+
+# Time component for scheduling
+time:
+  - platform: sntp
+    id: sntp_time
+    timezone: America/Detroit
+
+# Preferences - immediate flash writes
+preferences:
+  flash_write_interval: 0s
+
+# ============================================
+# GLOBALS - Timer Settings (Persisted to Flash)
+# ============================================
+globals:
+  # Plug 1 Timer Settings
+  - id: plug1_schedule_persist
+    type: bool
+    restore_value: yes
+    initial_value: 'false'
+  - id: plug1_on_hour_persist
+    type: int
+    restore_value: yes
+    initial_value: '8'
+  - id: plug1_on_minute_persist
+    type: int
+    restore_value: yes
+    initial_value: '0'
+  - id: plug1_off_hour_persist
+    type: int
+    restore_value: yes
+    initial_value: '6'
+  - id: plug1_off_minute_persist
+    type: int
+    restore_value: yes
+    initial_value: '0'
+  - id: plug1_on_ampm_persist
+    type: std::string
+    restore_value: yes
+    max_restore_data_length: 4
+    initial_value: '"AM"'
+  - id: plug1_off_ampm_persist
+    type: std::string
+    restore_value: yes
+    max_restore_data_length: 4
+    initial_value: '"PM"'
+
+  # Plug 2 Timer Settings
+  - id: plug2_schedule_persist
+    type: bool
+    restore_value: yes
+    initial_value: 'false'
+  - id: plug2_on_hour_persist
+    type: int
+    restore_value: yes
+    initial_value: '8'
+  - id: plug2_on_minute_persist
+    type: int
+    restore_value: yes
+    initial_value: '0'
+  - id: plug2_off_hour_persist
+    type: int
+    restore_value: yes
+    initial_value: '6'
+  - id: plug2_off_minute_persist
+    type: int
+    restore_value: yes
+    initial_value: '0'
+  - id: plug2_on_ampm_persist
+    type: std::string
+    restore_value: yes
+    max_restore_data_length: 4
+    initial_value: '"AM"'
+  - id: plug2_off_ampm_persist
+    type: std::string
+    restore_value: yes
+    max_restore_data_length: 4
+    initial_value: '"PM"'
+
+  # Plug 3 Timer Settings
+  - id: plug3_schedule_persist
+    type: bool
+    restore_value: yes
+    initial_value: 'false'
+  - id: plug3_on_hour_persist
+    type: int
+    restore_value: yes
+    initial_value: '8'
+  - id: plug3_on_minute_persist
+    type: int
+    restore_value: yes
+    initial_value: '0'
+  - id: plug3_off_hour_persist
+    type: int
+    restore_value: yes
+    initial_value: '6'
+  - id: plug3_off_minute_persist
+    type: int
+    restore_value: yes
+    initial_value: '0'
+  - id: plug3_on_ampm_persist
+    type: std::string
+    restore_value: yes
+    max_restore_data_length: 4
+    initial_value: '"AM"'
+  - id: plug3_off_ampm_persist
+    type: std::string
+    restore_value: yes
+    max_restore_data_length: 4
+    initial_value: '"PM"'
+
+  # Plug 4 Timer Settings
+  - id: plug4_schedule_persist
+    type: bool
+    restore_value: yes
+    initial_value: 'false'
+  - id: plug4_on_hour_persist
+    type: int
+    restore_value: yes
+    initial_value: '8'
+  - id: plug4_on_minute_persist
+    type: int
+    restore_value: yes
+    initial_value: '0'
+  - id: plug4_off_hour_persist
+    type: int
+    restore_value: yes
+    initial_value: '6'
+  - id: plug4_off_minute_persist
+    type: int
+    restore_value: yes
+    initial_value: '0'
+  - id: plug4_on_ampm_persist
+    type: std::string
+    restore_value: yes
+    max_restore_data_length: 4
+    initial_value: '"AM"'
+  - id: plug4_off_ampm_persist
+    type: std::string
+    restore_value: yes
+    max_restore_data_length: 4
+    initial_value: '"PM"'
+
+  # Plug 5 Timer Settings
+  - id: plug5_schedule_persist
+    type: bool
+    restore_value: yes
+    initial_value: 'false'
+  - id: plug5_on_hour_persist
+    type: int
+    restore_value: yes
+    initial_value: '8'
+  - id: plug5_on_minute_persist
+    type: int
+    restore_value: yes
+    initial_value: '0'
+  - id: plug5_off_hour_persist
+    type: int
+    restore_value: yes
+    initial_value: '6'
+  - id: plug5_off_minute_persist
+    type: int
+    restore_value: yes
+    initial_value: '0'
+  - id: plug5_on_ampm_persist
+    type: std::string
+    restore_value: yes
+    max_restore_data_length: 4
+    initial_value: '"AM"'
+  - id: plug5_off_ampm_persist
+    type: std::string
+    restore_value: yes
+    max_restore_data_length: 4
+    initial_value: '"PM"'
+
+  # Plug 6 Timer Settings
+  - id: plug6_schedule_persist
+    type: bool
+    restore_value: yes
+    initial_value: 'false'
+  - id: plug6_on_hour_persist
+    type: int
+    restore_value: yes
+    initial_value: '8'
+  - id: plug6_on_minute_persist
+    type: int
+    restore_value: yes
+    initial_value: '0'
+  - id: plug6_off_hour_persist
+    type: int
+    restore_value: yes
+    initial_value: '6'
+  - id: plug6_off_minute_persist
+    type: int
+    restore_value: yes
+    initial_value: '0'
+  - id: plug6_on_ampm_persist
+    type: std::string
+    restore_value: yes
+    max_restore_data_length: 4
+    initial_value: '"AM"'
+  - id: plug6_off_ampm_persist
+    type: std::string
+    restore_value: yes
+    max_restore_data_length: 4
+    initial_value: '"PM"'
+
+  # Plug 7 Timer Settings
+  - id: plug7_schedule_persist
+    type: bool
+    restore_value: yes
+    initial_value: 'false'
+  - id: plug7_on_hour_persist
+    type: int
+    restore_value: yes
+    initial_value: '8'
+  - id: plug7_on_minute_persist
+    type: int
+    restore_value: yes
+    initial_value: '0'
+  - id: plug7_off_hour_persist
+    type: int
+    restore_value: yes
+    initial_value: '6'
+  - id: plug7_off_minute_persist
+    type: int
+    restore_value: yes
+    initial_value: '0'
+  - id: plug7_on_ampm_persist
+    type: std::string
+    restore_value: yes
+    max_restore_data_length: 4
+    initial_value: '"AM"'
+  - id: plug7_off_ampm_persist
+    type: std::string
+    restore_value: yes
+    max_restore_data_length: 4
+    initial_value: '"PM"'
+
+  # Plug 8 Timer Settings
+  - id: plug8_schedule_persist
+    type: bool
+    restore_value: yes
+    initial_value: 'false'
+  - id: plug8_on_hour_persist
+    type: int
+    restore_value: yes
+    initial_value: '8'
+  - id: plug8_on_minute_persist
+    type: int
+    restore_value: yes
+    initial_value: '0'
+  - id: plug8_off_hour_persist
+    type: int
+    restore_value: yes
+    initial_value: '6'
+  - id: plug8_off_minute_persist
+    type: int
+    restore_value: yes
+    initial_value: '0'
+  - id: plug8_on_ampm_persist
+    type: std::string
+    restore_value: yes
+    max_restore_data_length: 4
+    initial_value: '"AM"'
+  - id: plug8_off_ampm_persist
+    type: std::string
+    restore_value: yes
+    max_restore_data_length: 4
+    initial_value: '"PM"'
+
+# ============================================
+# SWITCHES - Timer Enable/Disable
+# ============================================
+switch:
+  # Plug 1 Timer Enable
+  - platform: template
+    id: plug1_schedule_enabled
+    name: "${plug1_name} Timer"
+    icon: mdi:timer
+    lambda: |-
+      return id(plug1_schedule_persist);
+    turn_on_action:
+      - lambda: id(plug1_schedule_persist) = true;
+    turn_off_action:
+      - lambda: id(plug1_schedule_persist) = false;
+
+  # Plug 2 Timer Enable
+  - platform: template
+    id: plug2_schedule_enabled
+    name: "${plug2_name} Timer"
+    icon: mdi:timer
+    lambda: |-
+      return id(plug2_schedule_persist);
+    turn_on_action:
+      - lambda: id(plug2_schedule_persist) = true;
+    turn_off_action:
+      - lambda: id(plug2_schedule_persist) = false;
+
+  # Plug 3 Timer Enable
+  - platform: template
+    id: plug3_schedule_enabled
+    name: "${plug3_name} Timer"
+    icon: mdi:timer
+    lambda: |-
+      return id(plug3_schedule_persist);
+    turn_on_action:
+      - lambda: id(plug3_schedule_persist) = true;
+    turn_off_action:
+      - lambda: id(plug3_schedule_persist) = false;
+
+  # Plug 4 Timer Enable
+  - platform: template
+    id: plug4_schedule_enabled
+    name: "${plug4_name} Timer"
+    icon: mdi:timer
+    lambda: |-
+      return id(plug4_schedule_persist);
+    turn_on_action:
+      - lambda: id(plug4_schedule_persist) = true;
+    turn_off_action:
+      - lambda: id(plug4_schedule_persist) = false;
+
+  # Plug 5 Timer Enable
+  - platform: template
+    id: plug5_schedule_enabled
+    name: "${plug5_name} Timer"
+    icon: mdi:timer
+    lambda: |-
+      return id(plug5_schedule_persist);
+    turn_on_action:
+      - lambda: id(plug5_schedule_persist) = true;
+    turn_off_action:
+      - lambda: id(plug5_schedule_persist) = false;
+
+  # Plug 6 Timer Enable
+  - platform: template
+    id: plug6_schedule_enabled
+    name: "${plug6_name} Timer"
+    icon: mdi:timer
+    lambda: |-
+      return id(plug6_schedule_persist);
+    turn_on_action:
+      - lambda: id(plug6_schedule_persist) = true;
+    turn_off_action:
+      - lambda: id(plug6_schedule_persist) = false;
+
+  # Plug 7 Timer Enable
+  - platform: template
+    id: plug7_schedule_enabled
+    name: "${plug7_name} Timer"
+    icon: mdi:timer
+    lambda: |-
+      return id(plug7_schedule_persist);
+    turn_on_action:
+      - lambda: id(plug7_schedule_persist) = true;
+    turn_off_action:
+      - lambda: id(plug7_schedule_persist) = false;
+
+  # Plug 8 Timer Enable
+  - platform: template
+    id: plug8_schedule_enabled
+    name: "${plug8_name} Timer"
+    icon: mdi:timer
+    lambda: |-
+      return id(plug8_schedule_persist);
+    turn_on_action:
+      - lambda: id(plug8_schedule_persist) = true;
+    turn_off_action:
+      - lambda: id(plug8_schedule_persist) = false;
+
+# ============================================
+# NUMBERS - Timer Hours and Minutes
+# ============================================
+number:
+  # Plug 1 Timer Settings
+  - platform: template
+    id: plug1_on_hour
+    name: "${plug1_name} On Hour"
+    min_value: 1
+    max_value: 12
+    step: 1
+    icon: mdi:clock-outline
+    lambda: |-
+      return (float)id(plug1_on_hour_persist);
+    set_action:
+      - lambda: id(plug1_on_hour_persist) = (int)x;
+
+  - platform: template
+    id: plug1_on_minute
+    name: "${plug1_name} On Minute"
+    min_value: 0
+    max_value: 59
+    step: 1
+    icon: mdi:clock-outline
+    lambda: |-
+      return (float)id(plug1_on_minute_persist);
+    set_action:
+      - lambda: id(plug1_on_minute_persist) = (int)x;
+
+  - platform: template
+    id: plug1_off_hour
+    name: "${plug1_name} Off Hour"
+    min_value: 1
+    max_value: 12
+    step: 1
+    icon: mdi:clock-outline
+    lambda: |-
+      return (float)id(plug1_off_hour_persist);
+    set_action:
+      - lambda: id(plug1_off_hour_persist) = (int)x;
+
+  - platform: template
+    id: plug1_off_minute
+    name: "${plug1_name} Off Minute"
+    min_value: 0
+    max_value: 59
+    step: 1
+    icon: mdi:clock-outline
+    lambda: |-
+      return (float)id(plug1_off_minute_persist);
+    set_action:
+      - lambda: id(plug1_off_minute_persist) = (int)x;
+
+  # Plug 2 Timer Settings
+  - platform: template
+    id: plug2_on_hour
+    name: "${plug2_name} On Hour"
+    min_value: 1
+    max_value: 12
+    step: 1
+    icon: mdi:clock-outline
+    lambda: |-
+      return (float)id(plug2_on_hour_persist);
+    set_action:
+      - lambda: id(plug2_on_hour_persist) = (int)x;
+
+  - platform: template
+    id: plug2_on_minute
+    name: "${plug2_name} On Minute"
+    min_value: 0
+    max_value: 59
+    step: 1
+    icon: mdi:clock-outline
+    lambda: |-
+      return (float)id(plug2_on_minute_persist);
+    set_action:
+      - lambda: id(plug2_on_minute_persist) = (int)x;
+
+  - platform: template
+    id: plug2_off_hour
+    name: "${plug2_name} Off Hour"
+    min_value: 1
+    max_value: 12
+    step: 1
+    icon: mdi:clock-outline
+    lambda: |-
+      return (float)id(plug2_off_hour_persist);
+    set_action:
+      - lambda: id(plug2_off_hour_persist) = (int)x;
+
+  - platform: template
+    id: plug2_off_minute
+    name: "${plug2_name} Off Minute"
+    min_value: 0
+    max_value: 59
+    step: 1
+    icon: mdi:clock-outline
+    lambda: |-
+      return (float)id(plug2_off_minute_persist);
+    set_action:
+      - lambda: id(plug2_off_minute_persist) = (int)x;
+
+  # Plug 3 Timer Settings
+  - platform: template
+    id: plug3_on_hour
+    name: "${plug3_name} On Hour"
+    min_value: 1
+    max_value: 12
+    step: 1
+    icon: mdi:clock-outline
+    lambda: |-
+      return (float)id(plug3_on_hour_persist);
+    set_action:
+      - lambda: id(plug3_on_hour_persist) = (int)x;
+
+  - platform: template
+    id: plug3_on_minute
+    name: "${plug3_name} On Minute"
+    min_value: 0
+    max_value: 59
+    step: 1
+    icon: mdi:clock-outline
+    lambda: |-
+      return (float)id(plug3_on_minute_persist);
+    set_action:
+      - lambda: id(plug3_on_minute_persist) = (int)x;
+
+  - platform: template
+    id: plug3_off_hour
+    name: "${plug3_name} Off Hour"
+    min_value: 1
+    max_value: 12
+    step: 1
+    icon: mdi:clock-outline
+    lambda: |-
+      return (float)id(plug3_off_hour_persist);
+    set_action:
+      - lambda: id(plug3_off_hour_persist) = (int)x;
+
+  - platform: template
+    id: plug3_off_minute
+    name: "${plug3_name} Off Minute"
+    min_value: 0
+    max_value: 59
+    step: 1
+    icon: mdi:clock-outline
+    lambda: |-
+      return (float)id(plug3_off_minute_persist);
+    set_action:
+      - lambda: id(plug3_off_minute_persist) = (int)x;
+
+  # Plug 4 Timer Settings
+  - platform: template
+    id: plug4_on_hour
+    name: "${plug4_name} On Hour"
+    min_value: 1
+    max_value: 12
+    step: 1
+    icon: mdi:clock-outline
+    lambda: |-
+      return (float)id(plug4_on_hour_persist);
+    set_action:
+      - lambda: id(plug4_on_hour_persist) = (int)x;
+
+  - platform: template
+    id: plug4_on_minute
+    name: "${plug4_name} On Minute"
+    min_value: 0
+    max_value: 59
+    step: 1
+    icon: mdi:clock-outline
+    lambda: |-
+      return (float)id(plug4_on_minute_persist);
+    set_action:
+      - lambda: id(plug4_on_minute_persist) = (int)x;
+
+  - platform: template
+    id: plug4_off_hour
+    name: "${plug4_name} Off Hour"
+    min_value: 1
+    max_value: 12
+    step: 1
+    icon: mdi:clock-outline
+    lambda: |-
+      return (float)id(plug4_off_hour_persist);
+    set_action:
+      - lambda: id(plug4_off_hour_persist) = (int)x;
+
+  - platform: template
+    id: plug4_off_minute
+    name: "${plug4_name} Off Minute"
+    min_value: 0
+    max_value: 59
+    step: 1
+    icon: mdi:clock-outline
+    lambda: |-
+      return (float)id(plug4_off_minute_persist);
+    set_action:
+      - lambda: id(plug4_off_minute_persist) = (int)x;
+
+  # Plug 5 Timer Settings
+  - platform: template
+    id: plug5_on_hour
+    name: "${plug5_name} On Hour"
+    min_value: 1
+    max_value: 12
+    step: 1
+    icon: mdi:clock-outline
+    lambda: |-
+      return (float)id(plug5_on_hour_persist);
+    set_action:
+      - lambda: id(plug5_on_hour_persist) = (int)x;
+
+  - platform: template
+    id: plug5_on_minute
+    name: "${plug5_name} On Minute"
+    min_value: 0
+    max_value: 59
+    step: 1
+    icon: mdi:clock-outline
+    lambda: |-
+      return (float)id(plug5_on_minute_persist);
+    set_action:
+      - lambda: id(plug5_on_minute_persist) = (int)x;
+
+  - platform: template
+    id: plug5_off_hour
+    name: "${plug5_name} Off Hour"
+    min_value: 1
+    max_value: 12
+    step: 1
+    icon: mdi:clock-outline
+    lambda: |-
+      return (float)id(plug5_off_hour_persist);
+    set_action:
+      - lambda: id(plug5_off_hour_persist) = (int)x;
+
+  - platform: template
+    id: plug5_off_minute
+    name: "${plug5_name} Off Minute"
+    min_value: 0
+    max_value: 59
+    step: 1
+    icon: mdi:clock-outline
+    lambda: |-
+      return (float)id(plug5_off_minute_persist);
+    set_action:
+      - lambda: id(plug5_off_minute_persist) = (int)x;
+
+  # Plug 6 Timer Settings
+  - platform: template
+    id: plug6_on_hour
+    name: "${plug6_name} On Hour"
+    min_value: 1
+    max_value: 12
+    step: 1
+    icon: mdi:clock-outline
+    lambda: |-
+      return (float)id(plug6_on_hour_persist);
+    set_action:
+      - lambda: id(plug6_on_hour_persist) = (int)x;
+
+  - platform: template
+    id: plug6_on_minute
+    name: "${plug6_name} On Minute"
+    min_value: 0
+    max_value: 59
+    step: 1
+    icon: mdi:clock-outline
+    lambda: |-
+      return (float)id(plug6_on_minute_persist);
+    set_action:
+      - lambda: id(plug6_on_minute_persist) = (int)x;
+
+  - platform: template
+    id: plug6_off_hour
+    name: "${plug6_name} Off Hour"
+    min_value: 1
+    max_value: 12
+    step: 1
+    icon: mdi:clock-outline
+    lambda: |-
+      return (float)id(plug6_off_hour_persist);
+    set_action:
+      - lambda: id(plug6_off_hour_persist) = (int)x;
+
+  - platform: template
+    id: plug6_off_minute
+    name: "${plug6_name} Off Minute"
+    min_value: 0
+    max_value: 59
+    step: 1
+    icon: mdi:clock-outline
+    lambda: |-
+      return (float)id(plug6_off_minute_persist);
+    set_action:
+      - lambda: id(plug6_off_minute_persist) = (int)x;
+
+  # Plug 7 Timer Settings
+  - platform: template
+    id: plug7_on_hour
+    name: "${plug7_name} On Hour"
+    min_value: 1
+    max_value: 12
+    step: 1
+    icon: mdi:clock-outline
+    lambda: |-
+      return (float)id(plug7_on_hour_persist);
+    set_action:
+      - lambda: id(plug7_on_hour_persist) = (int)x;
+
+  - platform: template
+    id: plug7_on_minute
+    name: "${plug7_name} On Minute"
+    min_value: 0
+    max_value: 59
+    step: 1
+    icon: mdi:clock-outline
+    lambda: |-
+      return (float)id(plug7_on_minute_persist);
+    set_action:
+      - lambda: id(plug7_on_minute_persist) = (int)x;
+
+  - platform: template
+    id: plug7_off_hour
+    name: "${plug7_name} Off Hour"
+    min_value: 1
+    max_value: 12
+    step: 1
+    icon: mdi:clock-outline
+    lambda: |-
+      return (float)id(plug7_off_hour_persist);
+    set_action:
+      - lambda: id(plug7_off_hour_persist) = (int)x;
+
+  - platform: template
+    id: plug7_off_minute
+    name: "${plug7_name} Off Minute"
+    min_value: 0
+    max_value: 59
+    step: 1
+    icon: mdi:clock-outline
+    lambda: |-
+      return (float)id(plug7_off_minute_persist);
+    set_action:
+      - lambda: id(plug7_off_minute_persist) = (int)x;
+
+  # Plug 8 Timer Settings
+  - platform: template
+    id: plug8_on_hour
+    name: "${plug8_name} On Hour"
+    min_value: 1
+    max_value: 12
+    step: 1
+    icon: mdi:clock-outline
+    lambda: |-
+      return (float)id(plug8_on_hour_persist);
+    set_action:
+      - lambda: id(plug8_on_hour_persist) = (int)x;
+
+  - platform: template
+    id: plug8_on_minute
+    name: "${plug8_name} On Minute"
+    min_value: 0
+    max_value: 59
+    step: 1
+    icon: mdi:clock-outline
+    lambda: |-
+      return (float)id(plug8_on_minute_persist);
+    set_action:
+      - lambda: id(plug8_on_minute_persist) = (int)x;
+
+  - platform: template
+    id: plug8_off_hour
+    name: "${plug8_name} Off Hour"
+    min_value: 1
+    max_value: 12
+    step: 1
+    icon: mdi:clock-outline
+    lambda: |-
+      return (float)id(plug8_off_hour_persist);
+    set_action:
+      - lambda: id(plug8_off_hour_persist) = (int)x;
+
+  - platform: template
+    id: plug8_off_minute
+    name: "${plug8_name} Off Minute"
+    min_value: 0
+    max_value: 59
+    step: 1
+    icon: mdi:clock-outline
+    lambda: |-
+      return (float)id(plug8_off_minute_persist);
+    set_action:
+      - lambda: id(plug8_off_minute_persist) = (int)x;
+
+# ============================================
+# SELECTS - AM/PM Selection
+# ============================================
+select:
+  # Plug 1 AM/PM
+  - platform: template
+    id: plug1_on_ampm
+    name: "${plug1_name} On AM/PM"
+    options: ["AM", "PM"]
+    icon: mdi:clock-outline
+    lambda: |-
+      return id(plug1_on_ampm_persist);
+    set_action:
+      - lambda: id(plug1_on_ampm_persist) = x;
+
+  - platform: template
+    id: plug1_off_ampm
+    name: "${plug1_name} Off AM/PM"
+    options: ["AM", "PM"]
+    icon: mdi:clock-outline
+    lambda: |-
+      return id(plug1_off_ampm_persist);
+    set_action:
+      - lambda: id(plug1_off_ampm_persist) = x;
+
+  # Plug 2 AM/PM
+  - platform: template
+    id: plug2_on_ampm
+    name: "${plug2_name} On AM/PM"
+    options: ["AM", "PM"]
+    icon: mdi:clock-outline
+    lambda: |-
+      return id(plug2_on_ampm_persist);
+    set_action:
+      - lambda: id(plug2_on_ampm_persist) = x;
+
+  - platform: template
+    id: plug2_off_ampm
+    name: "${plug2_name} Off AM/PM"
+    options: ["AM", "PM"]
+    icon: mdi:clock-outline
+    lambda: |-
+      return id(plug2_off_ampm_persist);
+    set_action:
+      - lambda: id(plug2_off_ampm_persist) = x;
+
+  # Plug 3 AM/PM
+  - platform: template
+    id: plug3_on_ampm
+    name: "${plug3_name} On AM/PM"
+    options: ["AM", "PM"]
+    icon: mdi:clock-outline
+    lambda: |-
+      return id(plug3_on_ampm_persist);
+    set_action:
+      - lambda: id(plug3_on_ampm_persist) = x;
+
+  - platform: template
+    id: plug3_off_ampm
+    name: "${plug3_name} Off AM/PM"
+    options: ["AM", "PM"]
+    icon: mdi:clock-outline
+    lambda: |-
+      return id(plug3_off_ampm_persist);
+    set_action:
+      - lambda: id(plug3_off_ampm_persist) = x;
+
+  # Plug 4 AM/PM
+  - platform: template
+    id: plug4_on_ampm
+    name: "${plug4_name} On AM/PM"
+    options: ["AM", "PM"]
+    icon: mdi:clock-outline
+    lambda: |-
+      return id(plug4_on_ampm_persist);
+    set_action:
+      - lambda: id(plug4_on_ampm_persist) = x;
+
+  - platform: template
+    id: plug4_off_ampm
+    name: "${plug4_name} Off AM/PM"
+    options: ["AM", "PM"]
+    icon: mdi:clock-outline
+    lambda: |-
+      return id(plug4_off_ampm_persist);
+    set_action:
+      - lambda: id(plug4_off_ampm_persist) = x;
+
+  # Plug 5 AM/PM
+  - platform: template
+    id: plug5_on_ampm
+    name: "${plug5_name} On AM/PM"
+    options: ["AM", "PM"]
+    icon: mdi:clock-outline
+    lambda: |-
+      return id(plug5_on_ampm_persist);
+    set_action:
+      - lambda: id(plug5_on_ampm_persist) = x;
+
+  - platform: template
+    id: plug5_off_ampm
+    name: "${plug5_name} Off AM/PM"
+    options: ["AM", "PM"]
+    icon: mdi:clock-outline
+    lambda: |-
+      return id(plug5_off_ampm_persist);
+    set_action:
+      - lambda: id(plug5_off_ampm_persist) = x;
+
+  # Plug 6 AM/PM
+  - platform: template
+    id: plug6_on_ampm
+    name: "${plug6_name} On AM/PM"
+    options: ["AM", "PM"]
+    icon: mdi:clock-outline
+    lambda: |-
+      return id(plug6_on_ampm_persist);
+    set_action:
+      - lambda: id(plug6_on_ampm_persist) = x;
+
+  - platform: template
+    id: plug6_off_ampm
+    name: "${plug6_name} Off AM/PM"
+    options: ["AM", "PM"]
+    icon: mdi:clock-outline
+    lambda: |-
+      return id(plug6_off_ampm_persist);
+    set_action:
+      - lambda: id(plug6_off_ampm_persist) = x;
+
+  # Plug 7 AM/PM
+  - platform: template
+    id: plug7_on_ampm
+    name: "${plug7_name} On AM/PM"
+    options: ["AM", "PM"]
+    icon: mdi:clock-outline
+    lambda: |-
+      return id(plug7_on_ampm_persist);
+    set_action:
+      - lambda: id(plug7_on_ampm_persist) = x;
+
+  - platform: template
+    id: plug7_off_ampm
+    name: "${plug7_name} Off AM/PM"
+    options: ["AM", "PM"]
+    icon: mdi:clock-outline
+    lambda: |-
+      return id(plug7_off_ampm_persist);
+    set_action:
+      - lambda: id(plug7_off_ampm_persist) = x;
+
+  # Plug 8 AM/PM
+  - platform: template
+    id: plug8_on_ampm
+    name: "${plug8_name} On AM/PM"
+    options: ["AM", "PM"]
+    icon: mdi:clock-outline
+    lambda: |-
+      return id(plug8_on_ampm_persist);
+    set_action:
+      - lambda: id(plug8_on_ampm_persist) = x;
+
+  - platform: template
+    id: plug8_off_ampm
+    name: "${plug8_name} Off AM/PM"
+    options: ["AM", "PM"]
+    icon: mdi:clock-outline
+    lambda: |-
+      return id(plug8_off_ampm_persist);
+    set_action:
+      - lambda: id(plug8_off_ampm_persist) = x;
+
+# ============================================
+# INTERVAL - Check Timers Every Minute
+# ============================================
+interval:
+  - interval: 60s
+    then:
+      - lambda: |-
+          auto now = id(sntp_time).now();
+          if (!now.is_valid()) return;
+
+          int current_hour = now.hour;
+          int current_minute = now.minute;
+
+          // Helper function to convert 12-hour to 24-hour
+          auto to_24h = [](int h12, std::string ampm) -> int {
+            if (ampm == "AM") {
+              return (h12 == 12) ? 0 : h12;
+            } else {
+              return (h12 == 12) ? 12 : h12 + 12;
+            }
+          };
+
+          // Plug 1 Schedule Check
+          if (id(plug1_schedule_persist)) {
+            int on_h = to_24h(id(plug1_on_hour_persist), id(plug1_on_ampm_persist));
+            int off_h = to_24h(id(plug1_off_hour_persist), id(plug1_off_ampm_persist));
+
+            if (current_hour == on_h && current_minute == id(plug1_on_minute_persist)) {
+              ESP_LOGI("Timer", "Turning ON ${plug1_name}");
+              id(http_client).get("http://${plug1_ip}/switch/kauf_plug/turn_on").send();
+            }
+            if (current_hour == off_h && current_minute == id(plug1_off_minute_persist)) {
+              ESP_LOGI("Timer", "Turning OFF ${plug1_name}");
+              id(http_client).get("http://${plug1_ip}/switch/kauf_plug/turn_off").send();
+            }
+          }
+
+          // Plug 2 Schedule Check
+          if (id(plug2_schedule_persist)) {
+            int on_h = to_24h(id(plug2_on_hour_persist), id(plug2_on_ampm_persist));
+            int off_h = to_24h(id(plug2_off_hour_persist), id(plug2_off_ampm_persist));
+
+            if (current_hour == on_h && current_minute == id(plug2_on_minute_persist)) {
+              ESP_LOGI("Timer", "Turning ON ${plug2_name}");
+              id(http_client).get("http://${plug2_ip}/switch/kauf_plug/turn_on").send();
+            }
+            if (current_hour == off_h && current_minute == id(plug2_off_minute_persist)) {
+              ESP_LOGI("Timer", "Turning OFF ${plug2_name}");
+              id(http_client).get("http://${plug2_ip}/switch/kauf_plug/turn_off").send();
+            }
+          }
+
+          // Plug 3 Schedule Check
+          if (id(plug3_schedule_persist)) {
+            int on_h = to_24h(id(plug3_on_hour_persist), id(plug3_on_ampm_persist));
+            int off_h = to_24h(id(plug3_off_hour_persist), id(plug3_off_ampm_persist));
+
+            if (current_hour == on_h && current_minute == id(plug3_on_minute_persist)) {
+              ESP_LOGI("Timer", "Turning ON ${plug3_name}");
+              id(http_client).get("http://${plug3_ip}/switch/kauf_plug/turn_on").send();
+            }
+            if (current_hour == off_h && current_minute == id(plug3_off_minute_persist)) {
+              ESP_LOGI("Timer", "Turning OFF ${plug3_name}");
+              id(http_client).get("http://${plug3_ip}/switch/kauf_plug/turn_off").send();
+            }
+          }
+
+          // Plug 4 Schedule Check
+          if (id(plug4_schedule_persist)) {
+            int on_h = to_24h(id(plug4_on_hour_persist), id(plug4_on_ampm_persist));
+            int off_h = to_24h(id(plug4_off_hour_persist), id(plug4_off_ampm_persist));
+
+            if (current_hour == on_h && current_minute == id(plug4_on_minute_persist)) {
+              ESP_LOGI("Timer", "Turning ON ${plug4_name}");
+              id(http_client).get("http://${plug4_ip}/switch/kauf_plug/turn_on").send();
+            }
+            if (current_hour == off_h && current_minute == id(plug4_off_minute_persist)) {
+              ESP_LOGI("Timer", "Turning OFF ${plug4_name}");
+              id(http_client).get("http://${plug4_ip}/switch/kauf_plug/turn_off").send();
+            }
+          }
+
+          // Plug 5 Schedule Check
+          if (id(plug5_schedule_persist)) {
+            int on_h = to_24h(id(plug5_on_hour_persist), id(plug5_on_ampm_persist));
+            int off_h = to_24h(id(plug5_off_hour_persist), id(plug5_off_ampm_persist));
+
+            if (current_hour == on_h && current_minute == id(plug5_on_minute_persist)) {
+              ESP_LOGI("Timer", "Turning ON ${plug5_name}");
+              id(http_client).get("http://${plug5_ip}/switch/kauf_plug/turn_on").send();
+            }
+            if (current_hour == off_h && current_minute == id(plug5_off_minute_persist)) {
+              ESP_LOGI("Timer", "Turning OFF ${plug5_name}");
+              id(http_client).get("http://${plug5_ip}/switch/kauf_plug/turn_off").send();
+            }
+          }
+
+          // Plug 6 Schedule Check
+          if (id(plug6_schedule_persist)) {
+            int on_h = to_24h(id(plug6_on_hour_persist), id(plug6_on_ampm_persist));
+            int off_h = to_24h(id(plug6_off_hour_persist), id(plug6_off_ampm_persist));
+
+            if (current_hour == on_h && current_minute == id(plug6_on_minute_persist)) {
+              ESP_LOGI("Timer", "Turning ON ${plug6_name}");
+              id(http_client).get("http://${plug6_ip}/switch/kauf_plug/turn_on").send();
+            }
+            if (current_hour == off_h && current_minute == id(plug6_off_minute_persist)) {
+              ESP_LOGI("Timer", "Turning OFF ${plug6_name}");
+              id(http_client).get("http://${plug6_ip}/switch/kauf_plug/turn_off").send();
+            }
+          }
+
+          // Plug 7 Schedule Check
+          if (id(plug7_schedule_persist)) {
+            int on_h = to_24h(id(plug7_on_hour_persist), id(plug7_on_ampm_persist));
+            int off_h = to_24h(id(plug7_off_hour_persist), id(plug7_off_ampm_persist));
+
+            if (current_hour == on_h && current_minute == id(plug7_on_minute_persist)) {
+              ESP_LOGI("Timer", "Turning ON ${plug7_name}");
+              id(http_client).get("http://${plug7_ip}/switch/kauf_plug/turn_on").send();
+            }
+            if (current_hour == off_h && current_minute == id(plug7_off_minute_persist)) {
+              ESP_LOGI("Timer", "Turning OFF ${plug7_name}");
+              id(http_client).get("http://${plug7_ip}/switch/kauf_plug/turn_off").send();
+            }
+          }
+
+          // Plug 8 Schedule Check
+          if (id(plug8_schedule_persist)) {
+            int on_h = to_24h(id(plug8_on_hour_persist), id(plug8_on_ampm_persist));
+            int off_h = to_24h(id(plug8_off_hour_persist), id(plug8_off_ampm_persist));
+
+            if (current_hour == on_h && current_minute == id(plug8_on_minute_persist)) {
+              ESP_LOGI("Timer", "Turning ON ${plug8_name}");
+              id(http_client).get("http://${plug8_ip}/switch/kauf_plug/turn_on").send();
+            }
+            if (current_hour == off_h && current_minute == id(plug8_off_minute_persist)) {
+              ESP_LOGI("Timer", "Turning OFF ${plug8_name}");
+              id(http_client).get("http://${plug8_ip}/switch/kauf_plug/turn_off").send();
+            }
+          }
