@@ -1585,10 +1585,6 @@ switch:
     turn_off_action:
       - lambda: id(plug12_schedule_persist) = false;
 
-# ============================================
-# NUMBERS - Timer Hours and Minutes
-# ============================================
-number:
   # Plug 1 Timer Settings
   - platform: template
     id: plug1_on_hour
