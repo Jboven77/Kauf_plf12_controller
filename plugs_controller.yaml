@@ -64,10 +64,9 @@ wifi:
 # Web server for UI at plugs.local
 web_server:
   port: 80
-  version: 3
+  version: 2
   local: true
-  css_url: ""
-  js_url: ""
+  ota: false
 
 # mDNS for plugs.local
 mdns:
