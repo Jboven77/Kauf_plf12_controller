@@ -1018,6 +1018,98 @@ select:
       - lambda: id(plug8_off_ampm_persist) = x;
 
 # ============================================
+# SCRIPTS - HTTP Control for Kauf Plugs
+# ============================================
+script:
+  # Plug 1 Scripts
+  - id: plug1_turn_on
+    then:
+      - http_request.post:
+          url: "http://${plug1_ip}/switch/kauf_plug/turn_on"
+
+  - id: plug1_turn_off
+    then:
+      - http_request.post:
+          url: "http://${plug1_ip}/switch/kauf_plug/turn_off"
+
+  # Plug 2 Scripts
+  - id: plug2_turn_on
+    then:
+      - http_request.post:
+          url: "http://${plug2_ip}/switch/kauf_plug/turn_on"
+
+  - id: plug2_turn_off
+    then:
+      - http_request.post:
+          url: "http://${plug2_ip}/switch/kauf_plug/turn_off"
+
+  # Plug 3 Scripts
+  - id: plug3_turn_on
+    then:
+      - http_request.post:
+          url: "http://${plug3_ip}/switch/kauf_plug/turn_on"
+
+  - id: plug3_turn_off
+    then:
+      - http_request.post:
+          url: "http://${plug3_ip}/switch/kauf_plug/turn_off"
+
+  # Plug 4 Scripts
+  - id: plug4_turn_on
+    then:
+      - http_request.post:
+          url: "http://${plug4_ip}/switch/kauf_plug/turn_on"
+
+  - id: plug4_turn_off
+    then:
+      - http_request.post:
+          url: "http://${plug4_ip}/switch/kauf_plug/turn_off"
+
+  # Plug 5 Scripts
+  - id: plug5_turn_on
+    then:
+      - http_request.post:
+          url: "http://${plug5_ip}/switch/kauf_plug/turn_on"
+
+  - id: plug5_turn_off
+    then:
+      - http_request.post:
+          url: "http://${plug5_ip}/switch/kauf_plug/turn_off"
+
+  # Plug 6 Scripts
+  - id: plug6_turn_on
+    then:
+      - http_request.post:
+          url: "http://${plug6_ip}/switch/kauf_plug/turn_on"
+
+  - id: plug6_turn_off
+    then:
+      - http_request.post:
+          url: "http://${plug6_ip}/switch/kauf_plug/turn_off"
+
+  # Plug 7 Scripts
+  - id: plug7_turn_on
+    then:
+      - http_request.post:
+          url: "http://${plug7_ip}/switch/kauf_plug/turn_on"
+
+  - id: plug7_turn_off
+    then:
+      - http_request.post:
+          url: "http://${plug7_ip}/switch/kauf_plug/turn_off"
+
+  # Plug 8 Scripts
+  - id: plug8_turn_on
+    then:
+      - http_request.post:
+          url: "http://${plug8_ip}/switch/kauf_plug/turn_on"
+
+  - id: plug8_turn_off
+    then:
+      - http_request.post:
+          url: "http://${plug8_ip}/switch/kauf_plug/turn_off"
+
+# ============================================
 # INTERVAL - Check Timers Every Minute
 # ============================================
 interval:
@@ -1046,11 +1138,11 @@ interval:
 
             if (current_hour == on_h && current_minute == id(plug1_on_minute_persist)) {
               ESP_LOGI("Timer", "Turning ON ${plug1_name}");
-              id(http_client).get("http://${plug1_ip}/switch/kauf_plug/turn_on").send();
+              id(plug1_turn_on).execute();
             }
             if (current_hour == off_h && current_minute == id(plug1_off_minute_persist)) {
               ESP_LOGI("Timer", "Turning OFF ${plug1_name}");
-              id(http_client).get("http://${plug1_ip}/switch/kauf_plug/turn_off").send();
+              id(plug1_turn_off).execute();
             }
           }
 
@@ -1061,11 +1153,11 @@ interval:
 
             if (current_hour == on_h && current_minute == id(plug2_on_minute_persist)) {
               ESP_LOGI("Timer", "Turning ON ${plug2_name}");
-              id(http_client).get("http://${plug2_ip}/switch/kauf_plug/turn_on").send();
+              id(plug2_turn_on).execute();
             }
             if (current_hour == off_h && current_minute == id(plug2_off_minute_persist)) {
               ESP_LOGI("Timer", "Turning OFF ${plug2_name}");
-              id(http_client).get("http://${plug2_ip}/switch/kauf_plug/turn_off").send();
+              id(plug2_turn_off).execute();
             }
           }
 
@@ -1076,11 +1168,11 @@ interval:
 
             if (current_hour == on_h && current_minute == id(plug3_on_minute_persist)) {
               ESP_LOGI("Timer", "Turning ON ${plug3_name}");
-              id(http_client).get("http://${plug3_ip}/switch/kauf_plug/turn_on").send();
+              id(plug3_turn_on).execute();
             }
             if (current_hour == off_h && current_minute == id(plug3_off_minute_persist)) {
               ESP_LOGI("Timer", "Turning OFF ${plug3_name}");
-              id(http_client).get("http://${plug3_ip}/switch/kauf_plug/turn_off").send();
+              id(plug3_turn_off).execute();
             }
           }
 
@@ -1091,11 +1183,11 @@ interval:
 
             if (current_hour == on_h && current_minute == id(plug4_on_minute_persist)) {
               ESP_LOGI("Timer", "Turning ON ${plug4_name}");
-              id(http_client).get("http://${plug4_ip}/switch/kauf_plug/turn_on").send();
+              id(plug4_turn_on).execute();
             }
             if (current_hour == off_h && current_minute == id(plug4_off_minute_persist)) {
               ESP_LOGI("Timer", "Turning OFF ${plug4_name}");
-              id(http_client).get("http://${plug4_ip}/switch/kauf_plug/turn_off").send();
+              id(plug4_turn_off).execute();
             }
           }
 
@@ -1106,11 +1198,11 @@ interval:
 
             if (current_hour == on_h && current_minute == id(plug5_on_minute_persist)) {
               ESP_LOGI("Timer", "Turning ON ${plug5_name}");
-              id(http_client).get("http://${plug5_ip}/switch/kauf_plug/turn_on").send();
+              id(plug5_turn_on).execute();
             }
             if (current_hour == off_h && current_minute == id(plug5_off_minute_persist)) {
               ESP_LOGI("Timer", "Turning OFF ${plug5_name}");
-              id(http_client).get("http://${plug5_ip}/switch/kauf_plug/turn_off").send();
+              id(plug5_turn_off).execute();
             }
           }
 
@@ -1121,11 +1213,11 @@ interval:
 
             if (current_hour == on_h && current_minute == id(plug6_on_minute_persist)) {
               ESP_LOGI("Timer", "Turning ON ${plug6_name}");
-              id(http_client).get("http://${plug6_ip}/switch/kauf_plug/turn_on").send();
+              id(plug6_turn_on).execute();
             }
             if (current_hour == off_h && current_minute == id(plug6_off_minute_persist)) {
               ESP_LOGI("Timer", "Turning OFF ${plug6_name}");
-              id(http_client).get("http://${plug6_ip}/switch/kauf_plug/turn_off").send();
+              id(plug6_turn_off).execute();
             }
           }
 
@@ -1136,11 +1228,11 @@ interval:
 
             if (current_hour == on_h && current_minute == id(plug7_on_minute_persist)) {
               ESP_LOGI("Timer", "Turning ON ${plug7_name}");
-              id(http_client).get("http://${plug7_ip}/switch/kauf_plug/turn_on").send();
+              id(plug7_turn_on).execute();
             }
             if (current_hour == off_h && current_minute == id(plug7_off_minute_persist)) {
               ESP_LOGI("Timer", "Turning OFF ${plug7_name}");
-              id(http_client).get("http://${plug7_ip}/switch/kauf_plug/turn_off").send();
+              id(plug7_turn_off).execute();
             }
           }
 
@@ -1151,10 +1243,10 @@ interval:
 
             if (current_hour == on_h && current_minute == id(plug8_on_minute_persist)) {
               ESP_LOGI("Timer", "Turning ON ${plug8_name}");
-              id(http_client).get("http://${plug8_ip}/switch/kauf_plug/turn_on").send();
+              id(plug8_turn_on).execute();
             }
             if (current_hour == off_h && current_minute == id(plug8_off_minute_persist)) {
               ESP_LOGI("Timer", "Turning OFF ${plug8_name}");
-              id(http_client).get("http://${plug8_ip}/switch/kauf_plug/turn_off").send();
+              id(plug8_turn_off).execute();
             }
           }
