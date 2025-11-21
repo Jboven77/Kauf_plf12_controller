@@ -689,6 +689,90 @@ text:
     mode: text
     restore_value: true
 
+  # Plug 9 Configuration
+  - platform: template
+    id: plug9_name
+    name: "Plug 9 Name"
+    optimistic: true
+    min_length: 0
+    max_length: 20
+    initial_value: "PLUG 9"
+    mode: text
+    restore_value: true
+
+  - platform: template
+    id: plug9_ip
+    name: "Plug 9 IP Address"
+    optimistic: true
+    min_length: 0
+    max_length: 15
+    initial_value: ""
+    mode: text
+    restore_value: true
+
+  # Plug 10 Configuration
+  - platform: template
+    id: plug10_name
+    name: "Plug 10 Name"
+    optimistic: true
+    min_length: 0
+    max_length: 20
+    initial_value: "PLUG 10"
+    mode: text
+    restore_value: true
+
+  - platform: template
+    id: plug10_ip
+    name: "Plug 10 IP Address"
+    optimistic: true
+    min_length: 0
+    max_length: 15
+    initial_value: ""
+    mode: text
+    restore_value: true
+
+  # Plug 11 Configuration
+  - platform: template
+    id: plug11_name
+    name: "Plug 11 Name"
+    optimistic: true
+    min_length: 0
+    max_length: 20
+    initial_value: "PLUG 11"
+    mode: text
+    restore_value: true
+
+  - platform: template
+    id: plug11_ip
+    name: "Plug 11 IP Address"
+    optimistic: true
+    min_length: 0
+    max_length: 15
+    initial_value: ""
+    mode: text
+    restore_value: true
+
+  # Plug 12 Configuration
+  - platform: template
+    id: plug12_name
+    name: "Plug 12 Name"
+    optimistic: true
+    min_length: 0
+    max_length: 20
+    initial_value: "PLUG 12"
+    mode: text
+    restore_value: true
+
+  - platform: template
+    id: plug12_ip
+    name: "Plug 12 IP Address"
+    optimistic: true
+    min_length: 0
+    max_length: 15
+    initial_value: ""
+    mode: text
+    restore_value: true
+
 # ============================================
 # GLOBALS - Timer Settings (Persisted to Flash)
 # ============================================
@@ -949,6 +1033,134 @@ globals:
     max_restore_data_length: 4
     initial_value: '"PM"'
 
+  # Plug 9 Timer Settings
+  - id: plug9_schedule_persist
+    type: bool
+    restore_value: yes
+    initial_value: 'false'
+  - id: plug9_on_hour_persist
+    type: int
+    restore_value: yes
+    initial_value: '8'
+  - id: plug9_on_minute_persist
+    type: int
+    restore_value: yes
+    initial_value: '0'
+  - id: plug9_on_ampm_persist
+    type: std::string
+    restore_value: yes
+    max_restore_data_length: 4
+    initial_value: '"AM"'
+  - id: plug9_off_hour_persist
+    type: int
+    restore_value: yes
+    initial_value: '6'
+  - id: plug9_off_minute_persist
+    type: int
+    restore_value: yes
+    initial_value: '0'
+  - id: plug9_off_ampm_persist
+    type: std::string
+    restore_value: yes
+    max_restore_data_length: 4
+    initial_value: '"PM"'
+
+  # Plug 10 Timer Settings
+  - id: plug10_schedule_persist
+    type: bool
+    restore_value: yes
+    initial_value: 'false'
+  - id: plug10_on_hour_persist
+    type: int
+    restore_value: yes
+    initial_value: '8'
+  - id: plug10_on_minute_persist
+    type: int
+    restore_value: yes
+    initial_value: '0'
+  - id: plug10_on_ampm_persist
+    type: std::string
+    restore_value: yes
+    max_restore_data_length: 4
+    initial_value: '"AM"'
+  - id: plug10_off_hour_persist
+    type: int
+    restore_value: yes
+    initial_value: '6'
+  - id: plug10_off_minute_persist
+    type: int
+    restore_value: yes
+    initial_value: '0'
+  - id: plug10_off_ampm_persist
+    type: std::string
+    restore_value: yes
+    max_restore_data_length: 4
+    initial_value: '"PM"'
+
+  # Plug 11 Timer Settings
+  - id: plug11_schedule_persist
+    type: bool
+    restore_value: yes
+    initial_value: 'false'
+  - id: plug11_on_hour_persist
+    type: int
+    restore_value: yes
+    initial_value: '8'
+  - id: plug11_on_minute_persist
+    type: int
+    restore_value: yes
+    initial_value: '0'
+  - id: plug11_on_ampm_persist
+    type: std::string
+    restore_value: yes
+    max_restore_data_length: 4
+    initial_value: '"AM"'
+  - id: plug11_off_hour_persist
+    type: int
+    restore_value: yes
+    initial_value: '6'
+  - id: plug11_off_minute_persist
+    type: int
+    restore_value: yes
+    initial_value: '0'
+  - id: plug11_off_ampm_persist
+    type: std::string
+    restore_value: yes
+    max_restore_data_length: 4
+    initial_value: '"PM"'
+
+  # Plug 12 Timer Settings
+  - id: plug12_schedule_persist
+    type: bool
+    restore_value: yes
+    initial_value: 'false'
+  - id: plug12_on_hour_persist
+    type: int
+    restore_value: yes
+    initial_value: '8'
+  - id: plug12_on_minute_persist
+    type: int
+    restore_value: yes
+    initial_value: '0'
+  - id: plug12_on_ampm_persist
+    type: std::string
+    restore_value: yes
+    max_restore_data_length: 4
+    initial_value: '"AM"'
+  - id: plug12_off_hour_persist
+    type: int
+    restore_value: yes
+    initial_value: '6'
+  - id: plug12_off_minute_persist
+    type: int
+    restore_value: yes
+    initial_value: '0'
+  - id: plug12_off_ampm_persist
+    type: std::string
+    restore_value: yes
+    max_restore_data_length: 4
+    initial_value: '"PM"'
+
 # ============================================
 # BINARY SENSORS - Track Actual Plug States
 # ============================================
@@ -1013,6 +1225,38 @@ binary_sensor:
   - platform: template
     id: plug8_state
     name: "Plug 8 State"
+    device_class: power
+    lambda: |-
+      return false;
+
+  # Plug 9 State
+  - platform: template
+    id: plug9_state
+    name: "Plug 9 State"
+    device_class: power
+    lambda: |-
+      return false;
+
+  # Plug 10 State
+  - platform: template
+    id: plug10_state
+    name: "Plug 10 State"
+    device_class: power
+    lambda: |-
+      return false;
+
+  # Plug 11 State
+  - platform: template
+    id: plug11_state
+    name: "Plug 11 State"
+    device_class: power
+    lambda: |-
+      return false;
+
+  # Plug 12 State
+  - platform: template
+    id: plug12_state
+    name: "Plug 12 State"
     device_class: power
     lambda: |-
       return false;
@@ -1125,6 +1369,58 @@ button:
     on_press:
       - script.execute: plug8_turn_off
 
+  # Plug 9 Controls
+  - platform: template
+    name: "Plug 9 ON"
+    icon: mdi:power-plug
+    on_press:
+      - script.execute: plug9_turn_on
+
+  - platform: template
+    name: "Plug 9 OFF"
+    icon: mdi:power-plug-off
+    on_press:
+      - script.execute: plug9_turn_off
+
+  # Plug 10 Controls
+  - platform: template
+    name: "Plug 10 ON"
+    icon: mdi:power-plug
+    on_press:
+      - script.execute: plug10_turn_on
+
+  - platform: template
+    name: "Plug 10 OFF"
+    icon: mdi:power-plug-off
+    on_press:
+      - script.execute: plug10_turn_off
+
+  # Plug 11 Controls
+  - platform: template
+    name: "Plug 11 ON"
+    icon: mdi:power-plug
+    on_press:
+      - script.execute: plug11_turn_on
+
+  - platform: template
+    name: "Plug 11 OFF"
+    icon: mdi:power-plug-off
+    on_press:
+      - script.execute: plug11_turn_off
+
+  # Plug 12 Controls
+  - platform: template
+    name: "Plug 12 ON"
+    icon: mdi:power-plug
+    on_press:
+      - script.execute: plug12_turn_on
+
+  - platform: template
+    name: "Plug 12 OFF"
+    icon: mdi:power-plug-off
+    on_press:
+      - script.execute: plug12_turn_off
+
 # ============================================
 # SWITCHES - Timer Enable/Disable
 # ============================================
@@ -1224,6 +1520,54 @@ switch:
       - lambda: id(plug8_schedule_persist) = true;
     turn_off_action:
       - lambda: id(plug8_schedule_persist) = false;
+
+  # Plug 9 Timer Enable
+  - platform: template
+    id: plug9_schedule_enabled
+    name: "Plug 9 Timer"
+    icon: mdi:timer
+    lambda: |-
+      return id(plug9_schedule_persist);
+    turn_on_action:
+      - lambda: id(plug9_schedule_persist) = true;
+    turn_off_action:
+      - lambda: id(plug9_schedule_persist) = false;
+
+  # Plug 10 Timer Enable
+  - platform: template
+    id: plug10_schedule_enabled
+    name: "Plug 10 Timer"
+    icon: mdi:timer
+    lambda: |-
+      return id(plug10_schedule_persist);
+    turn_on_action:
+      - lambda: id(plug10_schedule_persist) = true;
+    turn_off_action:
+      - lambda: id(plug10_schedule_persist) = false;
+
+  # Plug 11 Timer Enable
+  - platform: template
+    id: plug11_schedule_enabled
+    name: "Plug 11 Timer"
+    icon: mdi:timer
+    lambda: |-
+      return id(plug11_schedule_persist);
+    turn_on_action:
+      - lambda: id(plug11_schedule_persist) = true;
+    turn_off_action:
+      - lambda: id(plug11_schedule_persist) = false;
+
+  # Plug 12 Timer Enable
+  - platform: template
+    id: plug12_schedule_enabled
+    name: "Plug 12 Timer"
+    icon: mdi:timer
+    lambda: |-
+      return id(plug12_schedule_persist);
+    turn_on_action:
+      - lambda: id(plug12_schedule_persist) = true;
+    turn_off_action:
+      - lambda: id(plug12_schedule_persist) = false;
 
 # ============================================
 # NUMBERS - Timer Hours and Minutes

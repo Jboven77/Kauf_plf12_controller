@@ -1,0 +1,595 @@
+================================================================================
+BINARY SENSORS
+================================================================================
+  # Plug 9 State
+  - platform: template
+    id: plug9_state
+    name: "Plug 9 State"
+    device_class: power
+    lambda: |-
+      return false;  // Updated by HTTP response
+
+  # Plug 10 State
+  - platform: template
+    id: plug10_state
+    name: "Plug 10 State"
+    device_class: power
+    lambda: |-
+      return false;  // Updated by HTTP response
+
+  # Plug 11 State
+  - platform: template
+    id: plug11_state
+    name: "Plug 11 State"
+    device_class: power
+    lambda: |-
+      return false;  // Updated by HTTP response
+
+  # Plug 12 State
+  - platform: template
+    id: plug12_state
+    name: "Plug 12 State"
+    device_class: power
+    lambda: |-
+      return false;  // Updated by HTTP response
+
+
+================================================================================
+SWITCHES
+================================================================================
+  # Plug 9 Schedule
+  - platform: template
+    id: plug9_schedule
+    name: "Plug 9 Schedule"
+    optimistic: true
+    restore_mode: RESTORE_DEFAULT_OFF
+    lambda: |-
+      return id(plug9_schedule_persist);
+    turn_on_action:
+      - lambda: id(plug9_schedule_persist) = true;
+    turn_off_action:
+      - lambda: id(plug9_schedule_persist) = false;
+
+  # Plug 10 Schedule
+  - platform: template
+    id: plug10_schedule
+    name: "Plug 10 Schedule"
+    optimistic: true
+    restore_mode: RESTORE_DEFAULT_OFF
+    lambda: |-
+      return id(plug10_schedule_persist);
+    turn_on_action:
+      - lambda: id(plug10_schedule_persist) = true;
+    turn_off_action:
+      - lambda: id(plug10_schedule_persist) = false;
+
+  # Plug 11 Schedule
+  - platform: template
+    id: plug11_schedule
+    name: "Plug 11 Schedule"
+    optimistic: true
+    restore_mode: RESTORE_DEFAULT_OFF
+    lambda: |-
+      return id(plug11_schedule_persist);
+    turn_on_action:
+      - lambda: id(plug11_schedule_persist) = true;
+    turn_off_action:
+      - lambda: id(plug11_schedule_persist) = false;
+
+  # Plug 12 Schedule
+  - platform: template
+    id: plug12_schedule
+    name: "Plug 12 Schedule"
+    optimistic: true
+    restore_mode: RESTORE_DEFAULT_OFF
+    lambda: |-
+      return id(plug12_schedule_persist);
+    turn_on_action:
+      - lambda: id(plug12_schedule_persist) = true;
+    turn_off_action:
+      - lambda: id(plug12_schedule_persist) = false;
+
+
+================================================================================
+NUMBERS
+================================================================================
+  # Plug 9 Timer Hour/Minute Controls
+  - platform: template
+    id: plug9_on_hour
+    name: "Plug 9 ON Hour"
+    optimistic: true
+    min_value: 1
+    max_value: 12
+    step: 1
+    initial_value: 8
+    lambda: |-
+      return id(plug9_on_hour_persist);
+    set_action:
+      - lambda: id(plug9_on_hour_persist) = x;
+
+  - platform: template
+    id: plug9_on_minute
+    name: "Plug 9 ON Minute"
+    optimistic: true
+    min_value: 0
+    max_value: 59
+    step: 1
+    initial_value: 0
+    lambda: |-
+      return id(plug9_on_minute_persist);
+    set_action:
+      - lambda: id(plug9_on_minute_persist) = x;
+
+  - platform: template
+    id: plug9_off_hour
+    name: "Plug 9 OFF Hour"
+    optimistic: true
+    min_value: 1
+    max_value: 12
+    step: 1
+    initial_value: 6
+    lambda: |-
+      return id(plug9_off_hour_persist);
+    set_action:
+      - lambda: id(plug9_off_hour_persist) = x;
+
+  - platform: template
+    id: plug9_off_minute
+    name: "Plug 9 OFF Minute"
+    optimistic: true
+    min_value: 0
+    max_value: 59
+    step: 1
+    initial_value: 0
+    lambda: |-
+      return id(plug9_off_minute_persist);
+    set_action:
+      - lambda: id(plug9_off_minute_persist) = x;
+
+  # Plug 10 Timer Hour/Minute Controls
+  - platform: template
+    id: plug10_on_hour
+    name: "Plug 10 ON Hour"
+    optimistic: true
+    min_value: 1
+    max_value: 12
+    step: 1
+    initial_value: 8
+    lambda: |-
+      return id(plug10_on_hour_persist);
+    set_action:
+      - lambda: id(plug10_on_hour_persist) = x;
+
+  - platform: template
+    id: plug10_on_minute
+    name: "Plug 10 ON Minute"
+    optimistic: true
+    min_value: 0
+    max_value: 59
+    step: 1
+    initial_value: 0
+    lambda: |-
+      return id(plug10_on_minute_persist);
+    set_action:
+      - lambda: id(plug10_on_minute_persist) = x;
+
+  - platform: template
+    id: plug10_off_hour
+    name: "Plug 10 OFF Hour"
+    optimistic: true
+    min_value: 1
+    max_value: 12
+    step: 1
+    initial_value: 6
+    lambda: |-
+      return id(plug10_off_hour_persist);
+    set_action:
+      - lambda: id(plug10_off_hour_persist) = x;
+
+  - platform: template
+    id: plug10_off_minute
+    name: "Plug 10 OFF Minute"
+    optimistic: true
+    min_value: 0
+    max_value: 59
+    step: 1
+    initial_value: 0
+    lambda: |-
+      return id(plug10_off_minute_persist);
+    set_action:
+      - lambda: id(plug10_off_minute_persist) = x;
+
+  # Plug 11 Timer Hour/Minute Controls
+  - platform: template
+    id: plug11_on_hour
+    name: "Plug 11 ON Hour"
+    optimistic: true
+    min_value: 1
+    max_value: 12
+    step: 1
+    initial_value: 8
+    lambda: |-
+      return id(plug11_on_hour_persist);
+    set_action:
+      - lambda: id(plug11_on_hour_persist) = x;
+
+  - platform: template
+    id: plug11_on_minute
+    name: "Plug 11 ON Minute"
+    optimistic: true
+    min_value: 0
+    max_value: 59
+    step: 1
+    initial_value: 0
+    lambda: |-
+      return id(plug11_on_minute_persist);
+    set_action:
+      - lambda: id(plug11_on_minute_persist) = x;
+
+  - platform: template
+    id: plug11_off_hour
+    name: "Plug 11 OFF Hour"
+    optimistic: true
+    min_value: 1
+    max_value: 12
+    step: 1
+    initial_value: 6
+    lambda: |-
+      return id(plug11_off_hour_persist);
+    set_action:
+      - lambda: id(plug11_off_hour_persist) = x;
+
+  - platform: template
+    id: plug11_off_minute
+    name: "Plug 11 OFF Minute"
+    optimistic: true
+    min_value: 0
+    max_value: 59
+    step: 1
+    initial_value: 0
+    lambda: |-
+      return id(plug11_off_minute_persist);
+    set_action:
+      - lambda: id(plug11_off_minute_persist) = x;
+
+  # Plug 12 Timer Hour/Minute Controls
+  - platform: template
+    id: plug12_on_hour
+    name: "Plug 12 ON Hour"
+    optimistic: true
+    min_value: 1
+    max_value: 12
+    step: 1
+    initial_value: 8
+    lambda: |-
+      return id(plug12_on_hour_persist);
+    set_action:
+      - lambda: id(plug12_on_hour_persist) = x;
+
+  - platform: template
+    id: plug12_on_minute
+    name: "Plug 12 ON Minute"
+    optimistic: true
+    min_value: 0
+    max_value: 59
+    step: 1
+    initial_value: 0
+    lambda: |-
+      return id(plug12_on_minute_persist);
+    set_action:
+      - lambda: id(plug12_on_minute_persist) = x;
+
+  - platform: template
+    id: plug12_off_hour
+    name: "Plug 12 OFF Hour"
+    optimistic: true
+    min_value: 1
+    max_value: 12
+    step: 1
+    initial_value: 6
+    lambda: |-
+      return id(plug12_off_hour_persist);
+    set_action:
+      - lambda: id(plug12_off_hour_persist) = x;
+
+  - platform: template
+    id: plug12_off_minute
+    name: "Plug 12 OFF Minute"
+    optimistic: true
+    min_value: 0
+    max_value: 59
+    step: 1
+    initial_value: 0
+    lambda: |-
+      return id(plug12_off_minute_persist);
+    set_action:
+      - lambda: id(plug12_off_minute_persist) = x;
+
+
+================================================================================
+SELECTS
+================================================================================
+  # Plug 9 AM/PM Selects
+  - platform: template
+    id: plug9_on_ampm
+    name: "Plug 9 ON AM/PM"
+    optimistic: true
+    options:
+      - "AM"
+      - "PM"
+    initial_option: "AM"
+    lambda: |-
+      return id(plug9_on_ampm_persist);
+    set_action:
+      - lambda: id(plug9_on_ampm_persist) = x;
+
+  - platform: template
+    id: plug9_off_ampm
+    name: "Plug 9 OFF AM/PM"
+    optimistic: true
+    options:
+      - "AM"
+      - "PM"
+    initial_option: "PM"
+    lambda: |-
+      return id(plug9_off_ampm_persist);
+    set_action:
+      - lambda: id(plug9_off_ampm_persist) = x;
+
+  # Plug 10 AM/PM Selects
+  - platform: template
+    id: plug10_on_ampm
+    name: "Plug 10 ON AM/PM"
+    optimistic: true
+    options:
+      - "AM"
+      - "PM"
+    initial_option: "AM"
+    lambda: |-
+      return id(plug10_on_ampm_persist);
+    set_action:
+      - lambda: id(plug10_on_ampm_persist) = x;
+
+  - platform: template
+    id: plug10_off_ampm
+    name: "Plug 10 OFF AM/PM"
+    optimistic: true
+    options:
+      - "AM"
+      - "PM"
+    initial_option: "PM"
+    lambda: |-
+      return id(plug10_off_ampm_persist);
+    set_action:
+      - lambda: id(plug10_off_ampm_persist) = x;
+
+  # Plug 11 AM/PM Selects
+  - platform: template
+    id: plug11_on_ampm
+    name: "Plug 11 ON AM/PM"
+    optimistic: true
+    options:
+      - "AM"
+      - "PM"
+    initial_option: "AM"
+    lambda: |-
+      return id(plug11_on_ampm_persist);
+    set_action:
+      - lambda: id(plug11_on_ampm_persist) = x;
+
+  - platform: template
+    id: plug11_off_ampm
+    name: "Plug 11 OFF AM/PM"
+    optimistic: true
+    options:
+      - "AM"
+      - "PM"
+    initial_option: "PM"
+    lambda: |-
+      return id(plug11_off_ampm_persist);
+    set_action:
+      - lambda: id(plug11_off_ampm_persist) = x;
+
+  # Plug 12 AM/PM Selects
+  - platform: template
+    id: plug12_on_ampm
+    name: "Plug 12 ON AM/PM"
+    optimistic: true
+    options:
+      - "AM"
+      - "PM"
+    initial_option: "AM"
+    lambda: |-
+      return id(plug12_on_ampm_persist);
+    set_action:
+      - lambda: id(plug12_on_ampm_persist) = x;
+
+  - platform: template
+    id: plug12_off_ampm
+    name: "Plug 12 OFF AM/PM"
+    optimistic: true
+    options:
+      - "AM"
+      - "PM"
+    initial_option: "PM"
+    lambda: |-
+      return id(plug12_off_ampm_persist);
+    set_action:
+      - lambda: id(plug12_off_ampm_persist) = x;
+
+
+================================================================================
+BUTTONS
+================================================================================
+  # Plug 9 Control Buttons
+  - platform: template
+    name: "Plug 9 Turn On"
+    id: plug9_turn_on
+    on_press:
+      - script.execute: plug9_turn_on
+
+  - platform: template
+    name: "Plug 9 Turn Off"
+    id: plug9_turn_off
+    on_press:
+      - script.execute: plug9_turn_off
+
+  # Plug 10 Control Buttons
+  - platform: template
+    name: "Plug 10 Turn On"
+    id: plug10_turn_on
+    on_press:
+      - script.execute: plug10_turn_on
+
+  - platform: template
+    name: "Plug 10 Turn Off"
+    id: plug10_turn_off
+    on_press:
+      - script.execute: plug10_turn_off
+
+  # Plug 11 Control Buttons
+  - platform: template
+    name: "Plug 11 Turn On"
+    id: plug11_turn_on
+    on_press:
+      - script.execute: plug11_turn_on
+
+  - platform: template
+    name: "Plug 11 Turn Off"
+    id: plug11_turn_off
+    on_press:
+      - script.execute: plug11_turn_off
+
+  # Plug 12 Control Buttons
+  - platform: template
+    name: "Plug 12 Turn On"
+    id: plug12_turn_on
+    on_press:
+      - script.execute: plug12_turn_on
+
+  - platform: template
+    name: "Plug 12 Turn Off"
+    id: plug12_turn_off
+    on_press:
+      - script.execute: plug12_turn_off
+
+
+================================================================================
+SCRIPTS
+================================================================================
+  # Plug 9 Scripts
+  - id: plug9_turn_on
+    then:
+      - http_request.post:
+          url: !lambda |-
+            return std::string("http://") + id(plug9_ip).state + std::string("/switch/kauf_plug/turn_on");
+
+  - id: plug9_turn_off
+    then:
+      - http_request.post:
+          url: !lambda |-
+            return std::string("http://") + id(plug9_ip).state + std::string("/switch/kauf_plug/turn_off");
+
+  # Plug 10 Scripts
+  - id: plug10_turn_on
+    then:
+      - http_request.post:
+          url: !lambda |-
+            return std::string("http://") + id(plug10_ip).state + std::string("/switch/kauf_plug/turn_on");
+
+  - id: plug10_turn_off
+    then:
+      - http_request.post:
+          url: !lambda |-
+            return std::string("http://") + id(plug10_ip).state + std::string("/switch/kauf_plug/turn_off");
+
+  # Plug 11 Scripts
+  - id: plug11_turn_on
+    then:
+      - http_request.post:
+          url: !lambda |-
+            return std::string("http://") + id(plug11_ip).state + std::string("/switch/kauf_plug/turn_on");
+
+  - id: plug11_turn_off
+    then:
+      - http_request.post:
+          url: !lambda |-
+            return std::string("http://") + id(plug11_ip).state + std::string("/switch/kauf_plug/turn_off");
+
+  # Plug 12 Scripts
+  - id: plug12_turn_on
+    then:
+      - http_request.post:
+          url: !lambda |-
+            return std::string("http://") + id(plug12_ip).state + std::string("/switch/kauf_plug/turn_on");
+
+  - id: plug12_turn_off
+    then:
+      - http_request.post:
+          url: !lambda |-
+            return std::string("http://") + id(plug12_ip).state + std::string("/switch/kauf_plug/turn_off");
+
+
+================================================================================
+TIMER CHECKS (add to interval lambda)
+================================================================================
+          // Plug 9 Schedule Check
+          if (id(plug9_schedule_persist)) {
+            int on_h = to_24h(id(plug9_on_hour_persist), id(plug9_on_ampm_persist));
+            int off_h = to_24h(id(plug9_off_hour_persist), id(plug9_off_ampm_persist));
+
+            if (current_hour == on_h && current_minute == id(plug9_on_minute_persist)) {
+              ESP_LOGI("Timer", "Turning ON Plug 9");
+              id(plug9_turn_on).execute();
+            }
+            if (current_hour == off_h && current_minute == id(plug9_off_minute_persist)) {
+              ESP_LOGI("Timer", "Turning OFF Plug 9");
+              id(plug9_turn_off).execute();
+            }
+          }
+
+          // Plug 10 Schedule Check
+          if (id(plug10_schedule_persist)) {
+            int on_h = to_24h(id(plug10_on_hour_persist), id(plug10_on_ampm_persist));
+            int off_h = to_24h(id(plug10_off_hour_persist), id(plug10_off_ampm_persist));
+
+            if (current_hour == on_h && current_minute == id(plug10_on_minute_persist)) {
+              ESP_LOGI("Timer", "Turning ON Plug 10");
+              id(plug10_turn_on).execute();
+            }
+            if (current_hour == off_h && current_minute == id(plug10_off_minute_persist)) {
+              ESP_LOGI("Timer", "Turning OFF Plug 10");
+              id(plug10_turn_off).execute();
+            }
+          }
+
+          // Plug 11 Schedule Check
+          if (id(plug11_schedule_persist)) {
+            int on_h = to_24h(id(plug11_on_hour_persist), id(plug11_on_ampm_persist));
+            int off_h = to_24h(id(plug11_off_hour_persist), id(plug11_off_ampm_persist));
+
+            if (current_hour == on_h && current_minute == id(plug11_on_minute_persist)) {
+              ESP_LOGI("Timer", "Turning ON Plug 11");
+              id(plug11_turn_on).execute();
+            }
+            if (current_hour == off_h && current_minute == id(plug11_off_minute_persist)) {
+              ESP_LOGI("Timer", "Turning OFF Plug 11");
+              id(plug11_turn_off).execute();
+            }
+          }
+
+          // Plug 12 Schedule Check
+          if (id(plug12_schedule_persist)) {
+            int on_h = to_24h(id(plug12_on_hour_persist), id(plug12_on_ampm_persist));
+            int off_h = to_24h(id(plug12_off_hour_persist), id(plug12_off_ampm_persist));
+
+            if (current_hour == on_h && current_minute == id(plug12_on_minute_persist)) {
+              ESP_LOGI("Timer", "Turning ON Plug 12");
+              id(plug12_turn_on).execute();
+            }
+            if (current_hour == off_h && current_minute == id(plug12_off_minute_persist)) {
+              ESP_LOGI("Timer", "Turning OFF Plug 12");
+              id(plug12_turn_off).execute();
+            }
+          }
+
