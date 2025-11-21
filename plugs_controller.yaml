@@ -516,7 +516,7 @@ binary_sensor:
     name: "Plug 1 State"
     device_class: power
     lambda: |-
-      return false;  # Updated by HTTP response
+      return false;  // Updated by HTTP response
 
   # Plug 2 State
   - platform: template
