@@ -291,13 +291,30 @@ custom_component:
               }
               const plugStates = {};
               const timerStates = {};
+              let numPlugsActive = 8;  // Default to 8, will be updated from server
+
               for (let i = 1; i <= 8; i++) {
                   plugStates[i] = { name: `PLUG ${i}`, ip: '', state: false };
                   timerStates[i] = { enabled: false, onHour: 8, onMinute: 0, onAMPM: 'AM', offHour: 6, offMinute: 0, offAMPM: 'PM' };
               }
+              function updateVisiblePlugs() {
+                  // Show/hide plug rows based on numPlugsActive
+                  const plugButtons = ['plug1Btn', 'plug2Btn', 'plug3Btn', 'plug4Btn', 'plug5Btn', 'plug6Btn', 'plug7Btn', 'plug8Btn'];
+                  plugButtons.forEach((id, index) => {
+                      const plugNum = index + 1;
+                      const row = document.getElementById(id).parentElement;
+                      if (plugNum <= numPlugsActive) {
+                          row.style.display = 'flex';
+                      } else {
+                          row.style.display = 'none';
+                      }
+                  });
+              }
+
               function showMainPage() {
                   document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
                   document.getElementById('mainPage').classList.add('active');
+                  updateVisiblePlugs();
               }
               function showTimerPage(plugNum) {
                   document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
@@ -431,7 +448,22 @@ custom_component:
                       console.error('Error fetching timer settings:', error);
                   }
               }
+              async function updateNumPlugs() {
+                  try {
+                      const response = await fetch('/number');
+                      const data = await response.json();
+                      const numPlugsObj = data.find(n => n.id === 'num_plugs');
+                      if (numPlugsObj) {
+                          numPlugsActive = parseInt(numPlugsObj.value);
+                          updateVisiblePlugs();
+                      }
+                  } catch (error) {
+                      console.error('Error fetching number of plugs:', error);
+                  }
+              }
+
               async function init() {
+                  await updateNumPlugs();
                   await updatePlugStates();
                   await updateTimerSettings();
                   for (let i = 1; i <= 8; i++) {
@@ -440,6 +472,7 @@ custom_component:
                   }
                   setInterval(updatePlugStates, 5000);
                   setInterval(updateTimerSettings, 10000);
+                  setInterval(updateNumPlugs, 10000);  // Check for plug count changes
               }
               init();
           </script>
@@ -468,6 +501,21 @@ time:
 # Preferences - immediate flash writes
 preferences:
   flash_write_interval: 0s
+
+# ============================================
+# NUMBER - Configure Number of Plugs
+# ============================================
+number:
+  - platform: template
+    id: num_plugs
+    name: "Number of Plugs"
+    optimistic: true
+    min_value: 1
+    max_value: 8
+    step: 1
+    initial_value: 8
+    restore_value: true
+    mode: box
 
 # ============================================
 # TEXT - Configurable Plug Names and IPs
