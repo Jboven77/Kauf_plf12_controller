@@ -3,26 +3,6 @@ substitutions:
   device_name: "plugs-controller"
   friendly_name: "Kauf Plugs Controller"
 
-  # PLUG IP ADDRESSES
-  plug1_ip: "192.168.68.79"
-  plug2_ip: "192.168.68.77"
-  plug3_ip: "192.168.68.76"
-  plug4_ip: "192.168.68.75"
-  plug5_ip: "192.168.68.203"
-  plug6_ip: "192.168.68.204"
-  plug7_ip: "192.168.68.205"
-  plug8_ip: "192.168.68.206"
-
-  # PLUG NAMES
-  plug1_name: "PLUG 1"
-  plug2_name: "PLUG 2"
-  plug3_name: "PLUG 3"
-  plug4_name: "PLUG 4"
-  plug5_name: "PLUG 5"
-  plug6_name: "PLUG 6"
-  plug7_name: "PLUG 7"
-  plug8_name: "PLUG 8"
-
 esphome:
   name: ${device_name}
   friendly_name: ${friendly_name}
@@ -89,6 +69,178 @@ time:
 # Preferences - immediate flash writes
 preferences:
   flash_write_interval: 0s
+
+# ============================================
+# TEXT - Configurable Plug Names and IPs
+# ============================================
+text:
+  # Plug 1 Configuration
+  - platform: template
+    id: plug1_name
+    name: "Plug 1 Name"
+    optimistic: true
+    min_length: 0
+    max_length: 20
+    initial_value: "PLUG 1"
+    mode: text
+    restore_value: true
+
+  - platform: template
+    id: plug1_ip
+    name: "Plug 1 IP Address"
+    optimistic: true
+    min_length: 0
+    max_length: 15
+    initial_value: "192.168.68.79"
+    mode: text
+    restore_value: true
+
+  # Plug 2 Configuration
+  - platform: template
+    id: plug2_name
+    name: "Plug 2 Name"
+    optimistic: true
+    min_length: 0
+    max_length: 20
+    initial_value: "PLUG 2"
+    mode: text
+    restore_value: true
+
+  - platform: template
+    id: plug2_ip
+    name: "Plug 2 IP Address"
+    optimistic: true
+    min_length: 0
+    max_length: 15
+    initial_value: "192.168.68.77"
+    mode: text
+    restore_value: true
+
+  # Plug 3 Configuration
+  - platform: template
+    id: plug3_name
+    name: "Plug 3 Name"
+    optimistic: true
+    min_length: 0
+    max_length: 20
+    initial_value: "PLUG 3"
+    mode: text
+    restore_value: true
+
+  - platform: template
+    id: plug3_ip
+    name: "Plug 3 IP Address"
+    optimistic: true
+    min_length: 0
+    max_length: 15
+    initial_value: "192.168.68.76"
+    mode: text
+    restore_value: true
+
+  # Plug 4 Configuration
+  - platform: template
+    id: plug4_name
+    name: "Plug 4 Name"
+    optimistic: true
+    min_length: 0
+    max_length: 20
+    initial_value: "PLUG 4"
+    mode: text
+    restore_value: true
+
+  - platform: template
+    id: plug4_ip
+    name: "Plug 4 IP Address"
+    optimistic: true
+    min_length: 0
+    max_length: 15
+    initial_value: "192.168.68.75"
+    mode: text
+    restore_value: true
+
+  # Plug 5 Configuration
+  - platform: template
+    id: plug5_name
+    name: "Plug 5 Name"
+    optimistic: true
+    min_length: 0
+    max_length: 20
+    initial_value: "PLUG 5"
+    mode: text
+    restore_value: true
+
+  - platform: template
+    id: plug5_ip
+    name: "Plug 5 IP Address"
+    optimistic: true
+    min_length: 0
+    max_length: 15
+    initial_value: "192.168.68.203"
+    mode: text
+    restore_value: true
+
+  # Plug 6 Configuration
+  - platform: template
+    id: plug6_name
+    name: "Plug 6 Name"
+    optimistic: true
+    min_length: 0
+    max_length: 20
+    initial_value: "PLUG 6"
+    mode: text
+    restore_value: true
+
+  - platform: template
+    id: plug6_ip
+    name: "Plug 6 IP Address"
+    optimistic: true
+    min_length: 0
+    max_length: 15
+    initial_value: "192.168.68.204"
+    mode: text
+    restore_value: true
+
+  # Plug 7 Configuration
+  - platform: template
+    id: plug7_name
+    name: "Plug 7 Name"
+    optimistic: true
+    min_length: 0
+    max_length: 20
+    initial_value: "PLUG 7"
+    mode: text
+    restore_value: true
+
+  - platform: template
+    id: plug7_ip
+    name: "Plug 7 IP Address"
+    optimistic: true
+    min_length: 0
+    max_length: 15
+    initial_value: "192.168.68.205"
+    mode: text
+    restore_value: true
+
+  # Plug 8 Configuration
+  - platform: template
+    id: plug8_name
+    name: "Plug 8 Name"
+    optimistic: true
+    min_length: 0
+    max_length: 20
+    initial_value: "PLUG 8"
+    mode: text
+    restore_value: true
+
+  - platform: template
+    id: plug8_ip
+    name: "Plug 8 IP Address"
+    optimistic: true
+    min_length: 0
+    max_length: 15
+    initial_value: "192.168.68.206"
+    mode: text
+    restore_value: true
 
 # ============================================
 # GLOBALS - Timer Settings (Persisted to Flash)
@@ -351,109 +503,177 @@ globals:
     initial_value: '"PM"'
 
 # ============================================
+# BINARY SENSORS - Track Actual Plug States
+# ============================================
+binary_sensor:
+  # Plug 1 State
+  - platform: template
+    id: plug1_state
+    name: "Plug 1 State"
+    device_class: power
+    lambda: |-
+      return false;  # Updated by HTTP response
+
+  # Plug 2 State
+  - platform: template
+    id: plug2_state
+    name: "Plug 2 State"
+    device_class: power
+    lambda: |-
+      return false;
+
+  # Plug 3 State
+  - platform: template
+    id: plug3_state
+    name: "Plug 3 State"
+    device_class: power
+    lambda: |-
+      return false;
+
+  # Plug 4 State
+  - platform: template
+    id: plug4_state
+    name: "Plug 4 State"
+    device_class: power
+    lambda: |-
+      return false;
+
+  # Plug 5 State
+  - platform: template
+    id: plug5_state
+    name: "Plug 5 State"
+    device_class: power
+    lambda: |-
+      return false;
+
+  # Plug 6 State
+  - platform: template
+    id: plug6_state
+    name: "Plug 6 State"
+    device_class: power
+    lambda: |-
+      return false;
+
+  # Plug 7 State
+  - platform: template
+    id: plug7_state
+    name: "Plug 7 State"
+    device_class: power
+    lambda: |-
+      return false;
+
+  # Plug 8 State
+  - platform: template
+    id: plug8_state
+    name: "Plug 8 State"
+    device_class: power
+    lambda: |-
+      return false;
+
+# ============================================
 # BUTTONS - Direct Plug Control
 # ============================================
 button:
   # Plug 1 Controls
   - platform: template
-    name: "${plug1_name} ON"
+    name: "Plug 1 ON"
     icon: mdi:power-plug
     on_press:
       - script.execute: plug1_turn_on
 
   - platform: template
-    name: "${plug1_name} OFF"
+    name: "Plug 1 OFF"
     icon: mdi:power-plug-off
     on_press:
       - script.execute: plug1_turn_off
 
   # Plug 2 Controls
   - platform: template
-    name: "${plug2_name} ON"
+    name: "Plug 2 ON"
     icon: mdi:power-plug
     on_press:
       - script.execute: plug2_turn_on
 
   - platform: template
-    name: "${plug2_name} OFF"
+    name: "Plug 2 OFF"
     icon: mdi:power-plug-off
     on_press:
       - script.execute: plug2_turn_off
 
   # Plug 3 Controls
   - platform: template
-    name: "${plug3_name} ON"
+    name: "Plug 3 ON"
     icon: mdi:power-plug
     on_press:
       - script.execute: plug3_turn_on
 
   - platform: template
-    name: "${plug3_name} OFF"
+    name: "Plug 3 OFF"
     icon: mdi:power-plug-off
     on_press:
       - script.execute: plug3_turn_off
 
   # Plug 4 Controls
   - platform: template
-    name: "${plug4_name} ON"
+    name: "Plug 4 ON"
     icon: mdi:power-plug
     on_press:
       - script.execute: plug4_turn_on
 
   - platform: template
-    name: "${plug4_name} OFF"
+    name: "Plug 4 OFF"
     icon: mdi:power-plug-off
     on_press:
       - script.execute: plug4_turn_off
 
   # Plug 5 Controls
   - platform: template
-    name: "${plug5_name} ON"
+    name: "Plug 5 ON"
     icon: mdi:power-plug
     on_press:
       - script.execute: plug5_turn_on
 
   - platform: template
-    name: "${plug5_name} OFF"
+    name: "Plug 5 OFF"
     icon: mdi:power-plug-off
     on_press:
       - script.execute: plug5_turn_off
 
   # Plug 6 Controls
   - platform: template
-    name: "${plug6_name} ON"
+    name: "Plug 6 ON"
     icon: mdi:power-plug
     on_press:
       - script.execute: plug6_turn_on
 
   - platform: template
-    name: "${plug6_name} OFF"
+    name: "Plug 6 OFF"
     icon: mdi:power-plug-off
     on_press:
       - script.execute: plug6_turn_off
 
   # Plug 7 Controls
   - platform: template
-    name: "${plug7_name} ON"
+    name: "Plug 7 ON"
     icon: mdi:power-plug
     on_press:
       - script.execute: plug7_turn_on
 
   - platform: template
-    name: "${plug7_name} OFF"
+    name: "Plug 7 OFF"
     icon: mdi:power-plug-off
     on_press:
       - script.execute: plug7_turn_off
 
   # Plug 8 Controls
   - platform: template
-    name: "${plug8_name} ON"
+    name: "Plug 8 ON"
     icon: mdi:power-plug
     on_press:
       - script.execute: plug8_turn_on
 
   - platform: template
-    name: "${plug8_name} OFF"
+    name: "Plug 8 OFF"
     icon: mdi:power-plug-off
     on_press:
       - script.execute: plug8_turn_off
@@ -465,7 +685,7 @@ switch:
   # Plug 1 Timer Enable
   - platform: template
     id: plug1_schedule_enabled
-    name: "${plug1_name} Timer"
+    name: "Plug 1 Timer"
     icon: mdi:timer
     lambda: |-
       return id(plug1_schedule_persist);
@@ -477,7 +697,7 @@ switch:
   # Plug 2 Timer Enable
   - platform: template
     id: plug2_schedule_enabled
-    name: "${plug2_name} Timer"
+    name: "Plug 2 Timer"
     icon: mdi:timer
     lambda: |-
       return id(plug2_schedule_persist);
@@ -489,7 +709,7 @@ switch:
   # Plug 3 Timer Enable
   - platform: template
     id: plug3_schedule_enabled
-    name: "${plug3_name} Timer"
+    name: "Plug 3 Timer"
     icon: mdi:timer
     lambda: |-
       return id(plug3_schedule_persist);
@@ -501,7 +721,7 @@ switch:
   # Plug 4 Timer Enable
   - platform: template
     id: plug4_schedule_enabled
-    name: "${plug4_name} Timer"
+    name: "Plug 4 Timer"
     icon: mdi:timer
     lambda: |-
       return id(plug4_schedule_persist);
@@ -513,7 +733,7 @@ switch:
   # Plug 5 Timer Enable
   - platform: template
     id: plug5_schedule_enabled
-    name: "${plug5_name} Timer"
+    name: "Plug 5 Timer"
     icon: mdi:timer
     lambda: |-
       return id(plug5_schedule_persist);
@@ -525,7 +745,7 @@ switch:
   # Plug 6 Timer Enable
   - platform: template
     id: plug6_schedule_enabled
-    name: "${plug6_name} Timer"
+    name: "Plug 6 Timer"
     icon: mdi:timer
     lambda: |-
       return id(plug6_schedule_persist);
@@ -537,7 +757,7 @@ switch:
   # Plug 7 Timer Enable
   - platform: template
     id: plug7_schedule_enabled
-    name: "${plug7_name} Timer"
+    name: "Plug 7 Timer"
     icon: mdi:timer
     lambda: |-
       return id(plug7_schedule_persist);
@@ -549,7 +769,7 @@ switch:
   # Plug 8 Timer Enable
   - platform: template
     id: plug8_schedule_enabled
-    name: "${plug8_name} Timer"
+    name: "Plug 8 Timer"
     icon: mdi:timer
     lambda: |-
       return id(plug8_schedule_persist);
@@ -565,7 +785,7 @@ number:
   # Plug 1 Timer Settings
   - platform: template
     id: plug1_on_hour
-    name: "${plug1_name} On Hour"
+    name: "Plug 1 On Hour"
     min_value: 1
     max_value: 12
     step: 1
@@ -577,7 +797,7 @@ number:
 
   - platform: template
     id: plug1_on_minute
-    name: "${plug1_name} On Minute"
+    name: "Plug 1 On Minute"
     min_value: 0
     max_value: 59
     step: 1
@@ -589,7 +809,7 @@ number:
 
   - platform: template
     id: plug1_off_hour
-    name: "${plug1_name} Off Hour"
+    name: "Plug 1 Off Hour"
     min_value: 1
     max_value: 12
     step: 1
@@ -601,7 +821,7 @@ number:
 
   - platform: template
     id: plug1_off_minute
-    name: "${plug1_name} Off Minute"
+    name: "Plug 1 Off Minute"
     min_value: 0
     max_value: 59
     step: 1
@@ -614,7 +834,7 @@ number:
   # Plug 2 Timer Settings
   - platform: template
     id: plug2_on_hour
-    name: "${plug2_name} On Hour"
+    name: "Plug 2 On Hour"
     min_value: 1
     max_value: 12
     step: 1
@@ -626,7 +846,7 @@ number:
 
   - platform: template
     id: plug2_on_minute
-    name: "${plug2_name} On Minute"
+    name: "Plug 2 On Minute"
     min_value: 0
     max_value: 59
     step: 1
@@ -638,7 +858,7 @@ number:
 
   - platform: template
     id: plug2_off_hour
-    name: "${plug2_name} Off Hour"
+    name: "Plug 2 Off Hour"
     min_value: 1
     max_value: 12
     step: 1
@@ -650,7 +870,7 @@ number:
 
   - platform: template
     id: plug2_off_minute
-    name: "${plug2_name} Off Minute"
+    name: "Plug 2 Off Minute"
     min_value: 0
     max_value: 59
     step: 1
@@ -663,7 +883,7 @@ number:
   # Plug 3 Timer Settings
   - platform: template
     id: plug3_on_hour
-    name: "${plug3_name} On Hour"
+    name: "Plug 3 On Hour"
     min_value: 1
     max_value: 12
     step: 1
@@ -675,7 +895,7 @@ number:
 
   - platform: template
     id: plug3_on_minute
-    name: "${plug3_name} On Minute"
+    name: "Plug 3 On Minute"
     min_value: 0
     max_value: 59
     step: 1
@@ -687,7 +907,7 @@ number:
 
   - platform: template
     id: plug3_off_hour
-    name: "${plug3_name} Off Hour"
+    name: "Plug 3 Off Hour"
     min_value: 1
     max_value: 12
     step: 1
@@ -699,7 +919,7 @@ number:
 
   - platform: template
     id: plug3_off_minute
-    name: "${plug3_name} Off Minute"
+    name: "Plug 3 Off Minute"
     min_value: 0
     max_value: 59
     step: 1
@@ -712,7 +932,7 @@ number:
   # Plug 4 Timer Settings
   - platform: template
     id: plug4_on_hour
-    name: "${plug4_name} On Hour"
+    name: "Plug 4 On Hour"
     min_value: 1
     max_value: 12
     step: 1
@@ -724,7 +944,7 @@ number:
 
   - platform: template
     id: plug4_on_minute
-    name: "${plug4_name} On Minute"
+    name: "Plug 4 On Minute"
     min_value: 0
     max_value: 59
     step: 1
@@ -736,7 +956,7 @@ number:
 
   - platform: template
     id: plug4_off_hour
-    name: "${plug4_name} Off Hour"
+    name: "Plug 4 Off Hour"
     min_value: 1
     max_value: 12
     step: 1
@@ -748,7 +968,7 @@ number:
 
   - platform: template
     id: plug4_off_minute
-    name: "${plug4_name} Off Minute"
+    name: "Plug 4 Off Minute"
     min_value: 0
     max_value: 59
     step: 1
@@ -761,7 +981,7 @@ number:
   # Plug 5 Timer Settings
   - platform: template
     id: plug5_on_hour
-    name: "${plug5_name} On Hour"
+    name: "Plug 5 On Hour"
     min_value: 1
     max_value: 12
     step: 1
@@ -773,7 +993,7 @@ number:
 
   - platform: template
     id: plug5_on_minute
-    name: "${plug5_name} On Minute"
+    name: "Plug 5 On Minute"
     min_value: 0
     max_value: 59
     step: 1
@@ -785,7 +1005,7 @@ number:
 
   - platform: template
     id: plug5_off_hour
-    name: "${plug5_name} Off Hour"
+    name: "Plug 5 Off Hour"
     min_value: 1
     max_value: 12
     step: 1
@@ -797,7 +1017,7 @@ number:
 
   - platform: template
     id: plug5_off_minute
-    name: "${plug5_name} Off Minute"
+    name: "Plug 5 Off Minute"
     min_value: 0
     max_value: 59
     step: 1
@@ -810,7 +1030,7 @@ number:
   # Plug 6 Timer Settings
   - platform: template
     id: plug6_on_hour
-    name: "${plug6_name} On Hour"
+    name: "Plug 6 On Hour"
     min_value: 1
     max_value: 12
     step: 1
@@ -822,7 +1042,7 @@ number:
 
   - platform: template
     id: plug6_on_minute
-    name: "${plug6_name} On Minute"
+    name: "Plug 6 On Minute"
     min_value: 0
     max_value: 59
     step: 1
@@ -834,7 +1054,7 @@ number:
 
   - platform: template
     id: plug6_off_hour
-    name: "${plug6_name} Off Hour"
+    name: "Plug 6 Off Hour"
     min_value: 1
     max_value: 12
     step: 1
@@ -846,7 +1066,7 @@ number:
 
   - platform: template
     id: plug6_off_minute
-    name: "${plug6_name} Off Minute"
+    name: "Plug 6 Off Minute"
     min_value: 0
     max_value: 59
     step: 1
@@ -859,7 +1079,7 @@ number:
   # Plug 7 Timer Settings
   - platform: template
     id: plug7_on_hour
-    name: "${plug7_name} On Hour"
+    name: "Plug 7 On Hour"
     min_value: 1
     max_value: 12
     step: 1
@@ -871,7 +1091,7 @@ number:
 
   - platform: template
     id: plug7_on_minute
-    name: "${plug7_name} On Minute"
+    name: "Plug 7 On Minute"
     min_value: 0
     max_value: 59
     step: 1
@@ -883,7 +1103,7 @@ number:
 
   - platform: template
     id: plug7_off_hour
-    name: "${plug7_name} Off Hour"
+    name: "Plug 7 Off Hour"
     min_value: 1
     max_value: 12
     step: 1
@@ -895,7 +1115,7 @@ number:
 
   - platform: template
     id: plug7_off_minute
-    name: "${plug7_name} Off Minute"
+    name: "Plug 7 Off Minute"
     min_value: 0
     max_value: 59
     step: 1
@@ -908,7 +1128,7 @@ number:
   # Plug 8 Timer Settings
   - platform: template
     id: plug8_on_hour
-    name: "${plug8_name} On Hour"
+    name: "Plug 8 On Hour"
     min_value: 1
     max_value: 12
     step: 1
@@ -920,7 +1140,7 @@ number:
 
   - platform: template
     id: plug8_on_minute
-    name: "${plug8_name} On Minute"
+    name: "Plug 8 On Minute"
     min_value: 0
     max_value: 59
     step: 1
@@ -932,7 +1152,7 @@ number:
 
   - platform: template
     id: plug8_off_hour
-    name: "${plug8_name} Off Hour"
+    name: "Plug 8 Off Hour"
     min_value: 1
     max_value: 12
     step: 1
@@ -944,7 +1164,7 @@ number:
 
   - platform: template
     id: plug8_off_minute
-    name: "${plug8_name} Off Minute"
+    name: "Plug 8 Off Minute"
     min_value: 0
     max_value: 59
     step: 1
@@ -961,7 +1181,7 @@ select:
   # Plug 1 AM/PM
   - platform: template
     id: plug1_on_ampm
-    name: "${plug1_name} On AM/PM"
+    name: "Plug 1 On AM/PM"
     options: ["AM", "PM"]
     icon: mdi:clock-outline
     lambda: |-
@@ -971,7 +1191,7 @@ select:
 
   - platform: template
     id: plug1_off_ampm
-    name: "${plug1_name} Off AM/PM"
+    name: "Plug 1 Off AM/PM"
     options: ["AM", "PM"]
     icon: mdi:clock-outline
     lambda: |-
@@ -982,7 +1202,7 @@ select:
   # Plug 2 AM/PM
   - platform: template
     id: plug2_on_ampm
-    name: "${plug2_name} On AM/PM"
+    name: "Plug 2 On AM/PM"
     options: ["AM", "PM"]
     icon: mdi:clock-outline
     lambda: |-
@@ -992,7 +1212,7 @@ select:
 
   - platform: template
     id: plug2_off_ampm
-    name: "${plug2_name} Off AM/PM"
+    name: "Plug 2 Off AM/PM"
     options: ["AM", "PM"]
     icon: mdi:clock-outline
     lambda: |-
@@ -1003,7 +1223,7 @@ select:
   # Plug 3 AM/PM
   - platform: template
     id: plug3_on_ampm
-    name: "${plug3_name} On AM/PM"
+    name: "Plug 3 On AM/PM"
     options: ["AM", "PM"]
     icon: mdi:clock-outline
     lambda: |-
@@ -1013,7 +1233,7 @@ select:
 
   - platform: template
     id: plug3_off_ampm
-    name: "${plug3_name} Off AM/PM"
+    name: "Plug 3 Off AM/PM"
     options: ["AM", "PM"]
     icon: mdi:clock-outline
     lambda: |-
@@ -1024,7 +1244,7 @@ select:
   # Plug 4 AM/PM
   - platform: template
     id: plug4_on_ampm
-    name: "${plug4_name} On AM/PM"
+    name: "Plug 4 On AM/PM"
     options: ["AM", "PM"]
     icon: mdi:clock-outline
     lambda: |-
@@ -1034,7 +1254,7 @@ select:
 
   - platform: template
     id: plug4_off_ampm
-    name: "${plug4_name} Off AM/PM"
+    name: "Plug 4 Off AM/PM"
     options: ["AM", "PM"]
     icon: mdi:clock-outline
     lambda: |-
@@ -1045,7 +1265,7 @@ select:
   # Plug 5 AM/PM
   - platform: template
     id: plug5_on_ampm
-    name: "${plug5_name} On AM/PM"
+    name: "Plug 5 On AM/PM"
     options: ["AM", "PM"]
     icon: mdi:clock-outline
     lambda: |-
@@ -1055,7 +1275,7 @@ select:
 
   - platform: template
     id: plug5_off_ampm
-    name: "${plug5_name} Off AM/PM"
+    name: "Plug 5 Off AM/PM"
     options: ["AM", "PM"]
     icon: mdi:clock-outline
     lambda: |-
@@ -1066,7 +1286,7 @@ select:
   # Plug 6 AM/PM
   - platform: template
     id: plug6_on_ampm
-    name: "${plug6_name} On AM/PM"
+    name: "Plug 6 On AM/PM"
     options: ["AM", "PM"]
     icon: mdi:clock-outline
     lambda: |-
@@ -1076,7 +1296,7 @@ select:
 
   - platform: template
     id: plug6_off_ampm
-    name: "${plug6_name} Off AM/PM"
+    name: "Plug 6 Off AM/PM"
     options: ["AM", "PM"]
     icon: mdi:clock-outline
     lambda: |-
@@ -1087,7 +1307,7 @@ select:
   # Plug 7 AM/PM
   - platform: template
     id: plug7_on_ampm
-    name: "${plug7_name} On AM/PM"
+    name: "Plug 7 On AM/PM"
     options: ["AM", "PM"]
     icon: mdi:clock-outline
     lambda: |-
@@ -1097,7 +1317,7 @@ select:
 
   - platform: template
     id: plug7_off_ampm
-    name: "${plug7_name} Off AM/PM"
+    name: "Plug 7 Off AM/PM"
     options: ["AM", "PM"]
     icon: mdi:clock-outline
     lambda: |-
@@ -1108,7 +1328,7 @@ select:
   # Plug 8 AM/PM
   - platform: template
     id: plug8_on_ampm
-    name: "${plug8_name} On AM/PM"
+    name: "Plug 8 On AM/PM"
     options: ["AM", "PM"]
     icon: mdi:clock-outline
     lambda: |-
@@ -1118,7 +1338,7 @@ select:
 
   - platform: template
     id: plug8_off_ampm
-    name: "${plug8_name} Off AM/PM"
+    name: "Plug 8 Off AM/PM"
     options: ["AM", "PM"]
     icon: mdi:clock-outline
     lambda: |-
@@ -1127,96 +1347,112 @@ select:
       - lambda: id(plug8_off_ampm_persist) = x;
 
 # ============================================
-# SCRIPTS - HTTP Control for Kauf Plugs
+# SCRIPTS - HTTP Control for Kauf Plugs (Dynamic IPs)
 # ============================================
 script:
   # Plug 1 Scripts
   - id: plug1_turn_on
     then:
       - http_request.post:
-          url: "http://${plug1_ip}/switch/kauf_plug/turn_on"
+          url: !lambda |-
+            return std::string("http://") + id(plug1_ip).state + std::string("/switch/kauf_plug/turn_on");
 
   - id: plug1_turn_off
     then:
       - http_request.post:
-          url: "http://${plug1_ip}/switch/kauf_plug/turn_off"
+          url: !lambda |-
+            return std::string("http://") + id(plug1_ip).state + std::string("/switch/kauf_plug/turn_off");
 
   # Plug 2 Scripts
   - id: plug2_turn_on
     then:
       - http_request.post:
-          url: "http://${plug2_ip}/switch/kauf_plug/turn_on"
+          url: !lambda |-
+            return std::string("http://") + id(plug2_ip).state + std::string("/switch/kauf_plug/turn_on");
 
   - id: plug2_turn_off
     then:
       - http_request.post:
-          url: "http://${plug2_ip}/switch/kauf_plug/turn_off"
+          url: !lambda |-
+            return std::string("http://") + id(plug2_ip).state + std::string("/switch/kauf_plug/turn_off");
 
   # Plug 3 Scripts
   - id: plug3_turn_on
     then:
       - http_request.post:
-          url: "http://${plug3_ip}/switch/kauf_plug/turn_on"
+          url: !lambda |-
+            return std::string("http://") + id(plug3_ip).state + std::string("/switch/kauf_plug/turn_on");
 
   - id: plug3_turn_off
     then:
       - http_request.post:
-          url: "http://${plug3_ip}/switch/kauf_plug/turn_off"
+          url: !lambda |-
+            return std::string("http://") + id(plug3_ip).state + std::string("/switch/kauf_plug/turn_off");
 
   # Plug 4 Scripts
   - id: plug4_turn_on
     then:
       - http_request.post:
-          url: "http://${plug4_ip}/switch/kauf_plug/turn_on"
+          url: !lambda |-
+            return std::string("http://") + id(plug4_ip).state + std::string("/switch/kauf_plug/turn_on");
 
   - id: plug4_turn_off
     then:
       - http_request.post:
-          url: "http://${plug4_ip}/switch/kauf_plug/turn_off"
+          url: !lambda |-
+            return std::string("http://") + id(plug4_ip).state + std::string("/switch/kauf_plug/turn_off");
 
   # Plug 5 Scripts
   - id: plug5_turn_on
     then:
       - http_request.post:
-          url: "http://${plug5_ip}/switch/kauf_plug/turn_on"
+          url: !lambda |-
+            return std::string("http://") + id(plug5_ip).state + std::string("/switch/kauf_plug/turn_on");
 
   - id: plug5_turn_off
     then:
       - http_request.post:
-          url: "http://${plug5_ip}/switch/kauf_plug/turn_off"
+          url: !lambda |-
+            return std::string("http://") + id(plug5_ip).state + std::string("/switch/kauf_plug/turn_off");
 
   # Plug 6 Scripts
   - id: plug6_turn_on
     then:
       - http_request.post:
-          url: "http://${plug6_ip}/switch/kauf_plug/turn_on"
+          url: !lambda |-
+            return std::string("http://") + id(plug6_ip).state + std::string("/switch/kauf_plug/turn_on");
 
   - id: plug6_turn_off
     then:
       - http_request.post:
-          url: "http://${plug6_ip}/switch/kauf_plug/turn_off"
+          url: !lambda |-
+            return std::string("http://") + id(plug6_ip).state + std::string("/switch/kauf_plug/turn_off");
 
   # Plug 7 Scripts
   - id: plug7_turn_on
     then:
       - http_request.post:
-          url: "http://${plug7_ip}/switch/kauf_plug/turn_on"
+          url: !lambda |-
+            return std::string("http://") + id(plug7_ip).state + std::string("/switch/kauf_plug/turn_on");
 
   - id: plug7_turn_off
     then:
       - http_request.post:
-          url: "http://${plug7_ip}/switch/kauf_plug/turn_off"
+          url: !lambda |-
+            return std::string("http://") + id(plug7_ip).state + std::string("/switch/kauf_plug/turn_off");
 
   # Plug 8 Scripts
   - id: plug8_turn_on
     then:
       - http_request.post:
-          url: "http://${plug8_ip}/switch/kauf_plug/turn_on"
+          url: !lambda |-
+            return std::string("http://") + id(plug8_ip).state + std::string("/switch/kauf_plug/turn_on");
 
   - id: plug8_turn_off
     then:
       - http_request.post:
-          url: "http://${plug8_ip}/switch/kauf_plug/turn_off"
+          url: !lambda |-
+            return std::string("http://") + id(plug8_ip).state + std::string("/switch/kauf_plug/turn_off");
 
 # ============================================
 # INTERVAL - Check Timers Every Minute
@@ -1246,11 +1482,11 @@ interval:
             int off_h = to_24h(id(plug1_off_hour_persist), id(plug1_off_ampm_persist));
 
             if (current_hour == on_h && current_minute == id(plug1_on_minute_persist)) {
-              ESP_LOGI("Timer", "Turning ON ${plug1_name}");
+              ESP_LOGI("Timer", "Turning ON Plug 1");
               id(plug1_turn_on).execute();
             }
             if (current_hour == off_h && current_minute == id(plug1_off_minute_persist)) {
-              ESP_LOGI("Timer", "Turning OFF ${plug1_name}");
+              ESP_LOGI("Timer", "Turning OFF Plug 1");
               id(plug1_turn_off).execute();
             }
           }
@@ -1261,11 +1497,11 @@ interval:
             int off_h = to_24h(id(plug2_off_hour_persist), id(plug2_off_ampm_persist));
 
             if (current_hour == on_h && current_minute == id(plug2_on_minute_persist)) {
-              ESP_LOGI("Timer", "Turning ON ${plug2_name}");
+              ESP_LOGI("Timer", "Turning ON Plug 2");
               id(plug2_turn_on).execute();
             }
             if (current_hour == off_h && current_minute == id(plug2_off_minute_persist)) {
-              ESP_LOGI("Timer", "Turning OFF ${plug2_name}");
+              ESP_LOGI("Timer", "Turning OFF Plug 2");
               id(plug2_turn_off).execute();
             }
           }
@@ -1276,11 +1512,11 @@ interval:
             int off_h = to_24h(id(plug3_off_hour_persist), id(plug3_off_ampm_persist));
 
             if (current_hour == on_h && current_minute == id(plug3_on_minute_persist)) {
-              ESP_LOGI("Timer", "Turning ON ${plug3_name}");
+              ESP_LOGI("Timer", "Turning ON Plug 3");
               id(plug3_turn_on).execute();
             }
             if (current_hour == off_h && current_minute == id(plug3_off_minute_persist)) {
-              ESP_LOGI("Timer", "Turning OFF ${plug3_name}");
+              ESP_LOGI("Timer", "Turning OFF Plug 3");
               id(plug3_turn_off).execute();
             }
           }
@@ -1291,11 +1527,11 @@ interval:
             int off_h = to_24h(id(plug4_off_hour_persist), id(plug4_off_ampm_persist));
 
             if (current_hour == on_h && current_minute == id(plug4_on_minute_persist)) {
-              ESP_LOGI("Timer", "Turning ON ${plug4_name}");
+              ESP_LOGI("Timer", "Turning ON Plug 4");
               id(plug4_turn_on).execute();
             }
             if (current_hour == off_h && current_minute == id(plug4_off_minute_persist)) {
-              ESP_LOGI("Timer", "Turning OFF ${plug4_name}");
+              ESP_LOGI("Timer", "Turning OFF Plug 4");
               id(plug4_turn_off).execute();
             }
           }
@@ -1306,11 +1542,11 @@ interval:
             int off_h = to_24h(id(plug5_off_hour_persist), id(plug5_off_ampm_persist));
 
             if (current_hour == on_h && current_minute == id(plug5_on_minute_persist)) {
-              ESP_LOGI("Timer", "Turning ON ${plug5_name}");
+              ESP_LOGI("Timer", "Turning ON Plug 5");
               id(plug5_turn_on).execute();
             }
             if (current_hour == off_h && current_minute == id(plug5_off_minute_persist)) {
-              ESP_LOGI("Timer", "Turning OFF ${plug5_name}");
+              ESP_LOGI("Timer", "Turning OFF Plug 5");
               id(plug5_turn_off).execute();
             }
           }
@@ -1321,11 +1557,11 @@ interval:
             int off_h = to_24h(id(plug6_off_hour_persist), id(plug6_off_ampm_persist));
 
             if (current_hour == on_h && current_minute == id(plug6_on_minute_persist)) {
-              ESP_LOGI("Timer", "Turning ON ${plug6_name}");
+              ESP_LOGI("Timer", "Turning ON Plug 6");
               id(plug6_turn_on).execute();
             }
             if (current_hour == off_h && current_minute == id(plug6_off_minute_persist)) {
-              ESP_LOGI("Timer", "Turning OFF ${plug6_name}");
+              ESP_LOGI("Timer", "Turning OFF Plug 6");
               id(plug6_turn_off).execute();
             }
           }
@@ -1336,11 +1572,11 @@ interval:
             int off_h = to_24h(id(plug7_off_hour_persist), id(plug7_off_ampm_persist));
 
             if (current_hour == on_h && current_minute == id(plug7_on_minute_persist)) {
-              ESP_LOGI("Timer", "Turning ON ${plug7_name}");
+              ESP_LOGI("Timer", "Turning ON Plug 7");
               id(plug7_turn_on).execute();
             }
             if (current_hour == off_h && current_minute == id(plug7_off_minute_persist)) {
-              ESP_LOGI("Timer", "Turning OFF ${plug7_name}");
+              ESP_LOGI("Timer", "Turning OFF Plug 7");
               id(plug7_turn_off).execute();
             }
           }
@@ -1351,11 +1587,11 @@ interval:
             int off_h = to_24h(id(plug8_off_hour_persist), id(plug8_off_ampm_persist));
 
             if (current_hour == on_h && current_minute == id(plug8_on_minute_persist)) {
-              ESP_LOGI("Timer", "Turning ON ${plug8_name}");
+              ESP_LOGI("Timer", "Turning ON Plug 8");
               id(plug8_turn_on).execute();
             }
             if (current_hour == off_h && current_minute == id(plug8_off_minute_persist)) {
-              ESP_LOGI("Timer", "Turning OFF ${plug8_name}");
+              ESP_LOGI("Timer", "Turning OFF Plug 8");
               id(plug8_turn_off).execute();
             }
           }
