@@ -6,6 +6,8 @@ substitutions:
 esphome:
   name: ${device_name}
   friendly_name: ${friendly_name}
+  includes:
+    - waveshare_ui.h
   platformio_options:
     board_build.flash_size: 8MB
     board_build.flash_mode: dio
@@ -57,6 +59,22 @@ mdns:
 
 # Captive portal
 captive_portal:
+
+# Web server base
+web_server_base:
+  id: web_server_base_id
+
+# Custom component for Waveshare UI
+custom_component:
+  - lambda: |-
+      auto *web_server = (AsyncWebServer*) id(web_server_base_id).get_server();
+
+      // Serve custom Waveshare UI at root
+      web_server->on("/", HTTP_GET, [](AsyncWebServerRequest *request){
+        request->send(200, "text/html", WAVESHARE_UI_HTML);
+      });
+
+      return {};
 
 # HTTP client for Kauf plug control
 http_request:
