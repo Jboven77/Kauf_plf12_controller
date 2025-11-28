@@ -56,7 +56,6 @@ sensor:
   - platform: vl53l1x
     name: "Distance"
     id: tof_distance
-    address: 0x29
     update_interval: 500ms
 
   # WiFi Signal Strength
