@@ -1,0 +1,68 @@
+substitutions:
+  device_name: tof-top-steps
+  friendly_name: TOF-Top Steps
+
+esphome:
+  name: ${device_name}
+  friendly_name: ${friendly_name}
+
+esp32:
+  board: esp32-c3-devkitm-1
+  framework:
+    type: arduino
+
+# Enable logging
+logger:
+  level: DEBUG  # Set to DEBUG for troubleshooting, change to INFO once working
+
+# Enable Home Assistant API
+api:
+  encryption:
+    key: "xZ8yia42psem/pM8EitSf9pGFG4SefX6Q/WrA63BUCg="
+
+# Enable OTA updates
+ota:
+  - platform: esphome
+    password: "2709128908f68863b5709e9c97e0b1a1"
+
+# WiFi configuration
+wifi:
+  ssid: "BOVENS-MESH"
+  password: "605506Jdb"
+
+  # Enable fallback hotspot
+  ap:
+    ssid: "${friendly_name} Fallback"
+    password: "Bt0UHxek49rg"
+
+captive_portal:
+
+# I2C Bus configuration
+i2c:
+  sda: GPIO20
+  scl: GPIO21
+  scan: true
+  frequency: 400kHz
+
+# VL53L1X Time-of-Flight Sensor
+sensor:
+  - platform: vl53l1x
+    name: "Distance"
+    id: tof_distance
+    address: 0x29
+    update_interval: 500ms  # Start with 500ms, can reduce to 200ms once stable
+    timeout: 200ms
+
+  # WiFi Signal Strength (optional but useful)
+  - platform: wifi_signal
+    name: "WiFi Signal"
+    update_interval: 60s
+
+# Text sensor for debugging (optional)
+text_sensor:
+  - platform: version
+    name: "ESPHome Version"
+
+  - platform: wifi_info
+    ip_address:
+      name: "IP Address"
