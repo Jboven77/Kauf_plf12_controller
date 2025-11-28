@@ -18,7 +18,6 @@ external_components:
   - source:
       type: local
       path: C:\Users\jerem\Documents\esphome  # Absolute path to component location
-    components: [ vl53l1x ]
 
 # Enable logging
 logger:
