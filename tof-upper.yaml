@@ -58,6 +58,8 @@ sensor:
   - platform: vl53l1x
     name: "Distance"
     id: tof_distance
+    distance_mode: long  # Enable long-range mode (up to 4 meters)
+    timing_budget: 100ms  # Longer timing for better accuracy at distance
     update_interval: 500ms
 
   # WiFi Signal Strength
