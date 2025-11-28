@@ -11,17 +11,18 @@ esp32:
   framework:
     type: arduino
 
-# External component for VL53L1X sensor
+# Try alternative VL53L1X component from different source
 external_components:
   - source:
       type: git
-      url: https://github.com/toyoshim/esphome-vl53l1x
-      ref: main
+      url: https://github.com/ssieb/esphome_components
+      ref: master
+    components: [ vl53l1x ]
     refresh: 0s
 
 # Enable logging
 logger:
-  level: DEBUG  # Set to DEBUG for troubleshooting, change to INFO once working
+  level: DEBUG
 
 # Enable Home Assistant API
 api:
@@ -38,7 +39,6 @@ wifi:
   ssid: "BOVENS-MESH"
   password: "605506Jdb"
 
-  # Enable fallback hotspot
   ap:
     ssid: "${friendly_name} Fallback"
     password: "Bt0UHxek49rg"
@@ -52,21 +52,17 @@ i2c:
   scan: true
   frequency: 400kHz
 
-# VL53L1X Time-of-Flight Sensor
+# VL53L1X Sensor
 sensor:
   - platform: vl53l1x
     name: "Distance"
-    id: tof_distance
     address: 0x29
-    update_interval: 500ms  # Start with 500ms, can reduce to 200ms once stable
-    timeout: 200ms
+    update_interval: 500ms
 
-  # WiFi Signal Strength (optional but useful)
   - platform: wifi_signal
     name: "WiFi Signal"
     update_interval: 60s
 
-# Text sensor for debugging (optional)
 text_sensor:
   - platform: version
     name: "ESPHome Version"
