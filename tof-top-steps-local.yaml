@@ -5,20 +5,20 @@ substitutions:
 esphome:
   name: ${device_name}
   friendly_name: ${friendly_name}
+  # Manual component code embedded (workaround for external component issues)
+  includes:
+    - vl53l1x_sensor.h
+  libraries:
+    - "pololu/VL53L1X"
 
 esp32:
   board: esp32-c3-devkitm-1
   framework:
     type: arduino
 
-# External component for VL53L1X sensor
-external_components:
-  - source: github://toyoshim/esphome-vl53l1x@main
-    refresh: 0s
-
 # Enable logging
 logger:
-  level: DEBUG  # Set to DEBUG for troubleshooting, change to INFO once working
+  level: DEBUG
 
 # Enable Home Assistant API
 api:
@@ -35,7 +35,6 @@ wifi:
   ssid: "BOVENS-MESH"
   password: "605506Jdb"
 
-  # Enable fallback hotspot
   ap:
     ssid: "${friendly_name} Fallback"
     password: "Bt0UHxek49rg"
@@ -49,21 +48,23 @@ i2c:
   scan: true
   frequency: 400kHz
 
-# VL53L1X Time-of-Flight Sensor
+# Custom sensor using library directly
 sensor:
-  - platform: vl53l1x
-    name: "Distance"
-    id: tof_distance
-    address: 0x29
-    update_interval: 500ms  # Start with 500ms, can reduce to 200ms once stable
-    timeout: 200ms
+  - platform: custom
+    lambda: |-
+      auto vl53 = new VL53L1XSensor();
+      App.register_component(vl53);
+      return {vl53};
+    sensors:
+      - name: "Distance"
+        unit_of_measurement: "mm"
+        accuracy_decimals: 0
+        icon: "mdi:ruler"
 
-  # WiFi Signal Strength (optional but useful)
   - platform: wifi_signal
     name: "WiFi Signal"
     update_interval: 60s
 
-# Text sensor for debugging (optional)
 text_sensor:
   - platform: version
     name: "ESPHome Version"
