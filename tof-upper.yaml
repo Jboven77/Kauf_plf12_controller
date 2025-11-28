@@ -59,7 +59,7 @@ sensor:
     name: "Distance"
     id: tof_distance
     distance_mode: long  # Enable long-range mode (up to 4 meters)
-    timing_budget: 100ms  # Longer timing for better accuracy at distance
+    timing_budget_ms: 100  # Longer timing for better accuracy at distance
     update_interval: 500ms
 
   # WiFi Signal Strength
