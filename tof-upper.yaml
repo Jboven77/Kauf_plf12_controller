@@ -1,0 +1,74 @@
+substitutions:
+  device_name: tof-upper
+  friendly_name: ToF-Upper
+
+esphome:
+  name: ${device_name}
+  friendly_name: ${friendly_name}
+
+esp32:
+  board: esp32-c3-devkitm-1
+  framework:
+    type: arduino  # VL53L1X component requires Arduino framework
+
+# Use LOCAL external component (no GitHub required!)
+external_components:
+  - source:
+      type: local
+      path: vl53l1x  # Path to the component folder
+    components: [ vl53l1x ]
+
+# Enable logging
+logger:
+  level: DEBUG
+
+# Enable Home Assistant API
+api:
+  encryption:
+    key: "9kx/l0p11p7WitS63E1X7bg0KgcTPgdD4zFafyUblX8="
+
+# Enable OTA updates
+ota:
+  - platform: esphome
+    password: "b6741b50e8e5f0e85451a25809f51227"
+
+# WiFi configuration
+wifi:
+  ssid: "BOVENS-MESH"
+  password: "605506Jdb"
+
+  # Enable fallback hotspot
+  ap:
+    ssid: "ToF-Upper Fallback"
+    password: "4NEmeVb8YkqL"
+
+captive_portal:
+
+# I2C Bus configuration
+i2c:
+  sda: GPIO20
+  scl: GPIO21
+  scan: true
+  frequency: 400kHz
+
+# VL53L1X Time-of-Flight Sensor
+sensor:
+  - platform: vl53l1x
+    name: "Distance"
+    id: tof_distance
+    address: 0x29
+    update_interval: 500ms
+
+  # WiFi Signal Strength
+  - platform: wifi_signal
+    name: "WiFi Signal"
+    update_interval: 60s
+
+# Text sensors for debugging
+text_sensor:
+  - platform: version
+    name: "ESPHome Version"
+
+  - platform: wifi_info
+    ip_address:
+      name: "IP Address"
