@@ -15,7 +15,7 @@ esp32:
 external_components:
   - source:
       type: local
-      path: .  # Component folder is in same directory as this YAML
+      path: C:\Users\jeremy\Documents\esphome  # Absolute path to component location
     components: [ vl53l1x ]
 
 # Enable logging
