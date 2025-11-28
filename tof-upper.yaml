@@ -56,16 +56,61 @@ i2c:
 # VL53L1X Time-of-Flight Sensor
 sensor:
   - platform: vl53l1x
+    name: "Distance Raw"
+    id: tof_distance_raw
+    internal: true  # Hide the buggy raw sensor
+    distance_mode: long
+    timing_budget_ms: 100
+    update_interval: 500ms
+
+  # Calibrated distance sensor (fixes inverted readings)
+  - platform: template
     name: "Distance"
     id: tof_distance
-    distance_mode: long  # Enable long-range mode (up to 4 meters)
-    timing_budget_ms: 100  # Longer timing for better accuracy at distance
+    unit_of_measurement: "mm"
+    accuracy_decimals: 0
+    lambda: |-
+      float raw = id(tof_distance_raw).state;
+
+      // Calibration based on actual measurements:
+      // Raw 100mm → 610mm (2ft)
+      // Raw 50mm → 914mm (3ft)
+      // Raw 37mm → 1219mm (4ft)
+
+      // Linear interpolation between calibration points
+      if (raw >= 100) {
+        // Between 2ft and closer (extrapolate)
+        return 610.0;
+      } else if (raw >= 50) {
+        // Between 2ft and 3ft
+        float ratio = (raw - 50.0) / (100.0 - 50.0);
+        return 914.0 + ratio * (610.0 - 914.0);
+      } else if (raw >= 37) {
+        // Between 3ft and 4ft
+        float ratio = (raw - 37.0) / (50.0 - 37.0);
+        return 1219.0 + ratio * (914.0 - 1219.0);
+      } else {
+        // Beyond 4ft (extrapolate)
+        return 1219.0 + (37.0 - raw) * 10.0;
+      }
     update_interval: 500ms
 
   # WiFi Signal Strength
   - platform: wifi_signal
     name: "WiFi Signal"
     update_interval: 60s
+
+# Binary sensor for step detection
+binary_sensor:
+  - platform: template
+    name: "Step Occupied"
+    id: step_occupied
+    lambda: |-
+      if (id(tof_distance).state < 1200) {
+        return true;  // Someone is on the steps (beam broken, distance < 4ft)
+      } else {
+        return false;  // Steps are clear
+      }
 
 # Text sensors for debugging
 text_sensor:
