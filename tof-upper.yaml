@@ -5,6 +5,8 @@ substitutions:
 esphome:
   name: ${device_name}
   friendly_name: ${friendly_name}
+  libraries:
+    - "pololu/VL53L1X"
 
 esp32:
   board: esp32-c3-devkitm-1
