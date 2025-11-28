@@ -15,7 +15,7 @@ esp32:
 external_components:
   - source:
       type: local
-      path: C:\Users\jeremy\Documents\esphome  # Absolute path to component location
+      path: C:\Users\jerem\Documents\esphome  # Absolute path to component location
     components: [ vl53l1x ]
 
 # Enable logging
