@@ -1,0 +1,70 @@
+substitutions:
+  device_name: tof-top-steps
+  friendly_name: TOF-Top Steps
+
+esphome:
+  name: ${device_name}
+  friendly_name: ${friendly_name}
+
+esp32:
+  board: esp32-c3-devkitm-1
+  framework:
+    type: arduino
+
+# Use LOCAL external component (no GitHub required!)
+external_components:
+  - source:
+      type: local
+      path: components  # Put the downloaded component here
+    components: [ vl53l1x ]
+
+# Enable logging
+logger:
+  level: DEBUG
+
+# Enable Home Assistant API
+api:
+  encryption:
+    key: "xZ8yia42psem/pM8EitSf9pGFG4SefX6Q/WrA63BUCg="
+
+# Enable OTA updates
+ota:
+  - platform: esphome
+    password: "2709128908f68863b5709e9c97e0b1a1"
+
+# WiFi configuration
+wifi:
+  ssid: "BOVENS-MESH"
+  password: "605506Jdb"
+
+  ap:
+    ssid: "${friendly_name} Fallback"
+    password: "Bt0UHxek49rg"
+
+captive_portal:
+
+# I2C Bus configuration
+i2c:
+  sda: GPIO20
+  scl: GPIO21
+  scan: true
+  frequency: 400kHz
+
+# VL53L1X Sensor
+sensor:
+  - platform: vl53l1x
+    name: "Distance"
+    address: 0x29
+    update_interval: 500ms
+
+  - platform: wifi_signal
+    name: "WiFi Signal"
+    update_interval: 60s
+
+text_sensor:
+  - platform: version
+    name: "ESPHome Version"
+
+  - platform: wifi_info
+    ip_address:
+      name: "IP Address"
