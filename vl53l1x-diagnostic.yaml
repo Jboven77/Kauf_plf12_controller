@@ -1,0 +1,78 @@
+substitutions:
+  device_name: vl53l1x-updated
+  friendly_name: VL53L1X_UPDATED
+
+esphome:
+  name: ${device_name}
+  friendly_name: ${friendly_name}
+
+esp32:
+  board: esp32-c3-devkitm-1
+  framework:
+    type: arduino
+
+external_components:
+  - source: github://soldierkam/vl53l1x_sensor
+    refresh: 1d
+
+# Enable VERY verbose logging
+logger:
+  level: VERY_VERBOSE
+  logs:
+    i2c: VERY_VERBOSE
+    vl53l1x: VERY_VERBOSE
+    sensor: DEBUG
+
+# Enable Home Assistant API
+api:
+  encryption:
+    key: "ExDe1QCbYpuNItTeQfaDDVw36cvxRa7h+XcrT1MGuKk="
+
+# Enable OTA updates
+ota:
+  - platform: esphome
+    password: "b4154cf408567485aa609e3c16a25076"
+
+# WiFi configuration
+wifi:
+  ssid: "BOVENS-MESH"
+  password: "605506Jdb"
+
+  ap:
+    ssid: "VL53L1X-Updated Fallback"
+    password: "DRnjJo6OUJwd"
+
+captive_portal:
+
+# I2C Bus - very slow for debugging
+i2c:
+  sda: GPIO20
+  scl: GPIO21
+  scan: true
+  frequency: 50kHz  # VERY slow for maximum stability
+
+# VL53L1X - DIAGNOSTIC MODE
+# Try absolute minimum settings to see if sensor works at all
+sensor:
+  - platform: vl53l1x_sensor
+    name: "Distance"
+    id: tof_distance
+    distance_mode: SHORT  # Most reliable mode
+    timing_budget: 100ms  # Generous timing
+    update_interval: 5s   # Very slow updates to reduce stress on sensor
+
+    # Try disabling the check that's failing
+    # These are optional parameters that might help
+    timeout: 50ms         # Longer timeout
+
+  - platform: wifi_signal
+    name: "WiFi Signal"
+    update_interval: 60s
+
+text_sensor:
+  - platform: version
+    name: "ESPHome Version"
+
+  - platform: wifi_info
+    ip_address:
+      name: "IP Address"
