@@ -11,12 +11,12 @@ esp32:
   framework:
     type: arduino
 
-# Use cptkirki's TOF400C VL53L1X component
-# Note: This repo structure requires manual download, using different approach
+# Use cptkirki's TOF400C VL53L1X component - LOCAL
 external_components:
-  - source: github://cptkirki/TOF400C-VL53L1X-esphome
+  - source:
+      type: local
+      path: C:\Users\YourUsername\Documents\ESPHOME_PROJECTS\EXTERNAL_COMPONENTS\TOF400c
     components: [ tof_vl53l1x ]
-    refresh: 1d
 
 # Enable logging
 logger:
