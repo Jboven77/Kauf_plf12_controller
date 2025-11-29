@@ -13,10 +13,8 @@ esp32:
 
 # Use cptkirki's TOF400C VL53L1X component - LOCAL
 external_components:
-  - source:
-      type: local
-      path: C:\Users\YourUsername\Documents\ESPHOME_PROJECTS\EXTERNAL_COMPONENTS\TOF400c
-    components: [ tof_vl53l1x ]
+  - source: C:/Users/jerem/Documents/ESPHOME_PROJECTS/EXTERNAL_COMPONENTS/TOF400c
+    refresh: always
 
 # Enable logging
 logger:
@@ -51,14 +49,17 @@ i2c:
   scan: true
   frequency: 400kHz
 
-# VL53L1X using cptkirki's component (designed for TOF400C module)
+# VL53L1X using cptkirki's TOF400C component with proper syntax
 sensor:
   - platform: tof_vl53l1x
     name: "Distance"
     id: tof_distance
-    update_interval: 1s
-    # This component is specifically designed for the TOF400C module
-    # which uses the VL53L1X sensor
+    update_interval: 250ms
+    distance_mode: long          # lowercase: short, medium, or long
+    timing_budget_ms: 200000     # 200ms in microseconds
+    intermeasurement_ms: 1000    # 1 second between measurements
+    accuracy_decimals: 0
+    unit_of_measurement: "mm"    # millimeters (not meters!)
 
   # WiFi Signal Strength
   - platform: wifi_signal
