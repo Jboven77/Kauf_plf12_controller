@@ -12,8 +12,10 @@ esp32:
     type: arduino
 
 # Use cptkirki's TOF400C VL53L1X component
+# Note: This repo structure requires manual download, using different approach
 external_components:
   - source: github://cptkirki/TOF400C-VL53L1X-esphome
+    components: [ tof_vl53l1x ]
     refresh: 1d
 
 # Enable logging
@@ -51,7 +53,7 @@ i2c:
 
 # VL53L1X using cptkirki's component (designed for TOF400C module)
 sensor:
-  - platform: tof400c
+  - platform: tof_vl53l1x
     name: "Distance"
     id: tof_distance
     update_interval: 1s
