@@ -48,7 +48,7 @@ sensor:
     name: "Distance"
     id: tof_distance
     distance_mode: MEDIUM  # Up to 3m
-    timing_budget: 140ms   # Increased - MEDIUM mode needs at least 33ms, using 140ms for safety
+    timing_budget: 200ms   # MEDIUM mode - valid values: 20ms, 33ms, 50ms, 100ms, 200ms, 500ms
     update_interval: 1s    # Slowed down to give sensor time to complete measurements
 
     # FIX for error 0x0D: Set valid ROI parameters!
