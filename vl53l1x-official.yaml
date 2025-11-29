@@ -1,0 +1,84 @@
+substitutions:
+  device_name: vl53l1x-updated
+  friendly_name: VL53L1X_UPDATED
+
+esphome:
+  name: ${device_name}
+  friendly_name: ${friendly_name}
+
+esp32:
+  board: esp32-c3-devkitm-1
+  framework:
+    type: arduino
+
+# Enable logging
+logger:
+  level: DEBUG
+
+# Enable Home Assistant API
+api:
+  encryption:
+    key: "ExDe1QCbYpuNItTeQfaDDVw36cvxRa7h+XcrT1MGuKk="
+
+# Enable OTA updates
+ota:
+  - platform: esphome
+    password: "b4154cf408567485aa609e3c16a25076"
+
+# WiFi configuration
+wifi:
+  ssid: "BOVENS-MESH"
+  password: "605506Jdb"
+
+  # Enable fallback hotspot
+  ap:
+    ssid: "VL53L1X-Updated Fallback"
+    password: "DRnjJo6OUJwd"
+
+captive_portal:
+
+# I2C Bus configuration - SLOWER speed for stability
+i2c:
+  sda: GPIO20
+  scl: GPIO21
+  scan: true
+  frequency: 100kHz  # Reduced from 400kHz - more stable
+
+# VL53L1X using OFFICIAL ESPHome component (limited to 2m but more stable!)
+sensor:
+  - platform: vl53l1x
+    name: "Distance"
+    id: tof_distance
+    address: 0x29
+    update_interval: 1s
+    timeout: 10ms
+    # Official component doesn't have distance_mode - it auto-configures
+
+  # WiFi Signal Strength
+  - platform: wifi_signal
+    name: "WiFi Signal"
+    update_interval: 60s
+
+# Binary sensor for step detection
+binary_sensor:
+  - platform: template
+    name: "Step Occupied"
+    id: step_occupied
+    lambda: |-
+      if (isnan(id(tof_distance).state)) {
+        return {};
+      }
+      if (id(tof_distance).state < 1.22) {
+        return true;
+      } else {
+        return false;
+      }
+
+# Text sensors for debugging
+text_sensor:
+  - platform: version
+    name: "ESPHome Version"
+
+  - platform: wifi_info
+    ip_address:
+      name: "IP Address"

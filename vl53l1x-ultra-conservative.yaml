@@ -1,0 +1,88 @@
+substitutions:
+  device_name: vl53l1x-updated
+  friendly_name: VL53L1X_UPDATED
+
+esphome:
+  name: ${device_name}
+  friendly_name: ${friendly_name}
+
+esp32:
+  board: esp32-c3-devkitm-1
+  framework:
+    type: arduino
+
+external_components:
+  - source: github://soldierkam/vl53l1x_sensor
+    refresh: 1d
+
+# Enable logging
+logger:
+  level: DEBUG
+  baud_rate: 115200
+
+# Enable Home Assistant API
+api:
+  encryption:
+    key: "ExDe1QCbYpuNItTeQfaDDVw36cvxRa7h+XcrT1MGuKk="
+
+# Enable OTA updates
+ota:
+  - platform: esphome
+    password: "b4154cf408567485aa609e3c16a25076"
+
+# WiFi configuration
+wifi:
+  ssid: "BOVENS-MESH"
+  password: "605506Jdb"
+
+  ap:
+    ssid: "VL53L1X-Updated Fallback"
+    password: "DRnjJo6OUJwd"
+
+captive_portal:
+
+# I2C Bus - ULTRA SLOW for maximum stability
+i2c:
+  sda: GPIO20
+  scl: GPIO21
+  scan: true
+  frequency: 50kHz  # VERY slow - maximum stability
+
+# VL53L1X - ULTRA CONSERVATIVE SETTINGS
+sensor:
+  - platform: vl53l1x_sensor
+    name: "Distance"
+    id: tof_distance
+    distance_mode: SHORT  # Shortest range, most reliable
+    timing_budget: 100ms  # Generous timing for SHORT mode
+    update_interval: 2s   # Very slow updates
+
+    # Try these optional parameters to improve reliability
+    signal_rate_limit: 0.25  # Default, can try 0.1 for more sensitivity
+    sigma_threshold: 50      # Higher = more lenient (default is ~15)
+
+  - platform: wifi_signal
+    name: "WiFi Signal"
+    update_interval: 60s
+
+binary_sensor:
+  - platform: template
+    name: "Step Occupied"
+    id: step_occupied
+    lambda: |-
+      if (isnan(id(tof_distance).state)) {
+        return {};
+      }
+      if (id(tof_distance).state < 1.20) {
+        return true;
+      } else {
+        return false;
+      }
+
+text_sensor:
+  - platform: version
+    name: "ESPHome Version"
+
+  - platform: wifi_info
+    ip_address:
+      name: "IP Address"
