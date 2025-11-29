@@ -48,8 +48,8 @@ sensor:
     name: "Distance"
     id: tof_distance
     distance_mode: MEDIUM  # Up to 3m
-    timing_budget: 100ms
-    update_interval: 500ms
+    timing_budget: 140ms   # Increased - MEDIUM mode needs at least 33ms, using 140ms for safety
+    update_interval: 1s    # Slowed down to give sensor time to complete measurements
 
     # FIX for error 0x0D: Set valid ROI parameters!
     roi_center: 199  # Center of 16x16 SPAD array (row 12, col 7 = 12*16+7 = 199)
