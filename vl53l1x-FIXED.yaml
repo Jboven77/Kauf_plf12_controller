@@ -54,8 +54,8 @@ sensor:
     # FIX for error 0x0D: Set valid ROI parameters!
     roi_center: 199  # Center of 16x16 SPAD array (row 12, col 7 = 12*16+7 = 199)
     roi_size:
-      width: 16
-      height: 16
+      x: 16
+      y: 16
 
   - platform: wifi_signal
     name: "WiFi Signal"
