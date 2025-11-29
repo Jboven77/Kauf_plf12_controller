@@ -54,7 +54,7 @@ sensor:
   - platform: vl53l1x_sensor
     name: "Distance"
     id: tof_distance
-    distance_mode: HIGH  # Up to 4m (13 feet) - not just 39 inches!
+    distance_mode: LONG  # Up to 4m (13 feet) - not just 39 inches!
     timing_budget: 100ms  # Good balance for 4ft range
     update_interval: 500ms
 
