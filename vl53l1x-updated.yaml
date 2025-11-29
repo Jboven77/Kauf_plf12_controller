@@ -54,8 +54,8 @@ sensor:
   - platform: vl53l1x_sensor
     name: "Distance"
     id: tof_distance
-    distance_mode: LONG  # Up to 4m (13 feet) - not just 39 inches!
-    timing_budget: 100ms  # Good balance for 4ft range
+    distance_mode: LONG  # Up to 4m (13 feet)
+    timing_budget: 200ms  # LONG mode requires at least 140ms, use 200ms for reliability
     update_interval: 500ms
 
   # WiFi Signal Strength
