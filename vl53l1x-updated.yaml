@@ -1,0 +1,98 @@
+substitutions:
+  device_name: vl53l1x-updated
+  friendly_name: VL53L1X_UPDATED
+
+esphome:
+  name: ${device_name}
+  friendly_name: ${friendly_name}
+
+esp32:
+  board: esp32-c3-devkitm-1
+  framework:
+    type: arduino  # Required for VL53L1X component
+
+# Use the BETTER VL53L1X component (supports full 4m range!)
+external_components:
+  - source: github://soldierkam/vl53l1x_sensor
+    refresh: 1d
+
+# Enable logging
+logger:
+  level: DEBUG
+
+# Enable Home Assistant API
+api:
+  encryption:
+    key: "ExDe1QCbYpuNItTeQfaDDVw36cvxRa7h+XcrT1MGuKk="
+
+# Enable OTA updates
+ota:
+  - platform: esphome
+    password: "b4154cf408567485aa609e3c16a25076"
+
+# WiFi configuration
+wifi:
+  ssid: "BOVENS-MESH"
+  password: "605506Jdb"
+
+  # Enable fallback hotspot
+  ap:
+    ssid: "VL53L1X-Updated Fallback"
+    password: "DRnjJo6OUJwd"
+
+captive_portal:
+
+# I2C Bus configuration (400kHz recommended)
+i2c:
+  sda: GPIO20
+  scl: GPIO21
+  scan: true
+  frequency: 400kHz
+
+# VL53L1X Time-of-Flight Sensor (PROPER 4m RANGE!)
+sensor:
+  - platform: vl53l1x_sensor
+    name: "Distance"
+    id: tof_distance
+    distance_mode: MEDIUM  # Changed from LONG - try MEDIUM first (up to 3m, more reliable)
+    timing_budget: 100ms   # Increased from 200ms - MEDIUM mode works well with 100ms
+    update_interval: 1s    # Slowed down from 500ms to reduce errors
+    # Optional: Add signal rate limit (lower = more sensitive, but may help with 0x0D errors)
+    # signal_rate_limit: 0.25  # MCPS (mega counts per second)
+
+  # WiFi Signal Strength
+  - platform: wifi_signal
+    name: "WiFi Signal"
+    update_interval: 60s
+
+# Binary sensor for step detection (triggers when distance < 4ft)
+binary_sensor:
+  - platform: template
+    name: "Step Occupied"
+    id: step_occupied
+    lambda: |-
+      // Check if we have a valid reading (not NaN)
+      if (isnan(id(tof_distance).state)) {
+        return {};  // Return unknown state if sensor has no valid reading
+      }
+      if (id(tof_distance).state < 1.22) {  // 1.22 meters = 4 feet
+        return true;  // Someone is on the steps (beam broken, distance < 4ft)
+      } else {
+        return false;  // Steps are clear
+      }
+
+# Text sensors for debugging
+text_sensor:
+  - platform: version
+    name: "ESPHome Version"
+
+  - platform: wifi_info
+    ip_address:
+      name: "IP Address"
+
+# Status LED to show sensor health (optional - if you have an LED on your board)
+# Uncomment if you want visual feedback
+# light:
+#   - platform: status_led
+#     name: "Status LED"
+#     pin: GPIO8  # Change to your LED pin
