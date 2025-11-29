@@ -51,11 +51,11 @@ sensor:
     timing_budget: 200ms     # Longer timing for better accuracy at distance
     update_interval: 1s
 
-    # Smaller ROI = narrower beam = longer range
+    # Wider ROI = better signal strength
     roi_center: 199          # Center of SPAD array
     roi_size:
-      x: 8                   # Reduced from 16 (narrower beam for longer range)
-      y: 8                   # Reduced from 16
+      x: 16                  # Full width for maximum signal
+      y: 16                  # Full height for maximum signal
 
   - platform: wifi_signal
     name: "WiFi Signal"
