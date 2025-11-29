@@ -1,0 +1,84 @@
+substitutions:
+  device_name: vl53l1x-updated
+  friendly_name: VL53L1X_UPDATED
+
+esphome:
+  name: ${device_name}
+  friendly_name: ${friendly_name}
+
+esp32:
+  board: esp32-c3-devkitm-1
+  framework:
+    type: arduino
+
+external_components:
+  - source: github://soldierkam/vl53l1x_sensor
+    refresh: 1d
+
+logger:
+  level: DEBUG
+
+api:
+  encryption:
+    key: "ExDe1QCbYpuNItTeQfaDDVw36cvxRa7h+XcrT1MGuKk="
+
+ota:
+  - platform: esphome
+    password: "b4154cf408567485aa609e3c16a25076"
+
+wifi:
+  ssid: "BOVENS-MESH"
+  password: "605506Jdb"
+
+  ap:
+    ssid: "VL53L1X-Updated Fallback"
+    password: "DRnjJo6OUJwd"
+
+captive_portal:
+
+i2c:
+  sda: GPIO20
+  scl: GPIO21
+  scan: true
+  frequency: 400kHz
+
+# VL53L1X with FIXED ROI configuration!
+sensor:
+  - platform: vl53l1x_sensor
+    name: "Distance"
+    id: tof_distance
+    distance_mode: MEDIUM  # Up to 3m
+    timing_budget: 100ms
+    update_interval: 500ms
+
+    # FIX for error 0x0D: Set valid ROI parameters!
+    roi_center: 199  # Center of 16x16 SPAD array (row 12, col 7 = 12*16+7 = 199)
+    roi_size:
+      width: 16
+      height: 16
+
+  - platform: wifi_signal
+    name: "WiFi Signal"
+    update_interval: 60s
+
+binary_sensor:
+  - platform: template
+    name: "Step Occupied"
+    id: step_occupied
+    lambda: |-
+      if (isnan(id(tof_distance).state)) {
+        return {};
+      }
+      if (id(tof_distance).state < 1.22) {
+        return true;
+      } else {
+        return false;
+      }
+
+text_sensor:
+  - platform: version
+    name: "ESPHome Version"
+
+  - platform: wifi_info
+    ip_address:
+      name: "IP Address"
