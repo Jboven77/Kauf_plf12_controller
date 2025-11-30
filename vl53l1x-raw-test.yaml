@@ -1,0 +1,67 @@
+substitutions:
+  device_name: vl53l1x-updated
+  friendly_name: VL53L1X_UPDATED
+
+esphome:
+  name: ${device_name}
+  friendly_name: ${friendly_name}
+  libraries:
+    - "pololu/VL53L1X"
+
+esp32:
+  board: esp32-c3-devkitm-1
+  framework:
+    type: arduino
+
+external_components:
+  - source:
+      type: local
+      path: C:\Users\jerem\Documents\ESPHOME_PROJECTS\EXTERNAL_COMPONENTS
+    components: [ vl53l1x ]
+
+logger:
+  level: DEBUG
+
+api:
+  encryption:
+    key: "ExDe1QCbYpuNItTeQfaDDVw36cvxRa7h+XcrT1MGuKk="
+
+ota:
+  - platform: esphome
+    password: "b4154cf408567485aa609e3c16a25076"
+
+wifi:
+  ssid: "BOVENS-MESH"
+  password: "605506Jdb"
+  ap:
+    ssid: "VL53L1X-Updated Fallback"
+    password: "DRnjJo6OUJwd"
+
+captive_portal:
+
+i2c:
+  sda: GPIO20
+  scl: GPIO21
+  scan: true
+  frequency: 400kHz
+
+# RAW SENSOR ONLY - NO CALIBRATION!
+sensor:
+  - platform: vl53l1x
+    name: "Distance Raw"  # This is the ACTUAL raw sensor value
+    id: tof_distance_raw
+    distance_mode: long
+    timing_budget_ms: 200
+    update_interval: 1s
+
+  - platform: wifi_signal
+    name: "WiFi Signal"
+    update_interval: 60s
+
+text_sensor:
+  - platform: version
+    name: "ESPHome Version"
+
+  - platform: wifi_info
+    ip_address:
+      name: "IP Address"
