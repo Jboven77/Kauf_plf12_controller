@@ -1,0 +1,64 @@
+substitutions:
+  device_name: vl53l1x-updated
+  friendly_name: VL53L1X_UPDATED
+
+esphome:
+  name: ${device_name}
+  friendly_name: ${friendly_name}
+  libraries:
+    - "pololu/VL53L1X"  # Using Pololu library
+
+esp32:
+  board: esp32-c3-devkitm-1
+  framework:
+    type: arduino
+
+# jardous/tof_vl53l1x component
+external_components:
+  - source: github://jardous/tof_vl53l1x@main
+    refresh: always
+
+logger:
+  level: DEBUG
+
+api:
+  encryption:
+    key: "ExDe1QCbYpuNItTeQfaDDVw36cvxRa7h+XcrT1MGuKk="
+
+ota:
+  - platform: esphome
+    password: "b4154cf408567485aa609e3c16a25076"
+
+wifi:
+  ssid: "BOVENS-MESH"
+  password: "605506Jdb"
+  ap:
+    ssid: "VL53L1X-Updated Fallback"
+    password: "DRnjJo6OUJwd"
+
+captive_portal:
+
+i2c:
+  sda: GPIO20
+  scl: GPIO21
+  scan: true
+  frequency: 400kHz
+
+# Try with platform: tof_vl53l1x (jardous component name)
+sensor:
+  - platform: tof_vl53l1x
+    name: "Distance"
+    id: tof_distance
+    update_interval: 500ms
+
+  - platform: wifi_signal
+    name: "WiFi Signal"
+    update_interval: 60s
+
+text_sensor:
+  - platform: version
+    name: "ESPHome Version"
+
+  - platform: wifi_info
+    ip_address:
+      name: "IP Address"
