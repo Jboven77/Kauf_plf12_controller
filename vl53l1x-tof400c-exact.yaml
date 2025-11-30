@@ -1,0 +1,70 @@
+substitutions:
+  device_name: vl53l1x-updated
+  friendly_name: VL53L1X_UPDATED
+
+esphome:
+  name: ${device_name}
+  friendly_name: ${friendly_name}
+  min_version: 2025.5.0
+
+esp32:
+  board: esp32-c3-devkitm-1
+  framework:
+    type: arduino
+
+logger:
+  level: DEBUG
+
+api:
+  encryption:
+    key: "ExDe1QCbYpuNItTeQfaDDVw36cvxRa7h+XcrT1MGuKk="
+
+ota:
+  - platform: esphome
+    password: "b4154cf408567485aa609e3c16a25076"
+
+wifi:
+  ssid: "BOVENS-MESH"
+  password: "605506Jdb"
+  ap:
+    ssid: "VL53L1X-Updated Fallback"
+    password: "DRnjJo6OUJwd"
+
+captive_portal:
+
+# TOF400C component - using EXACT example syntax
+external_components:
+  - source: C:/Users/jerem/Documents/ESPHOME_PROJECTS/EXTERNAL_COMPONENTS/TOF400c
+    refresh: always
+
+i2c:
+  sda: GPIO20
+  scl: GPIO21
+  scan: true
+
+# EXACT syntax from example.yaml
+sensor:
+  - platform: tof_vl53l1x
+    name: "Distance"
+    update_interval: 250ms
+    distance_mode: long
+    timing_budget_ms: 150000
+    intermeasurement_ms: 250
+    filters:
+      - sliding_window_moving_average:
+          window_size: 3
+          send_every: 1
+    accuracy_decimals: 0
+    unit_of_measurement: "mm"
+
+  - platform: wifi_signal
+    name: "WiFi Signal"
+    update_interval: 60s
+
+text_sensor:
+  - platform: version
+    name: "ESPHome Version"
+
+  - platform: wifi_info
+    ip_address:
+      name: "IP Address"
