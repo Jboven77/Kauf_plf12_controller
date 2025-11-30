@@ -1,0 +1,127 @@
+substitutions:
+  device_name: vl53l1x-updated
+  friendly_name: VL53L1X_UPDATED
+
+esphome:
+  name: ${device_name}
+  friendly_name: ${friendly_name}
+  libraries:
+    - "pololu/VL53L1X"
+
+esp32:
+  board: esp32-c3-devkitm-1
+  framework:
+    type: arduino  # VL53L1X component requires Arduino framework
+
+# Use LOCAL external component (WORKING - not soldierkam!)
+external_components:
+  - source:
+      type: local
+      path: C:\Users\jerem\Documents\ESPHOME_PROJECTS\EXTERNAL_COMPONENTS
+    components: [ vl53l1x ]
+
+# Enable logging
+logger:
+  level: DEBUG
+
+# Enable Home Assistant API
+api:
+  encryption:
+    key: "ExDe1QCbYpuNItTeQfaDDVw36cvxRa7h+XcrT1MGuKk="
+
+# Enable OTA updates
+ota:
+  - platform: esphome
+    password: "b4154cf408567485aa609e3c16a25076"
+
+# WiFi configuration
+wifi:
+  ssid: "BOVENS-MESH"
+  password: "605506Jdb"
+
+  # Enable fallback hotspot
+  ap:
+    ssid: "VL53L1X-Updated Fallback"
+    password: "DRnjJo6OUJwd"
+
+captive_portal:
+
+# I2C Bus configuration
+i2c:
+  sda: GPIO20
+  scl: GPIO21
+  scan: true
+  frequency: 400kHz
+
+# VL53L1X Time-of-Flight Sensor - EXTENDED RANGE
+sensor:
+  - platform: vl53l1x
+    name: "Distance Raw"
+    id: tof_distance_raw
+    internal: true  # Hide the buggy raw sensor
+    distance_mode: long
+    timing_budget_ms: 200     # Extended range timing
+    update_interval: 1s
+
+  # Calibrated distance sensor (fixes inverted readings)
+  - platform: template
+    name: "Distance"
+    id: tof_distance
+    unit_of_measurement: "mm"
+    accuracy_decimals: 0
+    lambda: |-
+      float raw = id(tof_distance_raw).state;
+
+      // Extended calibration for 5ft range:
+      // Raw 100mm → 610mm (2ft)
+      // Raw 50mm → 914mm (3ft)
+      // Raw 37mm → 1219mm (4ft)
+      // Raw ~28mm → 1524mm (5ft)
+
+      // Linear interpolation between calibration points
+      if (raw >= 100) {
+        // Between 2ft and closer (extrapolate)
+        return 610.0;
+      } else if (raw >= 50) {
+        // Between 2ft and 3ft
+        float ratio = (raw - 50.0) / (100.0 - 50.0);
+        return 914.0 + ratio * (610.0 - 914.0);
+      } else if (raw >= 37) {
+        // Between 3ft and 4ft
+        float ratio = (raw - 37.0) / (50.0 - 37.0);
+        return 1219.0 + ratio * (914.0 - 1219.0);
+      } else if (raw >= 28) {
+        // Between 4ft and 5ft
+        float ratio = (raw - 28.0) / (37.0 - 28.0);
+        return 1524.0 + ratio * (1219.0 - 1524.0);
+      } else {
+        // Beyond 5ft (extrapolate)
+        return 1524.0 + (28.0 - raw) * 15.0;
+      }
+    update_interval: 1s
+
+  # WiFi Signal Strength
+  - platform: wifi_signal
+    name: "WiFi Signal"
+    update_interval: 60s
+
+# Binary sensor for step detection (5ft range)
+binary_sensor:
+  - platform: template
+    name: "Step Occupied"
+    id: step_occupied
+    lambda: |-
+      if (id(tof_distance).state < 1500) {  // 5ft detection range
+        return true;  // Someone is on the steps (beam broken)
+      } else {
+        return false;  // Steps are clear
+      }
+
+# Text sensors for debugging
+text_sensor:
+  - platform: version
+    name: "ESPHome Version"
+
+  - platform: wifi_info
+    ip_address:
+      name: "IP Address"
